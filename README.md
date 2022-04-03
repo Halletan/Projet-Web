@@ -19,4 +19,6 @@ Fonctionnalités : Nice to have :
 - Got you out from my VS
 - Hey you
 
-
+Agenda :
+Pour le Lundi 18 18h:
+Réfléchir au Schéma EA. + Faire une db sur azure.
