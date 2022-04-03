@@ -18,4 +18,6 @@ Fonctionnalités : Nice to have :
 - Système de réservation visuelle des places (inspiration : Kinepolis) https://tickets.kinepolis.be/Booking/Seating
 
 
-
+Agenda :
+Pour le Lundi 18 18h:
+Réfléchir au Schéma EA. + Faire une db sur azure.
