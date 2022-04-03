@@ -16,6 +16,6 @@ Fonctionnalités : Must-have :
 Fonctionnalités : Nice to have :
 - Système de fidelity card.
 - Système de réservation visuelle des places (inspiration : Kinepolis) https://tickets.kinepolis.be/Booking/Seating
-- Got you
+- Got you out from my VS
 
 
