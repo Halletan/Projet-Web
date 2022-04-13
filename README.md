@@ -24,7 +24,7 @@ Réfléchir au Schéma EA. + Faire une db sur azure.
 
 
 
-#Memo
+#Memo (Great Stuff)
 RetryPolicy :
 
 We'll be using Polly Nuget in order to implement all our retry policies :
@@ -38,5 +38,7 @@ We'll be using Polly Nuget in order to implement all our retry policies :
 6 - Finally, in the controller, we'll be using IHttpClientFactory to call the previous service injected with the given name.
 
 #CleanerSimpleEasy
+
+
 
 
