@@ -21,3 +21,22 @@ Fonctionnalités : Nice to have :
 Agenda :
 Pour le Lundi 18 18h:
 Réfléchir au Schéma EA. + Faire une db sur azure.
+
+
+
+#Memo
+RetryPolicy :
+
+We'll be using Polly Nuget in order to implement all our retry policies :
+
+1 - We install the following nuget :
+    Microsoft.Extensions.Http.Polly (this will contain all polly's dependencies)
+2 - We'll be implementing an Interface which will contain all the policies signatures.
+3 - Service that implements this Interface
+4 - We inject the dependency <Interface, Service>
+5 - We add HttpClient, we give it a name and add to it PolicyHandler extension method that defines which policy to use.
+6 - Finally, in the controller, we'll be using IHttpClientFactory to call the previous service injected with the given name.
+
+#CleanerSimpleEasy
+
+
