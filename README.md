@@ -24,8 +24,7 @@ Réfléchir au Schéma EA. + Faire une db sur azure.
 
 
 
-#Memo (Great Stuff)
-RetryPolicy :
+#RetryPolicy :
 
 We'll be using Polly Nuget in order to implement all our retry policies :
 
@@ -36,6 +35,11 @@ We'll be using Polly Nuget in order to implement all our retry policies :
 4 - We inject the dependency <Interface, Service>
 5 - We add HttpClient, we give it a name and add to it PolicyHandler extension method that defines which policy to use.
 6 - Finally, in the controller, we'll be using IHttpClientFactory to call the previous service injected with the given name.
+
+#MiddleWare Nuget
+We can for example create a simple dedicated nuget that handles LoggerBehaviours using MediatR
+
+
 
 #CleanerSimpleEasy
 
