@@ -25,7 +25,6 @@ Réfléchir au Schéma EA. + Faire une db sur azure.
 
 
 #RetryPolicy :
-
 We'll be using Polly Nuget in order to implement all our retry policies :
 
 1 - We install the following nuget :
@@ -40,8 +39,6 @@ We'll be using Polly Nuget in order to implement all our retry policies :
 We can for example create a simple dedicated nuget that handles LoggerBehaviours using MediatR
 
 
-
-#CleanerSimpleEasy
 
 
 
