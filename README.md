@@ -55,7 +55,7 @@ var request = new HttpRequestMessage
 	Headers =
 	{
 		{ "X-RapidAPI-Host", "airport-info.p.rapidapi.com" },
-		{ "X-RapidAPI-Key", "3398f4ab61msh2fec552303aed05p1babbajsn4969aa1f509b" },
+		{ "X-RapidAPI-Key", "***********************************************" },
 	},
 };
 using (var response = await client.SendAsync(request))
@@ -64,6 +64,8 @@ using (var response = await client.SendAsync(request))
 	var body = await response.Content.ReadAsStringAsync();
 	Console.WriteLine(body);
 }
+
+
 
 
 
