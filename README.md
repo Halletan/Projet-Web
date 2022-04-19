@@ -47,7 +47,7 @@ We can for example create a simple dedicated nuget that handles LoggerBehaviours
 #Api Consume
 
 Idées : https://free-apis.github.io/#/   
-				https://betterprogramming.pub/a-curated-list-of-100-cool-and-fun-public-apis-to-inspire-your-next-project-7600ce3e9b3?gi=358120b5705c
+		https://betterprogramming.pub/a-curated-list-of-100-cool-and-fun-public-apis-to-inspire-your-next-project-7600ce3e9b3?gi=358120b5705c
 
 
 We could for example consume an api that retrieves the list of airports by IATA code
@@ -73,3 +73,6 @@ using (var response = await client.SendAsync(request))
 	var body = await response.Content.ReadAsStringAsync();
 	Console.WriteLine(body);
 }
+
+
+# Test
