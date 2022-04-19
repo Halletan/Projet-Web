@@ -4,9 +4,14 @@ Theme : Un site de réservation de voyages spatiaux.
 
 Description : Nous souhaitons réaliser un site qui permet à un utilisateur de réserver une place dans une navette spatiale, vers une planète au choix, en fonction des voyages planifiés.
 
-Rèlges: Code en Anglais (Nom des variables; méthodes ...)
+Rèlges:
+- Code en Anglais (Nom des variables; méthodes ...)
+- Git : Sur le dépot remote : avoir une branche main(production), avoir une branche dev(devellopment)
+	  : Sur le dépot local : avoir une branche dev, faire une nouvelle branche pour chaque feature. Une fois la feature ok, merge de notre branche feature avec la branche dev.
+	  Après test => Push sur la branche dev du dépot remote.
+	   Puis, Review du code en équipe; Si ok, Merge de la branche dev avec la branche main.
 
-Fonctionnalités : Must-have : 
+Fonctionnalités : Must-have :
 
 - User registration (with authentification) => Voir sous-fonctionnalités obligatoires énoncé.
 - Système de réservation.
@@ -39,7 +44,11 @@ We'll be using Polly Nuget in order to implement all our retry policies :
 We can for example create a simple dedicated nuget that handles LoggerBehaviours using MediatR
 
 
-#Api Consume 
+#Api Consume
+
+Idées : https://free-apis.github.io/#/   
+				https://betterprogramming.pub/a-curated-list-of-100-cool-and-fun-public-apis-to-inspire-your-next-project-7600ce3e9b3?gi=358120b5705c
+
 
 We could for example consume an api that retrieves the list of airports by IATA code
 
@@ -64,8 +73,3 @@ using (var response = await client.SendAsync(request))
 	var body = await response.Content.ReadAsStringAsync();
 	Console.WriteLine(body);
 }
-
-
-
-
-
