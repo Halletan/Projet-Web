@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\Behaviors\" />
+    <Folder Include="Common\Commands\Flight\" />
+    <Folder Include="Common\Exceptions\" />
+    <Folder Include="Common\Mappings\" />
+    <Folder Include="Common\Models\" />
+    <Folder Include="Common\Interfaces\" />
+    <Folder Include="Common\Queries\" />
+    <Folder Include="Common\Services\" />
+  </ItemGroup>
+
+</Project>
