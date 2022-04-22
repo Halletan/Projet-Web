@@ -1,6 +1,6 @@
 # Projet-Web
 
-Theme : Un site de réservation de voyages spatiaux. 
+Theme : Un site de réservation de voyages spatiaux.
 
 Description : Nous souhaitons réaliser un site qui permet à un utilisateur de réserver une place dans une navette spatiale, vers une planète au choix, en fonction des voyages planifiés.
 
@@ -26,7 +26,8 @@ Fonctionnalités : Nice to have :
 Agenda :
 Pour le Lundi 18 18h:
 Réfléchir au Schéma EA. + Faire une db sur azure.
-
+Pour le Vddi 22, 17H,
+Réfléchir à l'architecture du projet
 
 
 #RetryPolicy :
