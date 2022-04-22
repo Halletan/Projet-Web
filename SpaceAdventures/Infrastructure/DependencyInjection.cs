@@ -8,6 +8,6 @@ namespace Infrastructure
 {
     public class DependencyInjection
     {
-        // Database injection
+        
     }
 }
