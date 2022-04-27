@@ -3,11 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using SpaceAdventures.Application.Common.Interfaces;
 
 namespace Infrastructure
 {
-    public class DependencyInjection
+    public static class DependencyInjection
     {
-        // Db Extension Method
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddDbContext<SpaceAdventuresDbContext>(opt =>
+                opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<ISpaceAdventureDbContext>(p => p.GetService<SpaceAdventuresDbContext>());
+
+            return services;
+        }
     }
 }

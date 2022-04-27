@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceAdventures.MVC", "SpaceAdventures.MVC\SpaceAdventures.MVC.csproj", "{D68E1361-D086-43A0-BCA2-70E6773BF62F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceAdventures.MVC", "SpaceAdventures.MVC\SpaceAdventures.MVC.csproj", "{D68E1361-D086-43A0-BCA2-70E6773BF62F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceAdventures.API", "SpaceAdventures.API\SpaceAdventures.API.csproj", "{8C7673A2-6C2F-48D5-A56F-689F92B21B46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceAdventures.API", "SpaceAdventures.API\SpaceAdventures.API.csproj", "{8C7673A2-6C2F-48D5-A56F-689F92B21B46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{27D265AA-5A8A-4805-974E-4CD74E8DF0D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceAdventures.Application", "Application\SpaceAdventures.Application.csproj", "{27D265AA-5A8A-4805-974E-4CD74E8DF0D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{8C0A6A7C-87D7-4154-8EB0-80B89EE05DF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceAdventures.Domain", "Domain\SpaceAdventures.Domain.csproj", "{8C0A6A7C-87D7-4154-8EB0-80B89EE05DF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{521AE60F-6A1C-4C32-B384-273C41E9450C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceAdventures.Infrastructure", "Infrastructure\SpaceAdventures.Infrastructure.csproj", "{521AE60F-6A1C-4C32-B384-273C41E9450C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
