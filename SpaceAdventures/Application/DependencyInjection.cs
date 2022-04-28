@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using SpaceAdventures.Application.Common.Policies;
 
 namespace Application
 {
@@ -17,8 +16,6 @@ namespace Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddMediatR(Assembly.GetExecutingAssembly());
-
-            services.AddSingleton<ClientPolicy>(new ClientPolicy());
 
             return services;
 

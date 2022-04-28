@@ -32,7 +32,7 @@ namespace SpaceAdventures.Application.Common.Queries.Clients
             var clients = await _context.Clients
                 .ProjectTo<ClientVm>(_mapper.ConfigurationProvider)
                 .OrderBy(c => c.LastName)
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
 
             return clients;
         }

@@ -18,6 +18,9 @@ namespace SpaceAdventures.Application.Common.Queries.Clients
         public string Email { get; set; }
         public int? IdMemberShipType { get; set; }
 
+        public virtual MembershipType IdMemberShipTypeNavigation { get; set; }
+        public virtual ICollection<Booking> Bookings { get; set; }
+
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Client, ClientVm>();

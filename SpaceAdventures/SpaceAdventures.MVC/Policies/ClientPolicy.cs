@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Polly;
+﻿using Polly;
 using Polly.Retry;
 
-namespace SpaceAdventures.Application.Common.Policies
+namespace SpaceAdventures.MVC.Policies
 {
     public class ClientPolicy
     {
-
         public AsyncRetryPolicy<HttpResponseMessage> ImmediateHttpRetry { get; }
         public AsyncRetryPolicy<HttpResponseMessage> LinearHttpRetry { get; }
         public AsyncRetryPolicy<HttpResponseMessage> ExponentialHttpRetry { get; }
@@ -29,7 +23,7 @@ namespace SpaceAdventures.Application.Common.Policies
 
             // Exponential BackOff, It will increase the time after each failure, we use it foe real scenarios
             ExponentialHttpRetry = Policy.HandleResult<HttpResponseMessage>(res => !res.IsSuccessStatusCode)
-                    .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+                .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
         }
     }
