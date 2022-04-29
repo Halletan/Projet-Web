@@ -2,6 +2,7 @@ using Application;
 using FluentValidation.AspNetCore;
 using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using SpaceAdventures.API.Middlewares;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,19 +31,10 @@ builder.Services.AddMvc(options =>
     options.ReturnHttpNotAcceptable = true;
 }).AddFluentValidation();
 
-
-
-
-
-
-
 var app = builder.Build();
 
-
-
-
-
-
+//  Our Log Request Middleware
+app.UseLogRequestMiddleware();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

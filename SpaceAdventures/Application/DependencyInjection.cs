@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using SpaceAdventures.Application.Common.Behaviours;
 
 namespace Application
 {
@@ -14,8 +15,9 @@ namespace Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
             services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
 
             return services;
 
