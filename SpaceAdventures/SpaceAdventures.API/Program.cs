@@ -2,6 +2,9 @@ using Application;
 using FluentValidation.AspNetCore;
 using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using SpaceAdventures.API.Configurations;
 using SpaceAdventures.API.Middlewares;
 
 
@@ -21,7 +24,20 @@ builder.Services.AddApplication();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+// Api Versioned Explorer Configuration
+builder.Services.AddVersionedApiExplorerConfig();
+
 builder.Services.AddSwaggerGen();
+
+// Swagger Description Configuration
+builder.Services.ConfigureOptions<SwaggerConfig>();
+
+// Api Versioning Configuration
+builder.Services.AddApiVersioningConfig();
+
+
+
 
 builder.Services.AddMvc(options =>
 {
@@ -40,7 +56,14 @@ app.UseLogRequestMiddleware();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(opt =>
+    {
+        var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+        foreach (var description in provider.ApiVersionDescriptions)
+        {
+            opt.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.ApiVersion.ToString());
+        }
+    });
 }
 
 app.UseHttpsRedirection();

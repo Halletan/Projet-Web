@@ -2,10 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using SpaceAdventures.Application.Common.Queries.Clients;
 
-namespace SpaceAdventures.API.Controllers
+namespace SpaceAdventures.API.Controllers.V2    
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [ApiVersion("2.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class ClientsController : ControllerBase
     {
         private readonly IMediator _mediator;
