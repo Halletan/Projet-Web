@@ -21,7 +21,7 @@ namespace SpaceAdventures.MVC.Policies
             LinearHttpRetry = Policy.HandleResult<HttpResponseMessage>(res => !res.IsSuccessStatusCode)
                 .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(3));
 
-            // Exponential BackOff, It will increase the time after each failure, we use it foe real scenarios
+            // Exponential BackOff, It will increase the time after each failure, we use it for real scenarios
             ExponentialHttpRetry = Policy.HandleResult<HttpResponseMessage>(res => !res.IsSuccessStatusCode)
                 .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 

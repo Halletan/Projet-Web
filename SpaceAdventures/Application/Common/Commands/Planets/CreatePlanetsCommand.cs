@@ -21,7 +21,6 @@ namespace SpaceAdventures.Application.Common.Commands.Planets
     {
         private readonly ISpaceAdventureDbContext _context;
         
-
         public CreatePlanetsCommandHandler(ISpaceAdventureDbContext context)
         {    
             _context = context;
@@ -34,7 +33,6 @@ namespace SpaceAdventures.Application.Common.Commands.Planets
                 Name = request.Name,               
             };
             
-            entity.
             _context.Planets.Add(entity);
             await _context.SaveChangesAsync(cancellationToken);
             return entity.IdPlanet;

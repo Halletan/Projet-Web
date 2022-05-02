@@ -187,14 +187,14 @@ namespace Infrastructure.Persistence
 
                 entity.ToTable("Itinerary");
 
-                entity.HasIndex(e => new { e.IdAirport1, e.IdAiport2 }, "IX_Itinerary_Aiport1_Aiport2")
+                entity.HasIndex(e => new { e.IdAirport1, e.IdAirport2 }, "IX_Itinerary_Aiport1_Aiport2")
                     .IsUnique();
 
                 entity.Property(e => e.IdItinerary).ValueGeneratedNever();
 
-                entity.HasOne(d => d.IdAiport2Navigation)
+                entity.HasOne(d => d.IdAirport2Navigation)
                     .WithMany(p => p.ItineraryIdAiport2Navigations)
-                    .HasForeignKey(d => d.IdAiport2)
+                    .HasForeignKey(d => d.IdAirport2)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Itinerary_Airport2");
 

@@ -14,10 +14,10 @@ namespace Domain.Entities
 
         public int IdItinerary { get; set; }
         public int IdAirport1 { get; set; }
-        public int IdAiport2 { get; set; }
+        public int IdAirport2 { get; set; }
         public double Rate { get; set; }
 
-        public virtual Airport IdAiport2Navigation { get; set; }
+        public virtual Airport IdAirport2Navigation { get; set; }   
         public virtual Airport IdAirport1Navigation { get; set; }
         public virtual ICollection<Flight> Flights { get; set; }
     }

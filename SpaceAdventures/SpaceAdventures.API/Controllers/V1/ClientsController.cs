@@ -40,7 +40,7 @@ namespace SpaceAdventures.API.Controllers.V1
         }
 
         [HttpPost]
-        [Route("CreatePlanet/")]
+        [Route("CreatePlanet")]
         public async Task<ActionResult<int>> CreatePlanet(CreatePlanetsCommand command)
         {
             return await _mediator.Send(command);

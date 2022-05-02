@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceAdventures.Domain", "D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceAdventures.Infrastructure", "Infrastructure\SpaceAdventures.Infrastructure.csproj", "{521AE60F-6A1C-4C32-B384-273C41E9450C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Temp.Data", "Temp.Data\Temp.Data.csproj", "{F7170C58-815E-44D8-BF83-0E7DD1C34C50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{521AE60F-6A1C-4C32-B384-273C41E9450C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{521AE60F-6A1C-4C32-B384-273C41E9450C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{521AE60F-6A1C-4C32-B384-273C41E9450C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7170C58-815E-44D8-BF83-0E7DD1C34C50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7170C58-815E-44D8-BF83-0E7DD1C34C50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7170C58-815E-44D8-BF83-0E7DD1C34C50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7170C58-815E-44D8-BF83-0E7DD1C34C50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
