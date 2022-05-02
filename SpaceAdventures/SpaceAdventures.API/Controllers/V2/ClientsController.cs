@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SpaceAdventures.Application.Common.Queries.Clients;
+using SpaceAdventures.Application.Common.Queries.Planets.GetPlanet;
 
 namespace SpaceAdventures.API.Controllers.V2    
 {
@@ -21,5 +22,12 @@ namespace SpaceAdventures.API.Controllers.V2
         {
             return _mediator.Send(new GetClientsQuery());
         }
+
+        [HttpGet]        
+        public Task<PlanetVm> GetPlanet()
+        {
+            return _mediator.Send(new GetPlanetsQuery());
+        }
+
     }
 }

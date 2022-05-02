@@ -32,6 +32,12 @@ namespace Infrastructure.Persistence
         public virtual DbSet<MembershipType> MembershipTypes { get; set; }
         public virtual DbSet<Planet> Planets { get; set; }
 
+        //Ajout Antoine
+        public override Task<int> SaveChangesAsync(CancellationToken cancellation = new CancellationToken())
+        {
+            return base.SaveChangesAsync(cancellation);
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_AltDiction_CP850_CI_AI");

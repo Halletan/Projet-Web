@@ -14,5 +14,8 @@ namespace SpaceAdventures.Application.Common.Interfaces
         DbSet<Itinerary> Itineraries { get; set; }
         DbSet<MembershipType> MembershipTypes { get; set; }
         DbSet<Planet> Planets { get; set; }
+
+        // Ajout by Antoine
+        Task<int> SaveChangesAsync(CancellationToken cancellation);
     }
 }
