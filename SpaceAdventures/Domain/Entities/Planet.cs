@@ -15,6 +15,6 @@ namespace Domain.Entities
         public int IdPlanet { get; set; }
         public string Name { get; set; }
 
-        public virtual ICollection<Airport> Airports { get; set; } = null;
+        public virtual ICollection<Airport> Airports { get; set; }
     }
 }

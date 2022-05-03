@@ -12,15 +12,7 @@ using System.Threading.Tasks;
 
 namespace SpaceAdventures.Application.Common.Queries.Planets.GetPlanet
 {
-    public class GetPlanetByIdQuery : IRequest<PlanetVm>
-    {
-        public int Id { get; set; }
-        public GetPlanetByIdQuery(int id)
-        {
-            this.Id = id;
-        }
-    }
-    
+    public record GetPlanetByIdQuery(int Id) : IRequest<PlanetVm>;
 
     public class GetPlanetByIdCommandHandler : IRequestHandler<GetPlanetByIdQuery, PlanetVm>
     {
@@ -35,13 +27,16 @@ namespace SpaceAdventures.Application.Common.Queries.Planets.GetPlanet
 
         public async Task<PlanetVm> Handle(GetPlanetByIdQuery request, CancellationToken cancellationToken)
         {
-            return new PlanetVm {
-                  List = await _context.Planets
-                .Where(pId=>pId.IdPlanet==request.Id)
-                .ProjectTo<PlanetItemDto>(_mapper.ConfigurationProvider)
-                .ToListAsync(cancellationToken)
-             };
-            
+            var planet = await _context.Planets.FirstOrDefaultAsync(p => p.IdPlanet == request.Id , cancellationToken);
+
+            if (planet == null)
+            {
+                throw new Exception("Planet does not exist"); 
+            }
+
+            return _mapper
+                .Map<Planet, PlanetVm>(planet);
+
         }
     }
 }

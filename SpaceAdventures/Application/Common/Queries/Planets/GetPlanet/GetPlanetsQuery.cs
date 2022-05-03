@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace SpaceAdventures.Application.Common.Queries.Planets.GetPlanet
 {
-    public class GetPlanetsQuery : IRequest<PlanetVm> { }
+    public record GetPlanetsQuery : IRequest<PlanetVm>;
 
     public class GetPlanetsQueryHandler : IRequestHandler<GetPlanetsQuery, PlanetVm>
     {
@@ -29,10 +29,10 @@ namespace SpaceAdventures.Application.Common.Queries.Planets.GetPlanet
         {
             return new PlanetVm
             {
-                ListPlanet = await _context.Planets
-                .ProjectTo<PlanetItemDto>(_mapper.ConfigurationProvider)
-                .ToListAsync(cancellationToken)
-            };                       
+                ListOfPlanets = await _context.Planets
+                    .ProjectTo<PlanetDto>(_mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken)
+            };
         }
     }
 }

@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace SpaceAdventures.Application.Common.Validations.Planets
 {
-    public class CreatePlanetValidation : AbstractValidator<CreatePlanetsCommand>
+    public class CreatePlanetValidator : AbstractValidator<CreatePlanetCommand>
     {
         private readonly ISpaceAdventureDbContext _context;
 
-        public CreatePlanetValidation (ISpaceAdventureDbContext context)
+        public CreatePlanetValidator (ISpaceAdventureDbContext context)
         {
             _context = context;
             RuleFor(n => n.Name)
-                .NotEmpty().WithMessage("The name of the planet is mandatory")
-                .MaximumLength(50).WithMessage("The planet name must not exceed 50 characters")
-                .MustAsync(BeUnique).WithMessage("The planet already exist !");
+                .NotEmpty().WithMessage("Planet's name is mandatory")
+                .MaximumLength(50).WithMessage("Planet's name should not exceed 50 characters")
+                .MustAsync(BeUnique).WithMessage("This planet already exists !");
         }
 
         public async Task<bool> BeUnique(string name,CancellationToken cancellation)

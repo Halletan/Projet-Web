@@ -227,8 +227,6 @@ namespace Infrastructure.Persistence
                 entity.HasIndex(e => e.Name, "IX_Planet_Name")
                     .IsUnique();
 
-                entity.Property(e => e.IdPlanet).ValueGeneratedNever();
-
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);

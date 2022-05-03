@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace SpaceAdventures.Application.Common.Queries.Planets.GetPlanet
 {
-    public class PlanetVm : IMapFrom<Planet>
+    public class PlanetVm : IMapFrom<Planet>    
     {
         public int IdPlanet { get; set; }
         public string Name { get; set; }
 
+        // TODO should be a list of AirportDto
         public virtual ICollection<Airport> Airports { get; set; }
-
-        public IList<PlanetItemDto> ListPlanet { get; set; }
-        public IEnumerable<PlanetItemDto> List { get; set; }
+        public IEnumerable<PlanetDto> ListOfPlanets { get; set; }   
+        
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Planet, PlanetVm>();

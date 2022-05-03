@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SpaceAdventures.Application.Common.Commands.Planets;
 using SpaceAdventures.Application.Common.Queries.Clients;
@@ -27,7 +28,7 @@ namespace SpaceAdventures.API.Controllers.V1
         #region Planet
         [HttpGet]
         [Route("Planets/")]
-        public Task<PlanetVm> GetPlanet()
+        public Task<PlanetVm> GetPlanets() 
         {
             return _mediator.Send(new GetPlanetsQuery());
         }
@@ -41,7 +42,7 @@ namespace SpaceAdventures.API.Controllers.V1
 
         [HttpPost]
         [Route("CreatePlanet")]
-        public async Task<ActionResult<int>> CreatePlanet(CreatePlanetsCommand command)
+        public async Task<ActionResult<PlanetVm>> CreatePlanet(CreatePlanetCommand command)
         {
             return await _mediator.Send(command);
         }
