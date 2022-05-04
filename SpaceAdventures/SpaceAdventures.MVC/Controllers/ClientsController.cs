@@ -17,10 +17,10 @@ namespace SpaceAdventures.MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<List<ClientVm>> GetClients()
+        public async Task<ClientsVm> GetClients()
         {
             var client = _httpClientFactory.CreateClient("RetryPolicy");
-            var response = await client.GetAsync("https://localhost:7195/api/clients");
+            var response = await client.GetAsync("https://localhost:7195/api/v1.0/Clients");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -28,7 +28,7 @@ namespace SpaceAdventures.MVC.Controllers
             }
 
             var content = await response.Content.ReadAsStringAsync();
-            var data = JsonConvert.DeserializeObject<List<ClientVm>>(content);
+            var data = JsonConvert.DeserializeObject<ClientsVm>(content);
 
             return data;
         }

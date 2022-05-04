@@ -8,8 +8,9 @@
 
   <ItemGroup>
     <Folder Include="Common\Commands\Flight\" />
+    <Folder Include="Common\Commands\Global\" />
     <Folder Include="Common\Exceptions\" />
-    <Folder Include="Common\Models\" />
+    <Folder Include="Common\Queries\Global\" />
     <Folder Include="Common\Services\" />
   </ItemGroup>
 

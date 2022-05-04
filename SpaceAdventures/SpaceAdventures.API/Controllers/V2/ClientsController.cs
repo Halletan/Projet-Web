@@ -18,13 +18,14 @@ namespace SpaceAdventures.API.Controllers.V2
         }
 
         [HttpGet]
-        public Task<IEnumerable<ClientVm>> GetClients()
+        public Task<ClientsVm> GetClients()
         {
             return _mediator.Send(new GetClientsQuery());
         }
 
-        [HttpGet]        
-        public Task<PlanetVm> GetPlanet()
+        [HttpGet]
+        [Route("Planets")]
+        public Task<PlanetVm> GetPlanets()
         {
             return _mediator.Send(new GetPlanetsQuery());
         }

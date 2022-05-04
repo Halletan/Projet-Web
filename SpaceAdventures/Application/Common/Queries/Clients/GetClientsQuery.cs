@@ -12,11 +12,11 @@ using SpaceAdventures.Application.Common.Interfaces;
 namespace SpaceAdventures.Application.Common.Queries.Clients
 {
     // Query
-    public class GetClientsQuery : IRequest<IEnumerable<ClientVm>> { }
+    public class GetClientsQuery : IRequest<ClientsVm> { }
 
     // Handler
 
-    public class GetClientsQueryHandler : IRequestHandler<GetClientsQuery, IEnumerable<ClientVm>>
+    public class GetClientsQueryHandler : IRequestHandler<GetClientsQuery, ClientsVm>
     {
         private readonly ISpaceAdventureDbContext _context;
         private readonly IMapper _mapper;
@@ -27,14 +27,15 @@ namespace SpaceAdventures.Application.Common.Queries.Clients
             _context = context;
         }
 
-        public async Task<IEnumerable<ClientVm>> Handle(GetClientsQuery request, CancellationToken cancellationToken)
+        public async Task<ClientsVm> Handle(GetClientsQuery request, CancellationToken cancellationToken)
         {
-            var clients = await _context.Clients
-                .ProjectTo<ClientVm>(_mapper.ConfigurationProvider)
-                .OrderBy(c => c.LastName)
-                .ToListAsync(cancellationToken);
-
-            return clients;
+            return new ClientsVm
+            {
+                ClientsList = await _context.Clients
+                    .ProjectTo<ClientDto>(_mapper.ConfigurationProvider)
+                    .OrderBy(c => c.LastName)
+                    .ToListAsync(cancellationToken)
+            };
         }
     }
 }

@@ -2,7 +2,9 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SpaceAdventures.Application.Common.Commands.Planets;
+using SpaceAdventures.Application.Common.Models;
 using SpaceAdventures.Application.Common.Queries.Clients;
+using SpaceAdventures.Application.Common.Queries.Clients.GetClientsWithPagination;
 using SpaceAdventures.Application.Common.Queries.Planets.GetPlanet;
 
 namespace SpaceAdventures.API.Controllers.V1
@@ -20,14 +22,24 @@ namespace SpaceAdventures.API.Controllers.V1
         }
 
         [HttpGet]
-        public Task<IEnumerable<ClientVm>> GetClients()
+        public Task<ClientsVm> GetClients()
         {
             return _mediator.Send(new GetClientsQuery());
         }
 
-        #region Planet
+
         [HttpGet]
-        [Route("Planets/")]
+        [Route("ClientWithPagination")]
+        public async Task<ActionResult<PaginatedList<ClientsBriefDto>>> GetClientsWithPagination(
+            [FromQuery] GetClientsWithPaginationQuery query)
+        {
+            return await _mediator.Send(query);
+        }
+
+        #region Planet
+
+        [HttpGet]
+        [Route("Planets")]
         public Task<PlanetVm> GetPlanets() 
         {
             return _mediator.Send(new GetPlanetsQuery());
@@ -46,6 +58,7 @@ namespace SpaceAdventures.API.Controllers.V1
         {
             return await _mediator.Send(command);
         }
+
         #endregion
     }
 }

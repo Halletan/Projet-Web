@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SpaceAdventures.API\SpaceAdventures.API.csproj" />
+    <ProjectReference Include="..\Application\SpaceAdventures.Application.csproj" />
   </ItemGroup>
 
 </Project>

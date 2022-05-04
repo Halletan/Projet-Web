@@ -19,6 +19,9 @@ namespace Application
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
+
+            // Behaviors
+
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
 
             return services;

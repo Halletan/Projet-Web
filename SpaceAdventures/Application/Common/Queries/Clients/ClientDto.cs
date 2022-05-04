@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Common.Interfaces;
+﻿using Application.Common.Interfaces;
 using AutoMapper;
 using Domain.Entities;
 
 namespace SpaceAdventures.Application.Common.Queries.Clients
 {
-    public class ClientVm : IMapFrom<Client>
+    public class ClientDto : IMapFrom<Client>
     {
         public int IdClient { get; set; }
         public string FirstName { get; set; }
@@ -18,12 +13,11 @@ namespace SpaceAdventures.Application.Common.Queries.Clients
         public string Email { get; set; }
         public int? IdMemberShipType { get; set; }
 
-        public virtual MembershipType IdMemberShipTypeNavigation { get; set; }
         public virtual ICollection<Booking> Bookings { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Client, ClientVm>();
+            profile.CreateMap<Client, ClientDto>();
         }
     }
 }
