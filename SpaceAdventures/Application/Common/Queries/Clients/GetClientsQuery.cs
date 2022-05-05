@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Common.Services;
+using Application.Common.Services.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
@@ -15,27 +17,18 @@ namespace SpaceAdventures.Application.Common.Queries.Clients
     public class GetClientsQuery : IRequest<ClientsVm> { }
 
     // Handler
-
     public class GetClientsQueryHandler : IRequestHandler<GetClientsQuery, ClientsVm>
     {
-        private readonly ISpaceAdventureDbContext _context;
-        private readonly IMapper _mapper;
+        private readonly IClientService _clientService;
 
-        public GetClientsQueryHandler(IMapper mapper, ISpaceAdventureDbContext context)
+        public GetClientsQueryHandler(IClientService clientService)
         {
-            _mapper = mapper;
-            _context = context;
+            _clientService = clientService;
         }
 
         public async Task<ClientsVm> Handle(GetClientsQuery request, CancellationToken cancellationToken)
         {
-            return new ClientsVm
-            {
-                ClientsList = await _context.Clients
-                    .ProjectTo<ClientDto>(_mapper.ConfigurationProvider)
-                    .OrderBy(c => c.LastName)
-                    .ToListAsync(cancellationToken)
-            };
+            return await _clientService.GetAllClients(cancellationToken);  
         }
     }
 }

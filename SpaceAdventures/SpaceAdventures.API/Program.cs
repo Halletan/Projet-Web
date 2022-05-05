@@ -25,7 +25,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-// Api Versioned Explorer Configuration
+// Api Versioned Explorer Configuration  -- Swagger Config
 builder.Services.AddVersionedApiExplorerConfig();
 
 builder.Services.AddSwaggerGen();
@@ -35,8 +35,6 @@ builder.Services.ConfigureOptions<SwaggerConfig>();
 
 // Api Versioning Configuration
 builder.Services.AddApiVersioningConfig();
-
-
 
 
 builder.Services.AddMvc(options =>

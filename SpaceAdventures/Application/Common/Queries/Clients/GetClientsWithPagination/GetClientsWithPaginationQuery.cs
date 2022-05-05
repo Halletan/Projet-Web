@@ -29,7 +29,7 @@ namespace SpaceAdventures.Application.Common.Queries.Clients.GetClientsWithPagin
             var paginatedList = await _context.Clients
                     .ProjectTo<ClientsBriefDto>(_mapper.ConfigurationProvider)
                     .PaginatedListAsync(request.PageNumber, request.PageSize);
-            return paginatedList;
+            return paginatedList;   
         }
     }
 }

@@ -5,9 +5,8 @@ using SpaceAdventures.Application.Common.Queries.Clients;
 
 namespace SpaceAdventures.MVC.Controllers
 {
-    [ApiController]
-    [Route("api/mvc/[controller]")]
-    public class ClientsController : ControllerBase
+    //  [Route("api/mvc/[controller]")]
+    public class ClientsController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
@@ -17,7 +16,8 @@ namespace SpaceAdventures.MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<ClientsVm> GetClients()
+        [Route("/api/clients")]
+        public async Task<IActionResult> GetClients()   
         {
             var client = _httpClientFactory.CreateClient("RetryPolicy");
             var response = await client.GetAsync("https://localhost:7195/api/v1.0/Clients");
@@ -29,8 +29,12 @@ namespace SpaceAdventures.MVC.Controllers
 
             var content = await response.Content.ReadAsStringAsync();
             var data = JsonConvert.DeserializeObject<ClientsVm>(content);
+            return Json(data);
+        }
 
-            return data;
+        public IActionResult ListOfClients()
+        {
+            return View();
         }
     }
 }   

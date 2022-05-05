@@ -20,7 +20,7 @@ namespace SpaceAdventures.API.Middlewares
             var response = httpContext.Response;
             var stream = response.Body;
             response.Body = buffer;
-            await _next(httpContext);
+             await _next(httpContext);
             Debug.WriteLine($"Request Content TYpe : { httpContext.Request.Headers["Accept"]} {Environment.NewLine}" +
                             $"Request Path : {request.Path} { Environment.NewLine} " +
                             $"Response Type : {response.ContentType} {Environment.NewLine}" +
