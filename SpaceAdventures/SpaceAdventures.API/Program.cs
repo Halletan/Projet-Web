@@ -3,7 +3,7 @@ using FluentValidation.AspNetCore;
 using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.AspNetCore.Mvc.Versioning;
+using Serilog;
 using SpaceAdventures.API.Configurations;
 using SpaceAdventures.API.Middlewares;
 
@@ -12,7 +12,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
 
+var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+builder.Host.UseSerilog((ctx, cfg) => cfg.ReadFrom.Configuration(config));
+
+
 // Add services to the container.
+builder.Services.AddSingleton<ILoggerFactory, LoggerFactory>();
+builder.Services.AddSingleton(typeof(ILogger<>), typeof(Logger<>));
+
 
 // Injection DB Service
 builder.Services.AddInfrastructure(configuration);
@@ -47,8 +54,12 @@ builder.Services.AddMvc(options =>
 
 var app = builder.Build();
 
+// Our Custom Exception Middleware
+app.UseExceptionMiddleware();
+
 //  Our Log Request Middleware
-app.UseLogRequestMiddleware();
+// app.UseLogRequestMiddleware();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -64,6 +75,10 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+
+
+
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
@@ -71,3 +86,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+
+

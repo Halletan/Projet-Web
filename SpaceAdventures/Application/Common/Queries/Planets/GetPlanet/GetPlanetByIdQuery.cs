@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SpaceAdventures.Application.Common.Exceptions;
 
 namespace SpaceAdventures.Application.Common.Queries.Planets.GetPlanet
 {
@@ -31,7 +32,7 @@ namespace SpaceAdventures.Application.Common.Queries.Planets.GetPlanet
 
             if (planet == null)
             {
-                throw new Exception("Planet does not exist"); 
+                throw new NotFoundException("Planet", request.Id);
             }
 
             return _mapper

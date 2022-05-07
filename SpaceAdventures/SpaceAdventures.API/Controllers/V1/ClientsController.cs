@@ -1,7 +1,7 @@
-﻿using AutoMapper;
+﻿
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SpaceAdventures.Application.Common.Commands.Planets;
+using SpaceAdventures.Application.Common.Commands.Clients;
 using SpaceAdventures.Application.Common.Models;
 using SpaceAdventures.Application.Common.Queries.Clients;
 using SpaceAdventures.Application.Common.Queries.Clients.GetClientsWithPagination;
@@ -27,7 +27,6 @@ namespace SpaceAdventures.API.Controllers.V1
             return _mediator.Send(new GetClientsQuery());
         }
 
-
         [HttpGet]
         [Route("ClientWithPagination")]
         public async Task<ActionResult<PaginatedList<ClientsBriefDto>>> GetClientsWithPagination(
@@ -36,29 +35,14 @@ namespace SpaceAdventures.API.Controllers.V1
             return await _mediator.Send(query);
         }
 
-        #region Planet
-
-        [HttpGet]
-        [Route("Planets")]
-        public Task<PlanetVm> GetPlanets() 
-        {
-            return _mediator.Send(new GetPlanetsQuery());
-        }
-
-        [HttpGet]
-        [Route("Planets/{id}")]
-        public Task<PlanetVm> GetPlanetById(int id)
-        {
-            return _mediator.Send(new GetPlanetByIdQuery(id));
-        }
-
         [HttpPost]
-        [Route("CreatePlanet")]
-        public async Task<ActionResult<PlanetVm>> CreatePlanet(CreatePlanetCommand command)
+        [Route("CreateClient")]
+        public async Task<ClientDto> CreateClient(CreateClientCommand command)
         {
             return await _mediator.Send(command);
         }
 
-        #endregion
+
+
     }
 }

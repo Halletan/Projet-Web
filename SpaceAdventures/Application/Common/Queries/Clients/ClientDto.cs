@@ -17,7 +17,7 @@ namespace SpaceAdventures.Application.Common.Queries.Clients
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Client, ClientDto>();
+            profile.CreateMap<Client, ClientDto>().ReverseMap();
         }
     }
 }
