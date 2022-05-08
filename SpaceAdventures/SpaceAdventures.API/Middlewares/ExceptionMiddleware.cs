@@ -7,7 +7,7 @@ namespace SpaceAdventures.API.Middlewares
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger _logger;  
+        private readonly ILogger<ExceptionMiddleware> _logger;  
 
         public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)    
         {
@@ -47,7 +47,7 @@ namespace SpaceAdventures.API.Middlewares
             }.ToString());
         }
     }
-
+    
     // Extension method used to add the middleware to the HTTP request pipeline.
     public static class ExceptionMiddlewareExtensions
     {

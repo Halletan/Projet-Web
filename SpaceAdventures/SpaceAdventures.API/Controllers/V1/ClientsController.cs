@@ -5,7 +5,6 @@ using SpaceAdventures.Application.Common.Commands.Clients;
 using SpaceAdventures.Application.Common.Models;
 using SpaceAdventures.Application.Common.Queries.Clients;
 using SpaceAdventures.Application.Common.Queries.Clients.GetClientsWithPagination;
-using SpaceAdventures.Application.Common.Queries.Planets.GetPlanet;
 
 namespace SpaceAdventures.API.Controllers.V1
 {
@@ -15,10 +14,17 @@ namespace SpaceAdventures.API.Controllers.V1
     public class ClientsController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<ClientsController> _logger;
 
-        public ClientsController(IMediator mediator)
+        /// <summary>
+        /// Clients Controller Constructor
+        /// </summary>
+        /// <param name="mediator"></param>
+        /// <param name="logger"></param>
+        public ClientsController(IMediator mediator, ILogger<ClientsController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         /// <summary>
@@ -27,6 +33,7 @@ namespace SpaceAdventures.API.Controllers.V1
         [HttpGet]
         public async Task<ClientsVm> GetClients()
         {
+            _logger.LogInformation("Test");
             return await _mediator.Send(new GetClientsQuery());
         }
 
@@ -43,7 +50,7 @@ namespace SpaceAdventures.API.Controllers.V1
         }
 
         /// <summary>
-        /// Get all client with pagination
+        /// Get all clients with pagination
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
