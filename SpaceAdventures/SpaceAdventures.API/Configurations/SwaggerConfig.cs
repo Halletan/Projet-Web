@@ -8,7 +8,6 @@ namespace SpaceAdventures.API.Configurations
 {
     public class SwaggerConfig : IConfigureOptions<SwaggerGenOptions>
     {
-
         private readonly IApiVersionDescriptionProvider _provider;
 
         public SwaggerConfig(IApiVersionDescriptionProvider provider)
@@ -22,10 +21,14 @@ namespace SpaceAdventures.API.Configurations
             {
                 options.SwaggerDoc(description.GroupName, CreateVersionInfo(description));
             }
+
+            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
         }
 
         private OpenApiInfo CreateVersionInfo(ApiVersionDescription description)
         {
+            
             var info = new OpenApiInfo
             {
                 Version = description.ApiVersion.ToString(),

@@ -19,11 +19,12 @@ namespace SpaceAdventures.API.Configurations
                 // 2- api-version : 1.0 => In case the user provides the version as header  
 
                 // 3- ?api-version=1.0 => From query approach
-                
+
                 cfg.ApiVersionReader = ApiVersionReader.Combine(
-                    new HeaderApiVersionReader("api-version"),
+                    new HeaderApiVersionReader("X-version"),
                     new QueryStringApiVersionReader("api-version"),
-                    new UrlSegmentApiVersionReader());
+                    new UrlSegmentApiVersionReader(),
+                    new MediaTypeApiVersionReader("ver"));
             });
 
             return services;
