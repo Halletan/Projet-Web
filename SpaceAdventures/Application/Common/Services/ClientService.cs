@@ -60,18 +60,25 @@ namespace SpaceAdventures.Application.Common.Services
             }
         }
 
-        public async Task<ClientDto> UpdateClient(int clientId, ClientDto clientDto, CancellationToken cancellation = default)
+        public async Task<ClientDto> UpdateClient(int clientId, ClientInput clientInput, CancellationToken cancellation = default)
         {
-            if (!await _context.Clients.AnyAsync(c => c.IdClient == clientId, cancellationToken: cancellation))
+            var client = await _context.Clients.FindAsync(clientId);
+
+            if (client == null)
             {
                 throw new NotFoundException("Client", clientId);
             }
 
             try
             {
-                _context.Clients.Update(_mapper.Map<Client>(clientDto));
+                client.FirstName = clientInput.FirstName;
+                client.LastName = clientInput.LastName;
+                client.Email = clientInput.Email;
+                client.IdMemberShipType = clientInput.IdMemberShipType;
+
+                _context.Clients.Update(client);
                 await _context.SaveChangesAsync(cancellation);
-                return clientDto;
+                return _mapper.Map<ClientDto>(client);
             }
             catch (Exception)
             {
@@ -85,15 +92,21 @@ namespace SpaceAdventures.Application.Common.Services
 
             if (client == null)
             {
-                _context.Clients.Remove(client);
+                throw new NotFoundException("Client", clientId);
             }
-            throw new NotFoundException("Client", clientId);
+            _context.Clients.Remove(client);
+            await _context.SaveChangesAsync(cancellation);
         }
 
         public async Task<bool> ClientExists(string email)
         {
-            var check = await _context.Clients.AnyAsync(c => c.Email == email);
-            return check;
+            return await _context.Clients.AnyAsync(c => c.Email == email);
+        }
+
+        public bool ClientExists(int? id, ClientInput clientInput)
+        {
+            return _context.Clients.Any(c => c.IdClient != id && c.Email == clientInput.Email);
         }
     }
 }
+    

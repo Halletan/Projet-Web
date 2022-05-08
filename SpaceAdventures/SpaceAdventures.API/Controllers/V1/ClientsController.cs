@@ -36,7 +36,7 @@ namespace SpaceAdventures.API.Controllers.V1
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("GetClientById")]
+        [Route("GetById")]
         public async Task<ClientDto> GetClientById(int id)
         {
             return await _mediator.Send(new GetClientByIdQuery(id));
@@ -60,10 +60,37 @@ namespace SpaceAdventures.API.Controllers.V1
         /// </summary>
         /// <param name="command"></param>
         [HttpPost]
-        [Route("CreateClient")]
+        [Route("Create")]
         public async Task<ClientDto> CreateClient([FromBody] CreateClientCommand command)
         {
             return await _mediator.Send(command);
+        }
+
+
+        /// <summary>
+        /// Update an existing client
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("Update")]
+        public async Task<ClientDto> UpdateClient([FromBody] UpdateClientCommand command)
+        {
+            return await _mediator.Send(command);
+        }
+
+
+        /// <summary>
+        /// Delete an existing client
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("Delete")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task DeleteClient([FromBody] DeleteClientCommand command)
+        {
+            await _mediator.Send(command);
         }
 
     }
