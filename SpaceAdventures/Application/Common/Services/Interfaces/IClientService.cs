@@ -10,7 +10,7 @@ public interface IClientService
     Task<ClientDto> CreateClient(ClientInput clientInput, CancellationToken cancellation = default);    
     Task<ClientDto> UpdateClient(int clientId, ClientDto clientDto, CancellationToken cancellation = default);
     Task DeleteClient(int clientId, CancellationToken cancellation = default);
-    Task<bool> ClientExists(string email);    
+    Task<bool> ClientExists(string email);
 
 
 }

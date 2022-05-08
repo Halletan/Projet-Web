@@ -21,12 +21,32 @@ namespace SpaceAdventures.API.Controllers.V1
             _mediator = mediator;
         }
 
+        /// <summary>
+        /// Get all clients
+        /// </summary>
         [HttpGet]
-        public Task<ClientsVm> GetClients()
+        public async Task<ClientsVm> GetClients()
         {
-            return _mediator.Send(new GetClientsQuery());
+            return await _mediator.Send(new GetClientsQuery());
         }
 
+        /// <summary>
+        /// Get client by its Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetClientById")]
+        public async Task<ClientDto> GetClientById(int id)
+        {
+            return await _mediator.Send(new GetClientByIdQuery(id));
+        }
+
+        /// <summary>
+        /// Get all client with pagination
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("ClientWithPagination")]
         public async Task<ActionResult<PaginatedList<ClientsBriefDto>>> GetClientsWithPagination(
@@ -35,14 +55,16 @@ namespace SpaceAdventures.API.Controllers.V1
             return await _mediator.Send(query);
         }
 
+        /// <summary>
+        /// Create a new client
+        /// </summary>
+        /// <param name="command"></param>
         [HttpPost]
         [Route("CreateClient")]
-        public async Task<ClientDto> CreateClient(CreateClientCommand command)
+        public async Task<ClientDto> CreateClient([FromBody] CreateClientCommand command)
         {
             return await _mediator.Send(command);
         }
-
-
 
     }
 }
