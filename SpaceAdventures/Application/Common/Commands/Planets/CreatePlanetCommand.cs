@@ -4,36 +4,26 @@ using Domain.Entities;
 using MediatR;
 
 using SpaceAdventures.Application.Common.Interfaces;
-using SpaceAdventures.Application.Common.Queries.Planets.GetPlanet;
-
+using SpaceAdventures.Application.Common.Queries.Planets;
+using SpaceAdventures.Application.Common.Services.Interfaces;
 
 namespace SpaceAdventures.Application.Common.Commands.Planets
 {
-    public record CreatePlanetCommand(string Name) : IRequest<PlanetVm>;
+    public record CreatePlanetCommand(PlanetInput planetInput) : IRequest<PlanetDto>;
 
-    public class CreatePlanetCommandHandler : IRequestHandler<CreatePlanetCommand, PlanetVm>
+    public class CreatePlanetCommandHandler : IRequestHandler<CreatePlanetCommand, PlanetDto>
     {
-        private readonly ISpaceAdventureDbContext _context;
-        private readonly IMapper _mapper;
+        private readonly IPlanetService _planetService;
 
 
-        public CreatePlanetCommandHandler(ISpaceAdventureDbContext context, IMapper mapper)
+        public CreatePlanetCommandHandler(IPlanetService planetService)
         {
-            _context = context;
-            _mapper = mapper;
+            _planetService = planetService;
         }
 
-        public async Task<PlanetVm> Handle(CreatePlanetCommand command, CancellationToken cancellationToken)
+        public async Task<PlanetDto> Handle(CreatePlanetCommand command, CancellationToken cancellationToken)
         {
-            var entity = new Planet
-            {
-                Name = command.Name
-            };
-
-            _context.Planets.Add(entity);
-            await _context.SaveChangesAsync(cancellationToken);
-            var planetVm = _mapper.Map<Planet, PlanetVm>(entity);
-            return planetVm;
+            return await _planetService.CreatePlanet(command.planetInput,cancellationToken);
         }
     }
 }

@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 using Application.Common.Services.Interfaces;
 using FluentValidation;
 
-namespace SpaceAdventures.Application.Common.Commands.Clients
+namespace SpaceAdventures.Application.Common.Commands.Itinerary
 {
-    public class UpdateClientCommandValidator : AbstractValidator<UpdateClientCommand>
+    public class UpdateAirportCommandValidator : AbstractValidator<UpdateAirportCommand>
     {
-        public UpdateClientCommandValidator(IClientService clientService)       
+        public UpdateAirportCommandValidator(IClientService clientService)       
         {
-            RuleFor(c => c.clientInput.FirstName)
+            RuleFor(c => c.ClientInput.FirstName)
                 .MaximumLength(50).WithMessage("Max 50 characters")
                 .NotNull().WithMessage("Firstname is required");
-            RuleFor(c => c.clientInput.LastName)
+            RuleFor(c => c.ClientInput.LastName)
                 .MaximumLength(50).WithMessage("Max 50 characters")
                 .NotNull().WithMessage("Firstname is required");
-            RuleFor(c => c.clientInput.Phone)
+            RuleFor(c => c.ClientInput.Phone)
                 .MaximumLength(50).WithMessage("Max 50 characters")
                 .NotNull().WithMessage("Phone is required");
-            RuleFor(c => c.clientInput.Email)
+            RuleFor(c => c.ClientInput.Email)
                 .MaximumLength(50).WithMessage("Max 50 characters")
                 .EmailAddress().WithMessage("Invalid email address")
                 .NotNull().WithMessage("Email is required");
@@ -31,11 +31,11 @@ namespace SpaceAdventures.Application.Common.Commands.Clients
                 .GreaterThanOrEqualTo(1).WithMessage("Should be greater than or equal to 1")
                 .Must((data, id) =>
                 {
-                    bool exists = clientService.ClientExists(id, data.clientInput);
+                    bool exists = clientService.ClientExists(id, data.ClientInput);
                     return !exists;
                 }).WithMessage("Client with this email address exists already !");
 
-            RuleFor(c => c.clientInput.IdMemberShipType)
+            RuleFor(c => c.ClientInput.IdMemberShipType)
                 .GreaterThanOrEqualTo(1).WithMessage("Should be greater than or equal to 1");
         }
     }

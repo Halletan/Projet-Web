@@ -11,6 +11,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using SpaceAdventures.Application.Common.Behaviours;
 using SpaceAdventures.Application.Common.Services;
+using SpaceAdventures.Application.Common.Services.Interfaces;
 
 namespace Application
 {
@@ -22,6 +23,9 @@ namespace Application
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<IPlanetService, PlanetService>();
+            services.AddScoped<IAirportService, AirportService>();
+            services.AddScoped<IItineraryService, ItineraryService>();
 
             // Behaviors
 

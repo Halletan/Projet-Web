@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SpaceAdventures.Application.Common.Queries.Clients;
-using SpaceAdventures.Application.Common.Queries.Planets.GetPlanet;
+using SpaceAdventures.Application.Common.Queries.Planets;
+
 
 namespace SpaceAdventures.API.Controllers.V2    
 {

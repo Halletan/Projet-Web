@@ -17,7 +17,7 @@ namespace SpaceAdventures.Application.Common.Commands.Clients
                 .NotNull().WithMessage("Firstname is required");
             RuleFor(c => c.ClientInput.LastName)
                 .MaximumLength(50).WithMessage("Max 50 characters")
-                .NotNull().WithMessage("Firstname is required");
+                .NotNull().WithMessage("Lastname is required");
             RuleFor(c => c.ClientInput.Phone)
                 .MaximumLength(50).WithMessage("Max 50 characters")
                 .NotNull().WithMessage("Phone is required");

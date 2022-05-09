@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SpaceAdventures.Application.Common.Commands.Planets;
-using SpaceAdventures.Application.Common.Queries.Planets.GetPlanet;
+using SpaceAdventures.Application.Common.Queries.Planets;
 
 namespace SpaceAdventures.API.Controllers.V1
 {
@@ -26,14 +26,14 @@ namespace SpaceAdventures.API.Controllers.V1
 
         [HttpGet]
         [Route("Planets/{id}")]
-        public Task<PlanetVm> GetPlanetById(int id)
+        public async Task<PlanetDto> GetPlanetById(int id)
         {
-            return _mediator.Send(new GetPlanetByIdQuery(id));
+            return await _mediator.Send(new GetPlanetByIdQuery(id));
         }
 
         [HttpPost]
         [Route("CreatePlanet")]
-        public async Task<ActionResult<PlanetVm>> CreatePlanet(CreatePlanetCommand command)
+        public async Task<ActionResult<PlanetDto>> CreatePlanet(CreatePlanetCommand command)
         {
             return await _mediator.Send(command);
         }

@@ -46,7 +46,7 @@ namespace SpaceAdventures.API.Controllers.V1
         [Route("GetById")]
         public async Task<ClientDto> GetClientById(int id)
         {
-            return await _mediator.Send(new GetClientByIdQuery(id));
+            return await _mediator.Send(new GetclientByIdQuery(id));
         }
 
         /// <summary>
