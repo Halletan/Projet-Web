@@ -1,14 +1,12 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Application.Common.Services.Interfaces;
 using MediatR;
 using SpaceAdventures.Application.Common.Services.Interfaces;
 
-namespace SpaceAdventures.Application.Common.Commands.Itinerary
+namespace SpaceAdventures.Application.Common.Commands.Itineraries
 {
     public record DeleteItineraryCommand(int Id) : IRequest;
 

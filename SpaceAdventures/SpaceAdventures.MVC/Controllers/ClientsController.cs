@@ -28,7 +28,7 @@ namespace SpaceAdventures.MVC.Controllers
             }
 
             var content = await response.Content.ReadAsStringAsync();
-            var data = JsonConvert.DeserializeObject<ItineraryVm>(content);
+            var data = JsonConvert.DeserializeObject<ClientsVm>(content);
             return Json(data);
         }
 

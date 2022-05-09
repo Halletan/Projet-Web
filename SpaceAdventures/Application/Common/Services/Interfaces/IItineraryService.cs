@@ -1,4 +1,4 @@
-﻿using SpaceAdventures.Application.Common.Commands.Itinerary;
+﻿using SpaceAdventures.Application.Common.Commands.Itineraries;
 using SpaceAdventures.Application.Common.Queries.Itineraries;
 using System;
 using System.Collections.Generic;
@@ -15,6 +15,6 @@ namespace SpaceAdventures.Application.Common.Services.Interfaces
         Task<ItineraryDto> CreateItinerary(ItineraryInput itineraryInput, CancellationToken cancellation = default);
         Task<ItineraryDto> UpdateItinerary(int ItineraryId, ItineraryInput itineraryInput, CancellationToken cancellation = default);
         Task DeleteItinerary(int itineraryId, CancellationToken cancellation = default);
-        Task<bool> ItineraryExists(ItineraryInput itineraryInput);
+        bool ItineraryExists(ItineraryInput itineraryInput);
     }
 }

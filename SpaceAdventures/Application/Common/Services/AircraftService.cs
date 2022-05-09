@@ -10,10 +10,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SpaceAdventures.Application.Common.Services.Interfaces;
 
 namespace SpaceAdventures.Application.Common.Services
 {
-    public class AircraftService
+    public class AircraftService : IAircraftService
     { 
     private readonly ISpaceAdventureDbContext _context;
     private readonly IMapper _mapper;

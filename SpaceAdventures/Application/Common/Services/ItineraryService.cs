@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using SpaceAdventures.Application.Common.Commands.Itinerary;
+using SpaceAdventures.Application.Common.Commands.Itineraries;
 using SpaceAdventures.Application.Common.Exceptions;
 using SpaceAdventures.Application.Common.Interfaces;
 using SpaceAdventures.Application.Common.Queries.Itineraries;
@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Entities;
+using SpaceAdventures.Application.Common.Commands.Itineraries;
 
 namespace SpaceAdventures.Application.Common.Services
 {
@@ -100,9 +101,9 @@ namespace SpaceAdventures.Application.Common.Services
             await _context.SaveChangesAsync(cancellation);
         }
 
-        public async Task<bool> ItineraryExists(ItineraryInput itineraryInput)
+        public bool ItineraryExists(ItineraryInput itineraryInput)
         {
-            return await _context.Itineraries.AnyAsync(c => c.IdAirport1== itineraryInput.IdAirport1 && c.IdAirport2== itineraryInput.IdAirport2);
+            return _context.Itineraries.Any(c => c.IdAirport1== itineraryInput.IdAirport1 && c.IdAirport2== itineraryInput.IdAirport2);
             
         }
 
