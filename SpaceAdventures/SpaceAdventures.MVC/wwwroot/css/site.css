@@ -16,3 +16,11 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.bg {
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100vh;
+}

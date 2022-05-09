@@ -9,6 +9,10 @@
     {
       "library": "bootbox.js@5.5.3",
       "destination": "wwwroot/lib/bootbox.js/"
+    },
+    {
+      "library": "font-awesome@6.1.1",
+      "destination": "wwwroot/lib/font-awesome/"
     }
   ]
 }
