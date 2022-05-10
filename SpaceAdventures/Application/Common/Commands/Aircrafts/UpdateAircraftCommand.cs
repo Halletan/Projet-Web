@@ -24,7 +24,7 @@ namespace SpaceAdventures.Application.Common.Commands.Aircrafts
 
         public async Task<AircraftDto> Handle(UpdateAircraftCommand request, CancellationToken cancellationToken)
         {
-            return await _AircraftService.UpdateAircraft(request.Id, request.AircraftDto, cancellationToken);
+            return await _AircraftService.UpdateAircraft(request.Id, request.AircraftInput, cancellationToken);
         }
     }
 }
