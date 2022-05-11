@@ -6,13 +6,7 @@ using SpaceAdventures.Application.Common.Exceptions;
 using SpaceAdventures.Application.Common.Interfaces;
 using SpaceAdventures.Application.Common.Queries.Itineraries;
 using SpaceAdventures.Application.Common.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Domain.Entities;
-using SpaceAdventures.Application.Common.Commands.Itineraries;
 
 namespace SpaceAdventures.Application.Common.Services
 {
@@ -39,24 +33,24 @@ namespace SpaceAdventures.Application.Common.Services
 
         public async Task<ItineraryDto> GetItineraryById(int itineraryId, CancellationToken cancellation = default)
         {
-            var Itinerary = await _context.Itineraries.FindAsync(itineraryId);
-            if (Itinerary == null)
+            var itinerary = await _context.Itineraries.FindAsync(itineraryId);
+            if (itinerary == null)
             {
                 throw new NotFoundException("Itinerary", itineraryId);
             }
 
-            return _mapper.Map<ItineraryDto>(Itinerary);
+            return _mapper.Map<ItineraryDto>(itinerary);
         }
 
         public async Task<ItineraryDto> CreateItinerary(ItineraryInput ItineraryInput, CancellationToken cancellation = default)
         {
-            var Itinerary = _mapper.Map<Itinerary>(ItineraryInput);
+            var itinerary = _mapper.Map<Itinerary>(ItineraryInput);
 
             try
             {
-                await _context.Itineraries.AddAsync(Itinerary, cancellation);
+                await _context.Itineraries.AddAsync(itinerary, cancellation);
                 await _context.SaveChangesAsync(cancellation);
-                return _mapper.Map<ItineraryDto>(Itinerary);
+                return _mapper.Map<ItineraryDto>(itinerary);
             }
             catch (Exception)
             {
@@ -66,22 +60,22 @@ namespace SpaceAdventures.Application.Common.Services
 
         public async Task<ItineraryDto> UpdateItinerary(int ItineraryId, ItineraryInput ItineraryInput, CancellationToken cancellation = default)
         {
-            var Itinerary = await _context.Itineraries.FindAsync(ItineraryId);
+            var itinerary = await _context.Itineraries.FindAsync(ItineraryId);
 
-            if (Itinerary == null)
+            if (itinerary == null)
             {
                 throw new NotFoundException("Itinerary", ItineraryId);
             }
 
             try
             {
-                Itinerary.Rate = ItineraryInput.Rate;
-                Itinerary.IdAirport1=ItineraryInput.IdAirport1;
-                Itinerary.IdAirport2 = ItineraryInput.IdAirport2;
+                itinerary.Rate = ItineraryInput.Rate;
+                itinerary.IdAirport1=ItineraryInput.IdAirport1;
+                itinerary.IdAirport2 = ItineraryInput.IdAirport2;
 
-                _context.Itineraries.Update(Itinerary);
+                _context.Itineraries.Update(itinerary);
                 await _context.SaveChangesAsync(cancellation);
-                return _mapper.Map<ItineraryDto>(Itinerary);
+                return _mapper.Map<ItineraryDto>(itinerary);
             }
             catch (Exception)
             {
@@ -91,13 +85,13 @@ namespace SpaceAdventures.Application.Common.Services
 
         public async Task DeleteItinerary(int ItineraryId, CancellationToken cancellation = default)
         {
-            var Itinerary = await _context.Itineraries.FindAsync(ItineraryId);
+            var itinerary = await _context.Itineraries.FindAsync(ItineraryId);
 
-            if (Itinerary == null)
+            if (itinerary == null)
             {
                 throw new NotFoundException("Itinerary", ItineraryId);
             }
-            _context.Itineraries.Remove(Itinerary);
+            _context.Itineraries.Remove(itinerary);
             await _context.SaveChangesAsync(cancellation);
         }
 

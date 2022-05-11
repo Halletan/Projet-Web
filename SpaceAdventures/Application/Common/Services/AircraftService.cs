@@ -5,11 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using SpaceAdventures.Application.Common.Exceptions;
 using SpaceAdventures.Application.Common.Interfaces;
 using SpaceAdventures.Application.Common.Queries.Aircrafts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SpaceAdventures.Application.Common.Services.Interfaces;
 using SpaceAdventures.Application.Common.Commands.Aircrafts;
 
@@ -63,27 +58,32 @@ namespace SpaceAdventures.Application.Common.Services
                 throw new ValidationException();
             }
         }
-      
+
+        public async Task<AircraftDto> UpdateAircraft(int AircraftId, AircraftDto AircraftDto, CancellationToken cancellation = default)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<AircraftDto> UpdateAircraft(int aircraftId, AircraftInput aircraftInput, CancellationToken cancellation = default)
         {
-            var Aircraft = await _context.Aircraft.FindAsync(aircraftId);
+            var aircraft = await _context.Aircraft.FindAsync(aircraftId);
 
-            if (Aircraft == null)
+            if (aircraft == null)       
             {
                 throw new NotFoundException("Aircraft", aircraftId);
             }
 
             try
             {
-                Aircraft.IdAircraft = aircraftInput.IdAircraft;
-                Aircraft.Manufacturer = aircraftInput.Manufacturer;
-                Aircraft.Model = aircraftInput.Model;
-                Aircraft.NumberOfSeats  = aircraftInput.NumberOfSeats;
+                aircraft.IdAircraft = aircraftInput.IdAircraft;
+                aircraft.Manufacturer = aircraftInput.Manufacturer;
+                aircraft.Model = aircraftInput.Model;
+                aircraft.NumberOfSeats  = aircraftInput.NumberOfSeats;
 
 
-                _context.Aircraft.Update(Aircraft);
+                _context.Aircraft.Update(aircraft);
                 await _context.SaveChangesAsync(cancellation);
-                return _mapper.Map<AircraftDto>(Aircraft);
+                return _mapper.Map<AircraftDto>(aircraft);
             }
             catch (Exception)
             {
@@ -91,21 +91,15 @@ namespace SpaceAdventures.Application.Common.Services
             }
         }
 
-
-
-
         public async Task DeleteAircraft(int aircraftId, CancellationToken cancellation = default)
-    {
+        {
         var aircraft = await _context.Aircraft.FindAsync(aircraftId);
 
         if (aircraft == null)
         {
-                throw new NotFoundException("Aircraft", aircraftId);
-                
+            throw new NotFoundException("Aircraft", aircraftId);
         }
-            _context.Aircraft.Remove(aircraft);
-    }
-
-   
+        _context.Aircraft.Remove(aircraft);
+        }
     }
 }
