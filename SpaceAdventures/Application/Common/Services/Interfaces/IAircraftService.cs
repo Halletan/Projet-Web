@@ -1,4 +1,5 @@
-﻿using SpaceAdventures.Application.Common.Queries.Aircrafts;
+﻿using SpaceAdventures.Application.Common.Commands.Aircrafts;
+using SpaceAdventures.Application.Common.Queries.Aircrafts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
