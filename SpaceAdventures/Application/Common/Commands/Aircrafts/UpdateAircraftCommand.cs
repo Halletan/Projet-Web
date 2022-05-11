@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SpaceAdventures.Application.Common.Commands.Aircrafts
 {
-    public record UpdateAircraftCommand(int Id, AircraftInput AircraftInput) : IRequest<AircraftDto>;
+    public record UpdateAircraftCommand(int Id, AircraftInput aircraftInput) : IRequest<AircraftDto>;
 
 
     public class UpdateAircraftCommandHandler : IRequestHandler<UpdateAircraftCommand, AircraftDto>
@@ -17,14 +17,14 @@ namespace SpaceAdventures.Application.Common.Commands.Aircrafts
 
         private readonly IAircraftService _AircraftService;
 
-        public UpdateAircraftCommandHandler(IAircraftService AircraftService)
+        public UpdateAircraftCommandHandler(IAircraftService aircraftService)
         {
-            _AircraftService = AircraftService;
+            _AircraftService = aircraftService;
         }
 
         public async Task<AircraftDto> Handle(UpdateAircraftCommand request, CancellationToken cancellationToken)
         {
-            return await _AircraftService.UpdateAircraft(request.Id, request.AircraftInput, cancellationToken);
+            return await _AircraftService.UpdateAircraft(request.Id, request.aircraftInput, cancellationToken);
         }
     }
 }

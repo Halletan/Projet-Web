@@ -12,9 +12,8 @@ namespace SpaceAdventures.Application.Common.Services.Interfaces
     {
         Task<AircraftsVm> GetAllAircrafts(CancellationToken cancellation = default);
         Task<AircraftDto> GetAircraftById(int AircraftId, CancellationToken cancellation = default);
-
-        //Task<AircraftDto> CreateAircraft(AircraftInput AircraftInput, CancellationToken cancellation = default);
-        Task<AircraftDto> UpdateAircraft(int AircraftId, AircraftDto AircraftDto, CancellationToken cancellation = default);
+        Task<AircraftDto> CreateAircraft(AircraftInput AircraftInput, CancellationToken cancellation = default);
+        Task<AircraftDto> UpdateAircraft(int AircraftId, AircraftInput AircraftInput, CancellationToken cancellation = default);
         Task DeleteAircraft(int AircraftId, CancellationToken cancellation = default);
         
     }
