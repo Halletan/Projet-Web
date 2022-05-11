@@ -1,8 +1,20 @@
+using SpaceAdventures.MVC.Configurations;
 using SpaceAdventures.MVC.Policies;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var configuration = builder.Configuration;
+
+
 // Add services to the container.
+
+// Authentication Service
+builder.Services.AddAuthenticationServiceCollection(configuration);
+
+// SameSiteNoneCookie Service
+builder.Services.AddSameSiteNoneCookiesServiceCollection();
+
+
 builder.Services.AddControllersWithViews();
 
 // Policy Service
@@ -23,10 +35,11 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCookiePolicy();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

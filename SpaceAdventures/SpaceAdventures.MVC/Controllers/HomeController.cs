@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SpaceAdventures.MVC.Models;
 using System.Diagnostics;
+using System.Globalization;
+using Microsoft.AspNetCore.Authentication;
 
 namespace SpaceAdventures.MVC.Controllers
 {
@@ -13,13 +15,19 @@ namespace SpaceAdventures.MVC.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
+            if (User.Identity.IsAuthenticated)
+            {
+                string accessToken = await HttpContext.GetTokenAsync("access_token");
+                DateTime accessTokenExpiresAt = DateTime.Parse(
+                    await HttpContext.GetTokenAsync("expires_at"),
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.RoundtripKind);
 
-        public IActionResult Privacy()
-        {
+                string idToken = await HttpContext.GetTokenAsync("id_token");
+            }
+
             return View();
         }
 

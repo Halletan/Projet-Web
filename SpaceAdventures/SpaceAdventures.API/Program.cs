@@ -1,13 +1,16 @@
 using Application;
 using FluentValidation.AspNetCore;
 using Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.OpenApi.Models;
 using Serilog;
 using Serilog.Exceptions;
 using Serilog.Exceptions.Core;
 using Serilog.Exceptions.EntityFrameworkCore.Destructurers;
 using SpaceAdventures.API.Configurations;
+using SpaceAdventures.API.Handlers;
 using SpaceAdventures.API.Middlewares;
 
 
@@ -15,11 +18,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
 
+
+// Serilog Service
+
 builder.Host.UseSerilog((ctx, lc) => lc
     .ReadFrom.Configuration(configuration)
     .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder()
         .WithDefaultDestructurers()
         .WithDestructurers(new []{new DbUpdateExceptionDestructurer()})));
+
+// Jwt Bearer Authentication
+builder.Services.AddAuthenticationJwtBearer(configuration);
 
 
 // Injection DB Service
@@ -33,7 +42,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerGen();
+// SwaggerGen Configuration Service
+builder.Services.AddSwaggerGenServiceCollection();
 
 // Swagger Description Configuration
 builder.Services.ConfigureOptions<SwaggerConfig>();
@@ -43,6 +53,9 @@ builder.Services.AddApiVersioningConfig();
 
 // Api Versioned Explorer Configuration  -- Swagger Config
 builder.Services.AddVersionedApiExplorerConfig();
+
+// Scope Authorization Handler
+builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
 
 builder.Services.AddMvc(options =>
@@ -82,6 +95,8 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

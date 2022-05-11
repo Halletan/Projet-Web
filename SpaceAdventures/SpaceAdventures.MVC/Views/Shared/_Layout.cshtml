@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="~/css/NavBar.css" asp-append-version="true" />
 </head>
 
-<body >
+<body class="bg"style="background-color:	rgb(156, 156, 201);">
 <div class='dashboard'>
     <div class="dashboard-nav">
         <header><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a><a href="#"
@@ -50,9 +50,20 @@
             </div>
             <a href="#" class="dashboard-nav-item"><i class="fas fa-cogs"></i> Settings </a><a
                     href="#" class="dashboard-nav-item"><i class="fas fa-user"></i> Profile </a>
-          <div class="nav-item-divider"></div>
-          <a
-                    href="#" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Login </a>
+            <div class="nav-item-divider"></div>
+
+            @{
+                System.Diagnostics.Debug.Assert(User.Identity != null, "User.Identity != null");
+            }
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a class="dashboard-nav-item" asp-controller="Account" asp-action="Logout" ><i class="fas fa-sign-out-alt"></i>Logout </a>
+            }
+            else
+            {
+                <a class="dashboard-nav-item" asp-controller="Account" asp-action="Login"><i class="fas fa-sign-in-alt"></i> Login </a>    
+            }
+
         </nav>
     </div>
     <div class='dashboard-app'>

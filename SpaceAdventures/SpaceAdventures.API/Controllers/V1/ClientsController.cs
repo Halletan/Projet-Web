@@ -1,6 +1,8 @@
 ﻿
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using SpaceAdventures.Application.Common.Commands.Clients;
 using SpaceAdventures.Application.Common.Models;
 using SpaceAdventures.Application.Common.Queries.Clients;
@@ -30,10 +32,12 @@ namespace SpaceAdventures.API.Controllers.V1
         /// <summary>
         /// Get all clients
         /// </summary>
+        //[HttpGet]
         [HttpGet]
+        [Authorize(Policy = "read:messages")]
         public async Task<ClientsVm> GetClients()
         {
-            _logger.LogInformation("Test");
+
             return await _mediator.Send(new GetClientsQuery());
         }
 
@@ -47,21 +51,6 @@ namespace SpaceAdventures.API.Controllers.V1
         public async Task<ClientDto> GetClientById(int id)
         {
             return await _mediator.Send(new GetclientByIdQuery(id));
-        }
-
-        /// <summary>
-        /// Get all clients with pagination
-        /// </summary>
-        /// <param name="query"></param>
-        /// <response code="201">Client Created</response>
-        [HttpGet]
-        [MapToApiVersion("2.0")]
-        [Route("ClientWithPagination")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<PaginatedList<ClientsBriefDto>>> GetClientsWithPagination(
-            [FromQuery] GetClientsWithPaginationQuery query)
-        {
-            return await _mediator.Send(query);
         }
 
         /// <summary>

@@ -37,6 +37,7 @@ namespace SpaceAdventures.API.Middlewares
                 BadHttpRequestException => StatusCodes.Status400BadRequest,
                 NotFoundException => StatusCodes.Status404NotFound,
                 ValidationException => StatusCodes.Status500InternalServerError,
+                ForbiddenAccessException => StatusCodes.Status401Unauthorized,
                 _ => StatusCodes.Status500InternalServerError
             };
 
