@@ -1,4 +1,4 @@
-﻿
+
 using SpaceAdventures.Application.Common.Commands.Aircrafts;
 using SpaceAdventures.Application.Common.Queries.Aircrafts;
 
