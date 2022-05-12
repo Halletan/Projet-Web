@@ -12,16 +12,16 @@ namespace SpaceAdventures.Application.Common.Commands.Aircrafts
 
     public class DeleteAircraftCommandHandler : IRequestHandler<DeleteAircraftCommand>
     {
-        private readonly IAircraftService _AircraftService;
+        private readonly IAircraftService _aircraftService;
 
-        public DeleteAircraftCommandHandler(IAircraftService AircraftService)
+        public DeleteAircraftCommandHandler(IAircraftService aircraftService)
         {
-            _AircraftService = AircraftService;
+            _aircraftService = aircraftService;
         }
 
         public async Task<Unit> Handle(DeleteAircraftCommand request, CancellationToken cancellationToken)
         {
-            await _AircraftService.DeleteAircraft(request.Id, cancellationToken);
+            await _aircraftService.DeleteAircraft(request.Id, cancellationToken);
             return Unit.Value;
         }
     }

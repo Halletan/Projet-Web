@@ -43,9 +43,9 @@ namespace SpaceAdventures.Application.Common.Services
         return _mapper.Map<AircraftDto>(aircraft);
     }
 
-        public async Task<AircraftDto> CreateAircraft(AircraftInput AircraftInput, CancellationToken cancellation = default)
+        public async Task<AircraftDto> CreateAircraft(AircraftInput aircraftInput, CancellationToken cancellation = default)    
         {
-            var aircraft = _mapper.Map<Aircraft>(AircraftInput);
+            var aircraft = _mapper.Map<Aircraft>(aircraftInput);
 
             try
             {
@@ -59,16 +59,11 @@ namespace SpaceAdventures.Application.Common.Services
             }
         }
 
-        public async Task<AircraftDto> UpdateAircraft(int AircraftId, AircraftDto AircraftDto, CancellationToken cancellation = default)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<AircraftDto> UpdateAircraft(int aircraftId, AircraftInput aircraftInput, CancellationToken cancellation = default)
         {
             var aircraft = await _context.Aircraft.FindAsync(aircraftId);
 
-            if (aircraft == null)       
+            if (aircraft == null)
             {
                 throw new NotFoundException("Aircraft", aircraftId);
             }
@@ -76,9 +71,9 @@ namespace SpaceAdventures.Application.Common.Services
             try
             {
                 aircraft.IdAircraft = aircraftInput.IdAircraft;
-                aircraft.Manufacturer = aircraftInput.Manufacturer;
+                aircraft.Manufacturer = aircraftInput.Manufacturer; 
                 aircraft.Model = aircraftInput.Model;
-                aircraft.NumberOfSeats  = aircraftInput.NumberOfSeats;
+                aircraft.NumberOfSeats = aircraftInput.NumberOfSeats;
 
 
                 _context.Aircraft.Update(aircraft);
@@ -90,6 +85,7 @@ namespace SpaceAdventures.Application.Common.Services
                 throw new ValidationException();
             }
         }
+        
 
         public async Task DeleteAircraft(int aircraftId, CancellationToken cancellation = default)
         {

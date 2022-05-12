@@ -42,9 +42,9 @@ namespace SpaceAdventures.Application.Common.Services
             return _mapper.Map<ItineraryDto>(itinerary);
         }
 
-        public async Task<ItineraryDto> CreateItinerary(ItineraryInput ItineraryInput, CancellationToken cancellation = default)
+        public async Task<ItineraryDto> CreateItinerary(ItineraryInput itineraryInput, CancellationToken cancellation = default)
         {
-            var itinerary = _mapper.Map<Itinerary>(ItineraryInput);
+            var itinerary = _mapper.Map<Itinerary>(itineraryInput); 
 
             try
             {
@@ -58,20 +58,20 @@ namespace SpaceAdventures.Application.Common.Services
             }
         }
 
-        public async Task<ItineraryDto> UpdateItinerary(int ItineraryId, ItineraryInput ItineraryInput, CancellationToken cancellation = default)
+        public async Task<ItineraryDto> UpdateItinerary(int itineraryId, ItineraryInput itineraryInput, CancellationToken cancellation = default)
         {
-            var itinerary = await _context.Itineraries.FindAsync(ItineraryId);
+            var itinerary = await _context.Itineraries.FindAsync(itineraryId);
 
             if (itinerary == null)
             {
-                throw new NotFoundException("Itinerary", ItineraryId);
+                throw new NotFoundException("Itinerary", itineraryId);
             }
 
             try
             {
-                itinerary.Rate = ItineraryInput.Rate;
-                itinerary.IdAirport1=ItineraryInput.IdAirport1;
-                itinerary.IdAirport2 = ItineraryInput.IdAirport2;
+                itinerary.Rate = itineraryInput.Rate;
+                itinerary.IdAirport1 = itineraryInput.IdAirport1;
+                itinerary.IdAirport2 = itineraryInput.IdAirport2;
 
                 _context.Itineraries.Update(itinerary);
                 await _context.SaveChangesAsync(cancellation);
@@ -83,13 +83,13 @@ namespace SpaceAdventures.Application.Common.Services
             }
         }
 
-        public async Task DeleteItinerary(int ItineraryId, CancellationToken cancellation = default)
+        public async Task DeleteItinerary(int itineraryId, CancellationToken cancellation = default)
         {
-            var itinerary = await _context.Itineraries.FindAsync(ItineraryId);
+            var itinerary = await _context.Itineraries.FindAsync(itineraryId);
 
             if (itinerary == null)
             {
-                throw new NotFoundException("Itinerary", ItineraryId);
+                throw new NotFoundException("Itinerary", itineraryId);
             }
             _context.Itineraries.Remove(itinerary);
             await _context.SaveChangesAsync(cancellation);

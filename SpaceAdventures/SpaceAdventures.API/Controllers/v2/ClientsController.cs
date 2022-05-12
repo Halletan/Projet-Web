@@ -30,10 +30,11 @@ namespace SpaceAdventures.API.Controllers.V2
         /// Get all clients with pagination
         /// </summary>
         /// <param name="query"></param>
-        /// <response code="201">Client Created</response>
+        /// <returns></returns>
         [HttpGet]
+        [Authorize(Policy = "read:messages")]
         [Route("ClientWithPagination")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        // ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<PaginatedList<ClientsBriefDto>>> GetClientsWithPagination(
             [FromQuery] GetClientsWithPaginationQuery query)
         {

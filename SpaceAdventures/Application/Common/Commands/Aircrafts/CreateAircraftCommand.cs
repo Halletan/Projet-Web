@@ -13,16 +13,16 @@ namespace SpaceAdventures.Application.Common.Commands.Aircrafts
 
     public class CreateAircraftCommandHandler : IRequestHandler<CreateAircraftCommand, AircraftDto>
     {
-        private readonly IAircraftService _AircraftService;
+        private readonly IAircraftService _aircraftService;     
 
-        public CreateAircraftCommandHandler(IAircraftService AircraftService)
+        public CreateAircraftCommandHandler(IAircraftService aircraftService)
         {
-            _AircraftService = AircraftService;
+            _aircraftService = aircraftService;
         }
 
         public async Task<AircraftDto> Handle(CreateAircraftCommand request, CancellationToken cancellationToken)
         {
-            return await _AircraftService.CreateAircraft(request.AircraftInput, cancellationToken);
+            return await _aircraftService.CreateAircraft(request.AircraftInput, cancellationToken);
         }
     }
 }

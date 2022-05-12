@@ -34,24 +34,24 @@ namespace SpaceAdventures.Application.Common.Services
 
         public async Task<AirportDto> GetAirportById(int airportId, CancellationToken cancellation = default)
         {
-            var Airport = await _context.Airports.FindAsync(airportId);
-            if (Airport == null)
+            var airport = await _context.Airports.FindAsync(airportId);
+            if (airport == null)
             {
                 throw new NotFoundException("Airport", airportId);
             }
 
-            return _mapper.Map<AirportDto>(Airport);
+            return _mapper.Map<AirportDto>(airport);
         }
 
         public async Task<AirportDto> CreateAirport(AirportInput airportInput, CancellationToken cancellation = default)
         {
-            var Airport = _mapper.Map<Airport>(airportInput);
+            var airport = _mapper.Map<Airport>(airportInput);
 
             try
             {
-                await _context.Airports.AddAsync(Airport, cancellation);
+                await _context.Airports.AddAsync(airport, cancellation);
                 await _context.SaveChangesAsync(cancellation);
-                return _mapper.Map<AirportDto>(Airport);
+                return _mapper.Map<AirportDto>(airport);
             }
             catch (Exception)
             {
@@ -61,22 +61,22 @@ namespace SpaceAdventures.Application.Common.Services
 
         public async Task<AirportDto> UpdateAirport(int airportId, AirportInput airportInput, CancellationToken cancellation = default)
         {
-            var Airport = await _context.Airports.FindAsync(airportId);
+            var airport = await _context.Airports.FindAsync(airportId);
 
-            if (Airport == null)
+            if (airport == null)
             {
                 throw new NotFoundException("Airport", airportId);
             }
 
             try
             {
-                Airport.IdPlanet = airportInput.IdPlanet;
-                Airport.Name = airportInput.Name;
-                Airport.IdAirport = airportInput.IdAirport;
+                airport.IdPlanet = airportInput.IdPlanet;
+                airport.Name = airportInput.Name;
+                airport.IdAirport = airportInput.IdAirport;
 
-                _context.Airports.Update(Airport);
+                _context.Airports.Update(airport);
                 await _context.SaveChangesAsync(cancellation);
-                return _mapper.Map<AirportDto>(Airport);
+                return _mapper.Map<AirportDto>(airport);
             }
             catch (Exception)
             {
@@ -86,19 +86,19 @@ namespace SpaceAdventures.Application.Common.Services
 
         public async Task DeleteAirport(int airportId, CancellationToken cancellation = default)
         {
-            var Airport = await _context.Airports.FindAsync(airportId);
+            var airport = await _context.Airports.FindAsync(airportId);
 
-            if (Airport == null)
+            if (airport == null)
             {
                 throw new NotFoundException("Airport", airportId);
             }
-            _context.Airports.Remove(Airport);
+            _context.Airports.Remove(airport);
             await _context.SaveChangesAsync(cancellation);
         }
 
-        public async Task<bool> AirportExists(string name,int IdPlanet)
+        public async Task<bool> AirportExists(string name,int planetId)
         {
-            return await _context.Airports.AnyAsync(c => c.Name == name && c.IdPlanet == IdPlanet);
+            return await _context.Airports.AnyAsync(c => c.Name == name && c.IdPlanet == planetId);
         }
 
         public bool AirportExists(int? id, AirportInput airportInput)
