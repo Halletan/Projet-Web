@@ -18,11 +18,11 @@ namespace SpaceAdventures.Application.Common.Queries.Itineraries
     public class GetItineraryQuery : IRequest<ItineraryVm> { }
 
     // Handler
-    public class GetItinerarysQueryHandler : IRequestHandler<GetItineraryQuery, ItineraryVm>
+    public class GetItineraryQueryHandler : IRequestHandler<GetItineraryQuery, ItineraryVm>
     {
         private readonly IItineraryService _ItineraryService;
 
-        public GetItinerarysQueryHandler(IItineraryService ItineraryService)
+        public GetItineraryQueryHandler(IItineraryService ItineraryService)
         {
             _ItineraryService = ItineraryService;
         }

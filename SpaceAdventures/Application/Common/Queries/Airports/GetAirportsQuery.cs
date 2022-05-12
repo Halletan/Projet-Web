@@ -11,11 +11,11 @@ namespace SpaceAdventures.Application.Common.Queries.Airports
     public record GetAirportsQuery : IRequest<AirportVm> { }
 
     // Handler
-    public class GetClientsQueryHandler : IRequestHandler<GetAirportsQuery, AirportVm>
+    public class GetAirportsQueryHandler : IRequestHandler<GetAirportsQuery, AirportVm>
     {
         private readonly IAirportService _airportService;
 
-        public GetClientsQueryHandler(IAirportService airportService)
+        public GetAirportsQueryHandler(IAirportService airportService)
         {
             _airportService = airportService;
         }

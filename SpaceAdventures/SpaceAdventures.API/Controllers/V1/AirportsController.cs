@@ -1,48 +1,49 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SpaceAdventures.Application.Common.Commands.Airports;
 using SpaceAdventures.Application.Common.Commands.Clients;
-using SpaceAdventures.Application.Common.Commands.Planets;
+using SpaceAdventures.Application.Common.Queries.Airports;
 using SpaceAdventures.Application.Common.Queries.Clients;
-using SpaceAdventures.Application.Common.Queries.Planets;
 
 namespace SpaceAdventures.API.Controllers.V1
 {
-
         [ApiController]
         [ApiVersion("1.0")]
         [Route("api/v{version:apiVersion}/[controller]")]
-        public class PlanetsController : ControllerBase
+        public class AirportsController : ControllerBase
         {
             private readonly IMediator _mediator;
-            private readonly ILogger<PlanetsController> _logger;
+            private readonly ILogger<AirportsController> _logger;
 
             /// <summary>
-            /// Planet Controller Constructor
+            /// Airports Controller Constructor
             /// </summary>
             /// <param name="mediator"></param>
             /// <param name="logger"></param>
-            public PlanetsController(IMediator mediator, ILogger<PlanetsController> logger)
+            public AirportsController(IMediator mediator, ILogger<AirportsController> logger)
             {
                 _mediator = mediator;
                 _logger = logger;
             }
 
             /// <summary>
-            /// Get a list of every planet 
+            /// Get a list of all Airports
             /// </summary>
             //[HttpGet]
             [HttpGet]
             [Authorize(Policy = "read:messages")]
-            [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status404NotFound)]
-            public async Task<PlanetVm> GetPlanets()
+        public async Task<AirportVm> GetAirports()
             {
-                return await _mediator.Send(new GetPlanetsQuery());
+
+                return await _mediator.Send(new GetAirportsQuery());
             }
 
             /// <summary>
-            /// Get a specific planet by an id
+            /// Get a sepicif Airport by id
             /// </summary>
             /// <param name="id"></param>
             /// <returns></returns>
@@ -50,26 +51,26 @@ namespace SpaceAdventures.API.Controllers.V1
             [Route("GetById")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status404NotFound)]
-            public async Task<PlanetDto> GetPlanetById(int id)
+        public async Task<AirportDto> GetAirportById(int id)
             {
-                return await _mediator.Send(new GetPlanetByIdQuery(id));
+                return await _mediator.Send(new GetAirportByIdQuery(id));
             }
 
             /// <summary>
-            /// Create a new planet
+            /// Create a new Airport
             /// </summary>
             /// <param name="command"></param>
             [HttpPost]
             [Route("Create")]
             [ProducesResponseType(StatusCodes.Status201Created)]
-            public async Task<PlanetDto> CreatePlanet([FromBody] CreatePlanetCommand command)
+        public async Task<AirportDto> CreateAirport([FromBody] CreateAirportCommand command)
             {
                 return await _mediator.Send(command);
             }
 
 
             /// <summary>
-            /// Update an existing planet
+            /// Update an existing Airport
             /// </summary>
             /// <param name="command"></param>
             /// <returns></returns>
@@ -77,14 +78,14 @@ namespace SpaceAdventures.API.Controllers.V1
             [Route("Update")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status404NotFound)]
-            public async Task<ActionResult<PlanetDto>> UpdatePlanet([FromBody] UpdatePlanetCommand command)
+        public async Task<AirportDto> UpdateAirport([FromBody] UpdateAirportCommand command)
             {
                 return await _mediator.Send(command);
             }
 
 
             /// <summary>
-            /// Delete an existing Planet
+            /// Delete an existing Airport
             /// </summary>
             /// <param name="command"></param>
             /// <returns></returns>
@@ -92,7 +93,7 @@ namespace SpaceAdventures.API.Controllers.V1
             [Route("Delete")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status404NotFound)]
-            public async Task DeletePlanet([FromBody] DeletePlanetCommand command)
+        public async Task DeleteAirport([FromBody] DeleteAirportCommand command)
             {
                 await _mediator.Send(command);
             }
