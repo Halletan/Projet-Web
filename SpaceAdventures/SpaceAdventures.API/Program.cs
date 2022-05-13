@@ -30,16 +30,15 @@ builder.Host.UseSerilog((ctx, lc) => lc
 // Jwt Bearer Authentication
 builder.Services.AddAuthenticationJwtBearer(configuration);
 
-
 // Injection DB Service
 builder.Services.AddInfrastructure(configuration);
 
 // Injection Application Services
 builder.Services.AddApplication();
 
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+// Swagger EndpointsApiExplorer Service
 builder.Services.AddEndpointsApiExplorer();
 
 // SwaggerGen Configuration Service

@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
+using SpaceAdventures.Application.Common.Commands.Clients;
 using SpaceAdventures.Application.Common.Queries.Clients;
 
 namespace SpaceAdventures.MVC.Controllers
 {
-    //  [Route("api/mvc/[controller]")]
+    [Route("api/mvc/[controller]")]
     public class ClientsController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public ClientsController(IHttpClientFactory httpClientFactory)  
+        public ClientsController(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }

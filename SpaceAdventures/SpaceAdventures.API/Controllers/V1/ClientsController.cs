@@ -2,11 +2,9 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using SpaceAdventures.Application.Common.Commands.Clients;
-using SpaceAdventures.Application.Common.Models;
 using SpaceAdventures.Application.Common.Queries.Clients;
-using SpaceAdventures.Application.Common.Queries.Clients.GetClientsWithPagination;
+
 
 namespace SpaceAdventures.API.Controllers.V1
 {
@@ -16,23 +14,21 @@ namespace SpaceAdventures.API.Controllers.V1
     public class ClientsController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly ILogger<ClientsController> _logger;
+        
+ 
 
         /// <summary>
         /// Clients Controller Constructor
         /// </summary>
         /// <param name="mediator"></param>
-        /// <param name="logger"></param>
-        public ClientsController(IMediator mediator, ILogger<ClientsController> logger)
+        public ClientsController(IMediator mediator)
         {
             _mediator = mediator;
-            _logger = logger;
         }
 
         /// <summary>
         /// Get all clients
         /// </summary>
-        //[HttpGet]
         [HttpGet]
         [Authorize(Policy = "read:messages")]
         public async Task<ClientsVm> GetClients()
@@ -48,7 +44,7 @@ namespace SpaceAdventures.API.Controllers.V1
         /// <returns></returns>
         [HttpGet]
         [Route("GetById")]
-        public async Task<ClientDto> GetClientById(int id)
+        public async Task<ActionResult<ClientDto>> GetClientById(int id)
         {
             return await _mediator.Send(new GetclientByIdQuery(id));
         }
