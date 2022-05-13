@@ -1,74 +1,74 @@
-
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SpaceAdventures.Application.Common.Commands.Clients;
-using SpaceAdventures.Application.Common.Queries.Clients;
-
+using SpaceAdventures.Application.Common.Commands.Membership;
+using SpaceAdventures.Application.Common.Queries.Membership;
 
 namespace SpaceAdventures.API.Controllers.V1
 {
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
-    public class ClientsController : ControllerBase
+    public class MembershipController : ControllerBase
     {
         private readonly IMediator _mediator;
-        
- 
+        private readonly ILogger<MembershipController> _logger;
 
         /// <summary>
-        /// Clients Controller Constructor
+        /// Membership Controller Constructor
         /// </summary>
         /// <param name="mediator"></param>
-        public ClientsController(IMediator mediator)
+        /// <param name="logger"></param>
+        public MembershipController(IMediator mediator, ILogger<MembershipController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         /// <summary>
-        /// Get all clients
+        /// Get a list of every Membership 
         /// </summary>
+        //[HttpGet]
         [HttpGet]
         [Authorize(Policy = "read:messages")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ClientsVm> GetClients()
+        public async Task<MembershipVm> GetMembership()
         {
 
-            return await _mediator.Send(new GetClientsQuery());
+            return await _mediator.Send(new GetMembershipQuery());
         }
 
         /// <summary>
-        /// Get client by its Id
+        /// Get a specific Membership by an id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
         [Route("GetById")]
-        public async Task<ActionResult<ClientDto>> GetClientById(int id)
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ClientDto> GetClientById(int id)
+        public async Task<MembershipDto> GetMembershipById(int id)
         {
-            return await _mediator.Send(new GetclientByIdQuery(id));
+            return await _mediator.Send(new GetMembershipByIdQuery(id));
         }
 
         /// <summary>
-        /// Create a new client
+        /// Create a new Membership
         /// </summary>
         /// <param name="command"></param>
         [HttpPost]
         [Route("Create")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ClientDto> CreateClient([FromBody] CreateClientCommand command)
+        public async Task<MembershipDto> CreateMembership([FromBody] CreateMembershipCommand command)
         {
             return await _mediator.Send(command);
         }
 
 
         /// <summary>
-        /// Update an existing client
+        /// Update an existing Membership
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
@@ -76,14 +76,14 @@ namespace SpaceAdventures.API.Controllers.V1
         [Route("Update")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ClientDto> UpdateClient([FromBody] UpdateClientCommand command)
+        public async Task<MembershipDto> UpdateMembership([FromBody] UpdateMembershipCommand command)
         {
             return await _mediator.Send(command);
         }
 
 
         /// <summary>
-        /// Delete an existing client
+        /// Delete an existing Membership
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
@@ -91,10 +91,9 @@ namespace SpaceAdventures.API.Controllers.V1
         [Route("Delete")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task DeleteClient([FromBody] DeleteClientCommand command)
+        public async Task DeleteMembership([FromBody] DeleteMembershipCommand command)
         {
             await _mediator.Send(command);
         }
-
     }
 }

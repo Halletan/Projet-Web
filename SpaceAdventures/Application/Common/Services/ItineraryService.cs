@@ -10,7 +10,7 @@ using Domain.Entities;
 
 namespace SpaceAdventures.Application.Common.Services
 {
-    internal class ItineraryService : IItineraryService
+    public class ItineraryService : IItineraryService
     {
         private readonly ISpaceAdventureDbContext _context;
         private readonly IMapper _mapper;
