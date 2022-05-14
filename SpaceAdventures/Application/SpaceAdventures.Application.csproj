@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Commands\Flight\" />
+    <Compile Remove="Common\Commands\Flight\**" />
+    <EmbeddedResource Remove="Common\Commands\Flight\**" />
+    <None Remove="Common\Commands\Flight\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Common\Commands\Global\" />
     <Folder Include="Common\Queries\Global\" />
   </ItemGroup>

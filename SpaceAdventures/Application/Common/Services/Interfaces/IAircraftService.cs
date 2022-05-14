@@ -12,5 +12,6 @@ namespace SpaceAdventures.Application.Common.Services.Interfaces
         Task<AircraftDto> CreateAircraft(AircraftInput aircraftInput, CancellationToken cancellation = default);
         Task<AircraftDto> UpdateAircraft(int aircraftId, AircraftInput aircraftInput, CancellationToken cancellation = default);
         Task DeleteAircraft(int aircraftId, CancellationToken cancellation = default);
+        //bool AircrafttExists(int? id, AircraftInput airportInput); // Useless Currently (corentin)
     }
 }

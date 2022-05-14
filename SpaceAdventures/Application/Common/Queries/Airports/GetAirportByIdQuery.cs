@@ -10,11 +10,11 @@ namespace SpaceAdventures.Application.Common.Queries.Airports
 {
     public record GetAirportByIdQuery(int Id) : IRequest<AirportDto>;
 
-    public class GetClientByIdQueryHandler : IRequestHandler<GetAirportByIdQuery, AirportDto>
+    public class GetAirportByIdQueryHandler : IRequestHandler<GetAirportByIdQuery, AirportDto>
     {
         private readonly IAirportService _airportService;
 
-        public GetClientByIdQueryHandler(IAirportService airportService)
+        public GetAirportByIdQueryHandler(IAirportService airportService)
         {
             _airportService = airportService;
         }

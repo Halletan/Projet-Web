@@ -12,6 +12,4 @@ public interface IClientService
     Task DeleteClient(int clientId, CancellationToken cancellation = default);
     Task<bool> ClientExists(string email);
     bool ClientExists(int? id, ClientInput clientInput);           
-
-
 }

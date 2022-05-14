@@ -97,5 +97,7 @@ namespace SpaceAdventures.Application.Common.Services
         }
         _context.Aircraft.Remove(aircraft);
         }
+
+       
     }
 }
