@@ -27,3 +27,4 @@ namespace SpaceAdventures.Application.Common.Commands.Flights
             profile.CreateMap<FlightInput, Flight>().ReverseMap();
         }
     }
+}

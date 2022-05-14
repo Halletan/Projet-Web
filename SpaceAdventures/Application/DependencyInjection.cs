@@ -25,9 +25,12 @@ namespace Application
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IPlanetService, PlanetService>();
             services.AddScoped<IAirportService, AirportService>();
-            services.AddScoped<IItineraryService, ItineraryService>();
-            services.AddScoped<IAircraftService, AircraftService>();
+            services.AddScoped<IItineraryService, ItineraryService>();            
             services.AddScoped<IMembershipService, MembershipService>();
+            services.AddScoped<IAircraftService, AircraftService>();
+            services.AddScoped<IFlightService, FlightService>();
+            services.AddScoped<IBookingService, BookingService>();
+            services.AddScoped<IAircraftSeatService, AircraftSeatService>();
 
             // Behaviors
 

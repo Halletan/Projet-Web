@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SpaceAdventures.Application.Common.Commands.Aircrafts
 {
-    public record CreateAircraftCommand(AircraftInput AircraftInput) : IRequest<AircraftDto>;
+    public record CreateAircraftCommand(AircraftInput aircraftInput) : IRequest<AircraftDto>;
 
     public class CreateAircraftCommandHandler : IRequestHandler<CreateAircraftCommand, AircraftDto>
     {
@@ -22,7 +22,7 @@ namespace SpaceAdventures.Application.Common.Commands.Aircrafts
 
         public async Task<AircraftDto> Handle(CreateAircraftCommand request, CancellationToken cancellationToken)
         {
-            return await _aircraftService.CreateAircraft(request.AircraftInput, cancellationToken);
+            return await _aircraftService.CreateAircraft(request.aircraftInput, cancellationToken);
         }
     }
 }
