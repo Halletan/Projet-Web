@@ -3,7 +3,6 @@
 
 namespace SpaceAdventures.API.Middlewares
 {
-    // You may need to install the Microsoft.AspNetCore.Http.Abstractions package into your project
     public class LogRequestMiddleware
     {
         private readonly RequestDelegate _next;

@@ -57,15 +57,12 @@ builder.Services.AddVersionedApiExplorerConfig();
 builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
 
-builder.Services.AddMvc(options =>
-{
-    options.Filters.Add(new ProducesResponseTypeAttribute(StatusCodes.Status406NotAcceptable));
-    options.Filters.Add(new ProducesResponseTypeAttribute(StatusCodes.Status500InternalServerError));
-    options.Filters.Add(new ProducesResponseTypeAttribute(StatusCodes.Status401Unauthorized));
-    options.ReturnHttpNotAcceptable = true;
-}).AddFluentValidation();
-
 var app = builder.Build();
+
+
+
+/*********  Middleware  **********/
+
 
 app.UseSerilogRequestLogging();
 
@@ -73,7 +70,7 @@ app.UseSerilogRequestLogging();
 app.UseExceptionMiddleware();
 
 //  Our Log Request Middleware
-// app.UseLogRequestMiddleware();
+//app.UseLogRequestMiddleware();
 
 
 // Configure the HTTP request pipeline.

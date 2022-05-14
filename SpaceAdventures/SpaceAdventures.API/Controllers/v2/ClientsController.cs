@@ -13,17 +13,15 @@ namespace SpaceAdventures.API.Controllers.V2
     public class ClientsController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly ILogger<ClientsController> _logger;
 
         /// <summary>
         /// Clients Controller Constructor
         /// </summary>
         /// <param name="mediator"></param>
-        /// <param name="logger"></param>
-        public ClientsController(IMediator mediator, ILogger<ClientsController> logger)
+
+        public ClientsController(IMediator mediator)
         {
             _mediator = mediator;
-            _logger = logger;
         }
 
         /// <summary>
@@ -34,7 +32,7 @@ namespace SpaceAdventures.API.Controllers.V2
         [HttpGet]
         [Authorize(Policy = "read:messages")]
         [Route("ClientWithPagination")]
-        // ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<PaginatedList<ClientsBriefDto>>> GetClientsWithPagination(
             [FromQuery] GetClientsWithPaginationQuery query)
         {

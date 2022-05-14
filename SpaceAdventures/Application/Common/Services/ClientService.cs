@@ -22,7 +22,7 @@ namespace SpaceAdventures.Application.Common.Services
             _mapper = mapper;
         }
 
-        public async Task<ClientsVm> GetAllClients(CancellationToken cancellationToken)    
+        public async Task<ClientsVm> GetAllClients(CancellationToken cancellationToken = default)    
         {
             return new ClientsVm
             {
