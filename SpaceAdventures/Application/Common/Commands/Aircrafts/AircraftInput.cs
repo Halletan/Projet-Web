@@ -11,7 +11,6 @@ namespace SpaceAdventures.Application.Common.Commands.Aircrafts
 {
     public class AircraftInput : IMapFrom<Aircraft>
     {
-
         public int IdAircraft { get; set; }
         public string Manufacturer { get; set; }
         public string Model { get; set; }
