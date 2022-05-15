@@ -15,7 +15,7 @@ namespace SpaceAdventures.Application.Common.Services.Interfaces
         Task<BookingDto> CreateBooking(BookingInput BookingInput, CancellationToken cancellation = default);
         Task<BookingDto> UpdateBooking(int BookingId, BookingInput BookingInput, CancellationToken cancellation = default);
         Task DeleteBooking(int BookingId, CancellationToken cancellation = default);
-        //Task<bool> BookingExists(string email);
+        //Task<bool> BookingExists();
         //bool BookingExists(int? id, BookingInput BookingInput);
 
 
