@@ -71,6 +71,26 @@ namespace SpaceAdventures.MVC.Configurations
                             context.HandleResponse();
 
                             return Task.CompletedTask;
+                        },
+
+                        OnRedirectToIdentityProvider = (context) =>
+                        {
+
+                            // Set the audience query parameter to the API identifier to ensure the returned access tokens can be used 
+                            // to call protected endpoints on the API.
+
+                            context.ProtocolMessage.SetParameter("audience", configuration["Auth0:Audience"]);
+                            return Task.FromResult(0);
+                        },
+
+                        OnMessageReceived = (context) =>
+                        {
+                            if (context.ProtocolMessage.Error == "access_denied")
+                            {
+                                context.HandleResponse();
+                                context.Response.Redirect("/Account/AccessDenied");
+                            }
+                            return Task.FromResult(0);
                         }
                     };
                 });

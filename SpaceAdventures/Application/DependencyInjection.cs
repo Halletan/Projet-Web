@@ -29,6 +29,8 @@ namespace Application
             services.AddScoped<IAircraftService, AircraftService>();
             services.AddScoped<IMembershipService, MembershipService>();
 
+            services.AddHttpClient<IUsersManagementApiService, UsersManagementApiService>();
+
             // Behaviors
 
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));

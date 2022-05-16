@@ -1,0 +1,73 @@
+﻿@model SpaceAdventures.MVC.Models.Clients
+
+@{
+    ViewData["Title"] = "GetClients";
+}
+
+<link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+<h1>List Of Customers</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table id="datatable" class="table">
+    <thead>
+    <tr>
+        <th>Customer ID</th>
+        <th>First name</th>
+        <th>
+            Last name
+        </th>
+        <th>
+            Phone
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Membership Type
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in @Model.ClientsList) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdClient)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdMemberShipType)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+
+@section Scripts
+{
+    
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/js/datatable.js"></script>
+}
+

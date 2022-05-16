@@ -1,27 +1,34 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿
+using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using SpaceAdventures.Application.Common.Commands.Clients;
-using SpaceAdventures.Application.Common.Queries.Clients;
+using SpaceAdventures.MVC.Models;
 
 namespace SpaceAdventures.MVC.Controllers
 {
     [Route("api/mvc/[controller]")]
     public class ClientsController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly HttpClient _httpClient;    
 
-        public ClientsController(IHttpClientFactory httpClientFactory)
+        public ClientsController(HttpClient httpClient)
         {
-            _httpClientFactory = httpClientFactory;
+            _httpClient = httpClient;
         }
 
         [HttpGet]
-        [Route("/api/clients")]
-        public async Task<IActionResult> GetClients()   
+        public async Task<ActionResult> GetClients()
         {
-            var client = _httpClientFactory.CreateClient("RetryPolicy");
-            var response = await client.GetAsync("https://localhost:7195/api/v1.0/Clients");
+            if (User.Identity is not { IsAuthenticated: true })
+            {
+                TempData["Message"] = "Warning : Please make sure to be authenticated !";
+                return RedirectToAction("Index", "Home");
+            }
+
+            string? accessToken = await HttpContext.GetTokenAsync("access_token");
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            var response = await _httpClient.GetAsync("https://localhost:7195/api/v1.0/Clients");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -29,13 +36,8 @@ namespace SpaceAdventures.MVC.Controllers
             }
 
             var content = await response.Content.ReadAsStringAsync();
-            var data = JsonConvert.DeserializeObject<ClientsVm>(content);
-            return Json(data);
-        }
-
-        public IActionResult ListOfClients()
-        {
-            return View();
+            var data = JsonConvert.DeserializeObject<Clients>(content);
+            return View(data);  
         }
     }
 }   

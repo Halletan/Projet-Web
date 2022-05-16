@@ -24,3 +24,22 @@ body {
     background-position: center center;
     height: 100vh;
 }
+
+/************Sticky Footer CSS ***************/
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+    background-color: #ddc1a0;
+    color: black;
+}
+
+
+/********* ToastR CSS*********/
+#toast-container {
+    margin-top: 60px;
+    margin-right: 10px;
+}
