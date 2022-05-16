@@ -14,7 +14,6 @@ namespace SpaceAdventures.Application.Common.Commands.Clients
 {
     public class ClientInput : IMapFrom<Client>
     {
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Phone { get; set; }
