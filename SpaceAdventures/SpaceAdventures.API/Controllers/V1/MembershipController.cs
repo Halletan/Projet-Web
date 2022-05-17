@@ -9,6 +9,7 @@ namespace SpaceAdventures.API.Controllers.V1
 {
     [ApiController]
     [ApiVersion("1.0")]
+    [Produces("application/json")]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class MembershipController : ControllerBase
     {
@@ -34,10 +35,10 @@ namespace SpaceAdventures.API.Controllers.V1
         [Authorize(Policy = "read:messages")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<MembershipVm> GetMembership()
+        public async Task<ActionResult<MembershipVm>> GetMembership()
         {
 
-            return await _mediator.Send(new GetMembershipQuery());
+            return Ok(await _mediator.Send(new GetMembershipQuery()));
         }
 
         /// <summary>
@@ -47,11 +48,12 @@ namespace SpaceAdventures.API.Controllers.V1
         /// <returns></returns>
         [HttpGet]
         [Route("GetById")]
+        [Authorize(Policy = "read:messages")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<MembershipDto> GetMembershipById(int id)
+        public async Task<ActionResult<MembershipDto>> GetMembershipById(int id)
         {
-            return await _mediator.Send(new GetMembershipByIdQuery(id));
+            return Ok(await _mediator.Send(new GetMembershipByIdQuery(id)));
         }
 
         /// <summary>
@@ -60,10 +62,12 @@ namespace SpaceAdventures.API.Controllers.V1
         /// <param name="command"></param>
         [HttpPost]
         [Route("Create")]
+        [Authorize(Policy = "write:messages")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<MembershipDto> CreateMembership([FromBody] CreateMembershipCommand command)
+
+        public async Task<ActionResult<MembershipDto>> CreateMembership([FromBody] CreateMembershipCommand command)
         {
-            return await _mediator.Send(command);
+            return Ok(await _mediator.Send(command));
         }
 
 
@@ -74,11 +78,12 @@ namespace SpaceAdventures.API.Controllers.V1
         /// <returns></returns>
         [HttpPut]
         [Route("Update")]
+        [Authorize(Policy = "write:messages")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<MembershipDto> UpdateMembership([FromBody] UpdateMembershipCommand command)
+        public async Task<ActionResult<MembershipDto>> UpdateMembership([FromBody] UpdateMembershipCommand command)
         {
-            return await _mediator.Send(command);
+            return Ok(await _mediator.Send(command));
         }
 
 
@@ -89,11 +94,13 @@ namespace SpaceAdventures.API.Controllers.V1
         /// <returns></returns>
         [HttpDelete]
         [Route("Delete")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize(Policy = "write:messages")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task DeleteMembership([FromBody] DeleteMembershipCommand command)
+        public async Task<ActionResult>DeleteMembership([FromBody] DeleteMembershipCommand command)
         {
             await _mediator.Send(command);
+            return NoContent();
         }
     }
 }

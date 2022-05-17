@@ -8,6 +8,7 @@ namespace SpaceAdventures.API.Controllers.V1
 
     [ApiController]
     [ApiVersion("1.0")]
+    [Produces("application/json")]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class BookingsController : ControllerBase
     {
@@ -35,10 +36,10 @@ namespace SpaceAdventures.API.Controllers.V1
         [Authorize(Policy = "read:messages")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<BookingsVm> GetBookings()
+        public async Task<ActionResult<BookingsVm>> GetBookings()
         {
 
-            return await _mediator.Send(new GetBookingsQuery());
+            return Ok(await _mediator.Send(new GetBookingsQuery()));
         }
 
         /// <summary>
@@ -48,11 +49,12 @@ namespace SpaceAdventures.API.Controllers.V1
         /// <returns></returns>
         [HttpGet]
         [Route("GetById")]
+        [Authorize(Policy = "read:messages")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<BookingDto> GetBookingById(int id)
+        public async Task<ActionResult<BookingDto>> GetBookingById(int id)
         {
-            return await _mediator.Send(new GetBookingByIdQuery(id));
+            return Ok(await _mediator.Send(new GetBookingByIdQuery(id)));
         }
 
         /// <summary>
@@ -61,10 +63,12 @@ namespace SpaceAdventures.API.Controllers.V1
         /// <param name="command"></param>
         [HttpPost]
         [Route("Create")]
+        [Authorize(Policy = "write:messages")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<BookingDto> CreateBooking([FromBody] CreateBookingCommand command)
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<BookingDto>> CreateBooking([FromBody] CreateBookingCommand command)
         {
-            return await _mediator.Send(command);
+            return Ok(await _mediator.Send(command));
         }
 
 
@@ -75,11 +79,12 @@ namespace SpaceAdventures.API.Controllers.V1
         /// <returns></returns>
         [HttpPut]
         [Route("Update")]
+        [Authorize(Policy = "write:messages")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<BookingDto> UpdateBooking([FromBody] UpdateBookingCommand command)
+        public async Task<ActionResult<BookingDto>> UpdateBooking([FromBody] UpdateBookingCommand command)
         {
-            return await _mediator.Send(command);
+            return Ok(await _mediator.Send(command));
         }
 
 
@@ -90,11 +95,13 @@ namespace SpaceAdventures.API.Controllers.V1
         /// <returns></returns>
         [HttpDelete]
         [Route("Delete")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize(Policy = "write:messages")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task DeleteBooking([FromBody] DeleteBookingCommand command)
+        public async Task<ActionResult>DeleteBooking([FromBody] DeleteBookingCommand command)
         {
             await _mediator.Send(command);
+            return NoContent();
         }
 
 

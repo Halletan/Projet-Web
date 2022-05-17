@@ -28,7 +28,7 @@ namespace SpaceAdventures.Application.Common.Commands.Itineraries
                 {
                     bool exists = itineraryService.ItineraryExists(data);
                     return !exists;
-                }).WithMessage("Client with this email address exists already !");
+                }).WithMessage("This itinerary already exist !");
 
         }
     }

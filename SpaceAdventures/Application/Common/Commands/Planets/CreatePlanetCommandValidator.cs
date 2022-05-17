@@ -15,7 +15,9 @@ namespace SpaceAdventures.Application.Common.Planets
         {
             RuleFor(n => n.planetInput.Name)
                 .NotEmpty().WithMessage("Planet's name is mandatory")
-                .MaximumLength(50).WithMessage("Planet's name should not exceed 50 characters")
+                .MaximumLength(50).WithMessage("Planet's name should not exceed 50 characters");
+
+            RuleFor(n => n.planetInput.Name)
                 .MustAsync(async (name, cancel) =>
                 {
                     bool exists = await planetService.PlanetExists(name);

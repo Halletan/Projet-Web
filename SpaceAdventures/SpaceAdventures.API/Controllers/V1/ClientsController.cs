@@ -10,6 +10,7 @@ namespace SpaceAdventures.API.Controllers.V1
 {
     [ApiController]
     [ApiVersion("1.0")]
+    [Produces("application/json")]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class ClientsController : ControllerBase
     {
@@ -34,7 +35,7 @@ namespace SpaceAdventures.API.Controllers.V1
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ClientsVm>> GetClients() 
         {
-            return await _mediator.Send(new GetClientsQuery());
+            return Ok(await _mediator.Send(new GetClientsQuery()));
         }
 
         /// <summary>
@@ -43,13 +44,13 @@ namespace SpaceAdventures.API.Controllers.V1
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(Policy = "read:messages")]
         [Route("GetById")]
+        [Authorize(Policy = "read:messages")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ClientDto>> GetClientById(int id)
         {
-            return await _mediator.Send(new GetClientByIdQuery(id));
+            return Ok(await _mediator.Send(new GetClientByIdQuery(id)));
         }
 
         /// <summary>
@@ -57,13 +58,13 @@ namespace SpaceAdventures.API.Controllers.V1
         /// </summary>
         /// <param name="command"></param>
         [HttpPost]
-        [Authorize(Policy = "write:messages")]
         [Route("Create")]
+        [Authorize(Policy = "write:messages")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ClientDto>> CreateClient([FromBody] CreateClientCommand command)
         {
-            return await _mediator.Send(command);
+            return Ok(await _mediator.Send(command));
         }
 
 
@@ -79,7 +80,7 @@ namespace SpaceAdventures.API.Controllers.V1
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ClientDto>> UpdateClient([FromBody] UpdateClientCommand command)
         {
-            return await _mediator.Send(command);
+            return Ok(await _mediator.Send(command));
         }
 
 
@@ -91,7 +92,7 @@ namespace SpaceAdventures.API.Controllers.V1
         [HttpDelete]
         [Route("Delete")]
         [Authorize(Policy = "write:messages")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> DeleteClient([FromBody] DeleteClientCommand command)
         {

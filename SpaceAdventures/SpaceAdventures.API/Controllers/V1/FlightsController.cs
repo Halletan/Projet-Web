@@ -9,6 +9,7 @@ namespace SpaceAdventures.API.Controllers.V1
 
     [ApiController]
     [ApiVersion("1.0")]
+    [Produces("application/json")]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class FlightsController : ControllerBase
     {
@@ -34,10 +35,10 @@ namespace SpaceAdventures.API.Controllers.V1
         [Authorize(Policy = "read:messages")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<FlightsVm> GetFlights()
+        public async Task<ActionResult<FlightsVm>> GetFlights()
         {
 
-            return await _mediator.Send(new GetFlightsQuery());
+            return Ok(await _mediator.Send(new GetFlightsQuery()));
         }
 
         /// <summary>
@@ -47,11 +48,12 @@ namespace SpaceAdventures.API.Controllers.V1
         /// <returns></returns>
         [HttpGet]
         [Route("GetById")]
+        [Authorize(Policy = "read:messages")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<FlightDto> GetFlightById(int id)
+        public async Task<ActionResult<FlightDto>> GetFlightById(int id)
         {
-            return await _mediator.Send(new GetFlightByIdQuery(id));
+            return Ok(await _mediator.Send(new GetFlightByIdQuery(id)));
         }
 
         /// <summary>
@@ -60,10 +62,12 @@ namespace SpaceAdventures.API.Controllers.V1
         /// <param name="command"></param>
         [HttpPost]
         [Route("Create")]
+        [Authorize(Policy = "write:messages")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<FlightDto> CreateFlight([FromBody] CreateFlightCommand command)
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<FlightDto>> CreateFlight([FromBody] CreateFlightCommand command)
         {
-            return await _mediator.Send(command);
+            return Ok(await _mediator.Send(command));
         }
 
 
@@ -74,11 +78,12 @@ namespace SpaceAdventures.API.Controllers.V1
         /// <returns></returns>
         [HttpPut]
         [Route("Update")]
+        [Authorize(Policy = "write:messages")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<FlightDto> UpdateFlight([FromBody] UpdateFlightCommand command)
+        public async Task<ActionResult<FlightDto>> UpdateFlight([FromBody] UpdateFlightCommand command)
         {
-            return await _mediator.Send(command);
+            return Ok(await _mediator.Send(command));
         }
 
 
@@ -89,11 +94,13 @@ namespace SpaceAdventures.API.Controllers.V1
         /// <returns></returns>
         [HttpDelete]
         [Route("Delete")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize(Policy = "write:messages")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task DeleteFlight([FromBody] DeleteFlightCommand command)
+        public async Task<ActionResult>DeleteFlight([FromBody] DeleteFlightCommand command)
         {
             await _mediator.Send(command);
+            return NoContent();
         }
     }
 }

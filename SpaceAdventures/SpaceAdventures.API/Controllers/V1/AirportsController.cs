@@ -11,6 +11,7 @@ namespace SpaceAdventures.API.Controllers.V1
 {
         [ApiController]
         [ApiVersion("1.0")]
+        [Produces("application/json")]
         [Route("api/v{version:apiVersion}/[controller]")]
         public class AirportsController : ControllerBase
         {
@@ -34,12 +35,12 @@ namespace SpaceAdventures.API.Controllers.V1
             //[HttpGet]
             [HttpGet]
             [Authorize(Policy = "read:messages")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+            [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<AirportVm> GetAirports()
+            public async Task<ActionResult<AirportVm>> GetAirports()
             {
 
-                return await _mediator.Send(new GetAirportsQuery());
+                return Ok(await _mediator.Send(new GetAirportsQuery()));
             }
 
             /// <summary>
@@ -49,11 +50,12 @@ namespace SpaceAdventures.API.Controllers.V1
             /// <returns></returns>
             [HttpGet]
             [Route("GetById")]
+            [Authorize(Policy = "read:messages")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<AirportDto> GetAirportById(int id)
+            public async Task<ActionResult<AirportDto>> GetAirportById(int id)
             {
-                return await _mediator.Send(new GetAirportByIdQuery(id));
+                return Ok(await _mediator.Send(new GetAirportByIdQuery(id)));
             }
 
             /// <summary>
@@ -62,10 +64,12 @@ namespace SpaceAdventures.API.Controllers.V1
             /// <param name="command"></param>
             [HttpPost]
             [Route("Create")]
+            [Authorize(Policy = "write:messages")]
             [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<AirportDto> CreateAirport([FromBody] CreateAirportCommand command)
+            [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+            public async Task<ActionResult<AirportDto>> CreateAirport([FromBody] CreateAirportCommand command)
             {
-                return await _mediator.Send(command);
+                return Ok(await _mediator.Send(command));
             }
 
 
@@ -76,11 +80,12 @@ namespace SpaceAdventures.API.Controllers.V1
             /// <returns></returns>
             [HttpPut]
             [Route("Update")]
+            [Authorize(Policy = "write:messages")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<AirportDto> UpdateAirport([FromBody] UpdateAirportCommand command)
+            public async Task<ActionResult<AirportDto>> UpdateAirport([FromBody] UpdateAirportCommand command)
             {
-                return await _mediator.Send(command);
+                return Ok(await _mediator.Send(command));
             }
 
 
@@ -91,11 +96,13 @@ namespace SpaceAdventures.API.Controllers.V1
             /// <returns></returns>
             [HttpDelete]
             [Route("Delete")]
-            [ProducesResponseType(StatusCodes.Status200OK)]
+            [Authorize(Policy = "write:messages")]
+            [ProducesResponseType(StatusCodes.Status204NoContent)]
             [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task DeleteAirport([FromBody] DeleteAirportCommand command)
+            public async Task<ActionResult>DeleteAirport([FromBody] DeleteAirportCommand command)
             {
                 await _mediator.Send(command);
+                return NoContent();
             }
         }
     

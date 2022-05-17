@@ -14,12 +14,7 @@ namespace SpaceAdventures.Application.Common.Commands.Membership
         {
             RuleFor(n => n.membershipInput.Name)
                 .NotEmpty().WithMessage("Membership's name is mandatory")
-                .MaximumLength(50).WithMessage("Membership's name should not exceed 50 characters")
-                .MustAsync(async (name, cancel) =>
-                {
-                    bool exists = await membershipService.MembershipExists(name);
-                    return !exists;
-                }).WithMessage("This Membership already exists !");
+                .MaximumLength(50).WithMessage("Membership's name should not exceed 50 characters");
 
             RuleFor(n => n.membershipInput.DiscountFactor)
                 .NotEmpty().WithMessage("Membership's discount factor is mandatory")

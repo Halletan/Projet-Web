@@ -9,6 +9,7 @@ namespace SpaceAdventures.API.Controllers.V1
 
     [ApiController]
     [ApiVersion("1.0")]
+    [Produces("application/json")]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class AircraftSeatsController : ControllerBase
     {
@@ -35,10 +36,10 @@ namespace SpaceAdventures.API.Controllers.V1
         [Authorize(Policy = "read:messages")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<AircraftSeatsVm> GetAircraftSeats()
+        public async Task<ActionResult<AircraftSeatsVm>> GetAircraftSeats()
         {
 
-            return await _mediator.Send(new GetAircraftSeatsQuery());
+            return Ok(await _mediator.Send(new GetAircraftSeatsQuery()));
         }
 
         /// <summary>
@@ -48,11 +49,12 @@ namespace SpaceAdventures.API.Controllers.V1
         /// <returns></returns>
         [HttpGet]
         [Route("GetById")]
+        [Authorize(Policy = "read:messages")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<AircraftSeatDto> GetAircraftSeatById(int id)
+        public async Task<ActionResult<AircraftSeatDto>> GetAircraftSeatById(int id)
         {
-            return await _mediator.Send(new GetAircraftSeatByIdQuery(id));
+            return Ok(await _mediator.Send(new GetAircraftSeatByIdQuery(id)));
         }
 
         /// <summary>
@@ -61,10 +63,12 @@ namespace SpaceAdventures.API.Controllers.V1
         /// <param name="command"></param>
         [HttpPost]
         [Route("Create")]
+        [Authorize(Policy = "write:messages")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<AircraftSeatDto> CreateAircraftSeat([FromBody] CreateAircraftSeatCommand command)
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<AircraftSeatDto>> CreateAircraftSeat([FromBody] CreateAircraftSeatCommand command)
         {
-            return await _mediator.Send(command);
+            return Ok(await _mediator.Send(command));
         }
 
 
@@ -75,11 +79,12 @@ namespace SpaceAdventures.API.Controllers.V1
         /// <returns></returns>
         [HttpPut]
         [Route("Update")]
+        [Authorize(Policy = "write:messages")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<AircraftSeatDto> UpdateAircraftSeat([FromBody] UpdateAircraftSeatCommand command)
+        public async Task<ActionResult<AircraftSeatDto>> UpdateAircraftSeat([FromBody] UpdateAircraftSeatCommand command)
         {
-            return await _mediator.Send(command);
+            return Ok(await _mediator.Send(command));
         }
 
 
@@ -90,11 +95,13 @@ namespace SpaceAdventures.API.Controllers.V1
         /// <returns></returns>
         [HttpDelete]
         [Route("Delete")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize(Policy = "write:messages")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task DeleteAircraftSeat([FromBody] DeleteAircraftSeatCommand command)
+        public async Task<ActionResult>DeleteAircraftSeat([FromBody] DeleteAircraftSeatCommand command)
         {
             await _mediator.Send(command);
+            return NoContent();
         }
 
     }

@@ -6,9 +6,11 @@ using SpaceAdventures.Application.Common.Queries.Users.Queries;
 
 namespace SpaceAdventures.API.Controllers.v1
 {
-    [Route("api/v{version:apiVersion}/[controller]")]
+    
     [ApiController]
     [ApiVersion("1.0")]
+    [Produces("application/json")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
