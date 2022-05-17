@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 namespace SpaceAdventures.Application.Common.Queries.Flights
 {
     // Query
-    public class GetFlightsQuery : IRequest<FlightsVm> { }
+    public class GetFlightsQuery : IRequest<FlightsVm>
+    {
+    }
 
     // Handler
     public class GetFlightsQueryHandler : IRequestHandler<GetFlightsQuery, FlightsVm>
