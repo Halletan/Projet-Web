@@ -9,8 +9,9 @@ namespace SpaceAdventures.API.Controllers.V2
 {
     [ApiController]
     [ApiVersion("2.0")]
+    [Produces("application/json")]
     [Route("api/v{version:apiVersion}/[controller]")]
-    public class ClientsController : ControllerBase
+    public class GlobalController : ControllerBase
     {
         private readonly IMediator _mediator;
 
@@ -19,7 +20,7 @@ namespace SpaceAdventures.API.Controllers.V2
         /// </summary>
         /// <param name="mediator"></param>
 
-        public ClientsController(IMediator mediator)
+        public GlobalController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -33,6 +34,7 @@ namespace SpaceAdventures.API.Controllers.V2
         [Authorize(Policy = "read:messages")]
         [Route("ClientWithPagination")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<PaginatedList<ClientsBriefDto>>> GetClientsWithPagination(
             [FromQuery] GetClientsWithPaginationQuery query)
         {

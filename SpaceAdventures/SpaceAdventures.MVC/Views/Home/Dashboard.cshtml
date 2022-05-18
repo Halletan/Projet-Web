@@ -1,0 +1,137 @@
+﻿
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true"/>
+
+
+<br/><br/><br/><br/><br/><br/><br/><br/>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-xl-3">
+            <div class="card bg-c-blue order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20">Customers</h6>
+                    <h2 class="text-right"><i class="fa-solid fa-user-group f-left m-2"></i><span id="customers"></span></h2>
+                    <p class="m-b-0 pt-2 m-2">Total customers<span class="f-right"></span></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 col-xl-3">
+            <div class="card bg-c-green order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20">Aircraft</h6>
+                    <h2 class="text-right"><i class="fa-solid fa-rocket f-left m-2"></i><span id="aircraft"></span></h2>
+                    <p class="m-b-0 pt-2 m-2">Total Aircrafts<span class="f-right"></span></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 col-xl-3">
+            <div class="card bg-c-yellow order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20">Booking</h6>
+                    <h2 class="text-right"><i class="fa fa-cart-shopping f-left m-2"></i><span id="bookings"></span></h2>  
+                    <p class="m-b-0 pt-2 m-2">Completed Bookings<span class="f-right"></span></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 col-xl-3">
+            <div class="card bg-c-pink order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20">Users</h6>
+                    <h2 class="text-right"><i class="fa fa-credit-card f-left m-2"></i><span id="users"></span></h2>
+                    <p class="m-b-0 pt-2 m-2">Total users<span class="f-right"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="text-center mb-5">
+      <h3 class="text-white">Upcoming Flights</h3>
+      <p class="lead text-white"></p>
+    </div>
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="d-flex flex-column flex-lg-row">
+          <span class="avatar avatar-text rounded-3 me-4 mb-2">MS</span>
+          <div class="row flex-fill">
+            <div class="col-sm-5">
+              <h4 class="h5">The trip to Mars will take about 7 months</h4>
+              <span class="badge bg-secondary">WORLDWIDE</span> <span class="badge bg-success">$800K - $2500K</span>
+            </div>
+            <div class="col-sm-4 py-2">
+              <span class="badge bg-secondary">Food</span>
+              <span class="badge bg-secondary">Suits</span>
+              <span class="badge bg-secondary">Training & Coaching</span>
+              <span class="badge bg-secondary">30/06/2022</span>
+            </div>
+            <div class="col-sm-3 text-lg-end">
+              <a asp-controller="" asp-action="" class="btn btn-dark stretched-link" >Read more</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="d-flex flex-column flex-lg-row">
+          <span class="avatar avatar-text rounded-3 me-4 bg-warning mb-2">VE</span>
+          <div class="row flex-fill">
+            <div class="col-sm-5">
+              <h4 class="h5">The trip to Venus will take about 15 months</h4>
+              <span class="badge bg-secondary">US</span> <span class="badge bg-success">$700K - $1200K</span>
+            </div>
+            <div class="col-sm-4 py-2">
+              <span class="badge bg-secondary">Foods</span>
+              <span class="badge bg-secondary">Suits</span>
+              <span class="badge bg-secondary">Training & Coaching</span>
+              <span class="badge bg-secondary">31/07/2022</span>
+            </div>
+            <div class="col-sm-3 text-lg-end">
+              <a asp-controller="" asp-action="" class="btn btn-success stretched-link">Read more</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="d-flex flex-column flex-lg-row">
+          <span class="avatar avatar-text rounded-3 me-4 bg-info mb-2">MO</span>
+          <div class="row flex-fill">
+            <div class="col-sm-5">
+              <h4 class="h5">Moon, 3 Days</h4>
+              <span class="badge bg-secondary">WORLDWIDE</span> <span class="badge bg-success">$350K - $500K</span>
+            </div>
+            <div class="col-sm-4 py-2">
+              <span class="badge bg-secondary">Foods</span>
+              <span class="badge bg-secondary">Suits</span>
+                <span class="badge bg-secondary">Insurance</span>
+                <span class="badge bg-secondary">Video Calls</span>
+                <span class="badge bg-secondary">Training & Coaching</span>
+                <span class="badge bg-secondary">20/06/2022</span>
+            </div>
+            <div class="col-sm-3 text-lg-end">
+              <a asp-controller="" asp-action="" class="btn btn-primary stretched-link">Read more</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+@section Scripts {
+    <script src="~/js/dashboard.js"></script>
+}
+

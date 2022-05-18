@@ -6,7 +6,6 @@ using SpaceAdventures.Application.Common.Queries.Aircrafts;
 
 namespace SpaceAdventures.API.Controllers.V1
 {
-
     [ApiController]
     [ApiVersion("1.0")]
     [Produces("application/json")]
@@ -37,7 +36,6 @@ namespace SpaceAdventures.API.Controllers.V1
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<AircraftsVm>> GetAircrafts()
         {
-
             return Ok(await _mediator.Send(new GetAircraftsQuery()));
         }
 

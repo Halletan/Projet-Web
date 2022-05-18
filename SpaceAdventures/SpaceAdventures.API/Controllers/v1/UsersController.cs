@@ -26,7 +26,8 @@ namespace SpaceAdventures.API.Controllers.v1
         /// <param name="userId"></param>
         /// <returns>List of user's roles</returns>
         [HttpGet]
-        // [Authorize]
+        [Authorize]
+        [Route("UserRoles")]
         public async Task<ActionResult<Roles>> GetUserRoles(string userId)
         {
             return await _mediator.Send(new GetUserRolesQuery(userId, false));  
