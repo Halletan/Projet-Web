@@ -38,6 +38,9 @@ namespace SpaceAdventures.API.Controllers.V2
         public async Task<ActionResult<PaginatedList<ClientsBriefDto>>> GetClientsWithPagination(
             [FromQuery] GetClientsWithPaginationQuery query)
         {
+
+            // Branch Policies
+
             return await _mediator.Send(query);
         }
     }
