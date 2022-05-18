@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using SpaceAdventures.Application.Common.Models.APIConsume;
@@ -12,17 +13,19 @@ namespace SpaceAdventures.Application.Common.Services
 {
     public class ISSCLService : IISSCLService
     {
-       private readonly HttpClient _httpClient;
-       private const string url = "http://api.open-notify.org/iss-now.json";
+        private readonly HttpClient _httpClient;
+        private IConfiguration _configuration;
+       
 
-       public ISSCLService(HttpClient httpClient)
+        public ISSCLService(HttpClient httpClient, IConfiguration configuration)
        {
            _httpClient=httpClient;
+           _configuration = configuration;
        }
 
        public async Task<ISSCLPosition> GetPosition(CancellationToken cancel)
        {
-           var response = await _httpClient.GetAsync(url);
+           var response = await _httpClient.GetAsync(_configuration["ISSCL:URL"]);
 
            if (!response.IsSuccessStatusCode)
            {

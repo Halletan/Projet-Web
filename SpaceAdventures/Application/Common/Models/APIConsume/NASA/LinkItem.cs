@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpaceAdventures.Application.Common.Models.APIConsume.NASA
 {
-    public class Link
+    public class LinkItem
     {
         public string href { get; set; }
         public string rel { get; set; }

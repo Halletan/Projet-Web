@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpaceAdventures.Application.Common.Models.APIConsume.NASA
+namespace SpaceAdventures.MVC.Models.NASA
 {
     public class Item
     {

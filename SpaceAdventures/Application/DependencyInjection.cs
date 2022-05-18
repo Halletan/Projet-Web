@@ -34,6 +34,7 @@ namespace Application
 
             services.AddHttpClient<IUsersManagementApiService, UsersManagementApiService>();
             services.AddHttpClient<IISSCLService, ISSCLService>();
+            services.AddHttpClient<INasaApiService, NasaApiService>();
 
             // Behaviors
 

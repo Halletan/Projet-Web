@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging.EventSource;
 
-namespace SpaceAdventures.Application.Common.Models.APIConsume.NASA
+namespace SpaceAdventures.MVC.Models.NASA
 {
     public class Data
     {
