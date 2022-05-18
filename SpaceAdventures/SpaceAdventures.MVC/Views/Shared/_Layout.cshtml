@@ -79,17 +79,15 @@
                         <a class="nav-link mx-1" href="#"><i class="fas fa-rocket m-1"></i>Itineraries</a>
                     </li>
                 }
-<<<<<<< Updated upstream
-                
-                
-            @if (!User.Identity.IsAuthenticated)
+
+
+                @if (!User.Identity.IsAuthenticated)
             {
                 <li class="nav-item">
                     <a class="nav-link mx-1" asp-controller="Home" asp-action="About"> <i class="fa-solid fa-address-card m-1"></i> About Us</a>
                 </li>
             }
-                
-=======
+
                 @if (!User.Identity.IsAuthenticated)
                 {
                     <li class="nav-item">
@@ -100,7 +98,7 @@
                     </li>
 
                 }
->>>>>>> Stashed changes
+
                 @{
                     System.Diagnostics.Debug.Assert(User.Identity != null, "User.Identity != null");
                 }
