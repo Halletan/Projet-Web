@@ -33,6 +33,7 @@ namespace Application
             services.AddScoped<IAircraftSeatService, AircraftSeatService>();
 
             services.AddHttpClient<IUsersManagementApiService, UsersManagementApiService>();
+            services.AddHttpClient<IISSCLService, ISSCLService>();
 
             // Behaviors
 
