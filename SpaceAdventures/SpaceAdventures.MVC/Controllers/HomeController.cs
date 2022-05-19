@@ -53,5 +53,11 @@ namespace SpaceAdventures.MVC.Controllers
         {
             return View();
         }
+
+        public IActionResult SolarSystem()
+        {
+            return View();
+        }
+
     }
 }
