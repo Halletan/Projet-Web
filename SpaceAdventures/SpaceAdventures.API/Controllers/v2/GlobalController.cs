@@ -39,7 +39,7 @@ namespace SpaceAdventures.API.Controllers.V2
             [FromQuery] GetClientsWithPaginationQuery query)
         {
 
-            // Branch Policies
+            // Branch Test 2
 
             return await _mediator.Send(query);
         }
