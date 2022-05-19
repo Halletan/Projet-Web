@@ -79,43 +79,35 @@
                         <a class="nav-link mx-1" href="#"><i class="fas fa-rocket m-1"></i>Itineraries</a>
                     </li>
                 }
-
-
-                @if (!User.Identity.IsAuthenticated)
+                
+                
+            @if (!User.Identity.IsAuthenticated)
             {
                 <li class="nav-item">
                     <a class="nav-link mx-1" asp-controller="Home" asp-action="About"> <i class="fa-solid fa-address-card m-1"></i> About Us</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-1" asp-controller="Home" asp-action="SolarSystem"> <i class="fa-solid fa-address-card m-1"></i> Solar System</a>
+                </li>
             }
 
-                @if (!User.Identity.IsAuthenticated)
-                {
-                    <li class="nav-item">
-                        <a class="nav-link mx-1" href="#"> <i class="fa-solid fa-address-card m-1"></i> About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-1" asp-controller="TestNasaApi" asp-action="Index"> <i class="fa-solid fa-address-card m-1"></i> Test Nasa</a>
-                    </li>
+            @{
+                System.Diagnostics.Debug.Assert(User.Identity != null, "User.Identity != null");
+            }
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li class="nav-item">
+                    <a class="nav-link btn btn-outline-light mx-1" asp-controller="Account" asp-action="Logout"> <i class="fa-solid fa-user-astronaut m-1"></i>Logout</a>
+                </li>
 
-                }
-
-                @{
-                    System.Diagnostics.Debug.Assert(User.Identity != null, "User.Identity != null");
-                }
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-outline-light mx-1" asp-controller="Account" asp-action="Logout"> <i class="fa-solid fa-user-astronaut m-1"></i>Logout</a>
-                    </li>
-
-                    <li><a class="nav-link mx-1 d-none"> @TempData["Message"]</a></li>
-                }
-                else
-                {
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-outline-light mx-1" asp-controller="Account" asp-action="Login"><i class="fa-solid fa-arrow-right-to-bracket m-1"></i>Login</a>
-                    </li>
-                }
+                <li><a class="nav-link mx-1 d-none"> @TempData["Message"]</a></li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link btn btn-outline-light mx-1" asp-controller="Account" asp-action="Login"><i class="fa-solid fa-arrow-right-to-bracket m-1"></i>Login</a>
+                </li>
+            }
             </ul>
         </div>
     </div>
@@ -124,7 +116,6 @@
 @*Navbar End*@
 
 @*Start Carousel*@
-
 
 @*End Carousel*@
 
