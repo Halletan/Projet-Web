@@ -18,7 +18,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
 
-
 // Serilog Service
 
 builder.Host.UseSerilog((ctx, lc) => lc
