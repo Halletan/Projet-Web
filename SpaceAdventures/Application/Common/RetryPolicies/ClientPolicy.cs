@@ -1,7 +1,12 @@
-﻿using Polly;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Polly;
 using Polly.Retry;
 
-namespace SpaceAdventures.MVC.Policies
+namespace SpaceAdventures.Application.Common.RetryPolicies
 {
     public class ClientPolicy
     {
@@ -16,8 +21,7 @@ namespace SpaceAdventures.MVC.Policies
             ImmediateHttpRetry =
                 Policy.HandleResult<HttpResponseMessage>(res => !res.IsSuccessStatusCode).RetryAsync(5);
 
-            // Here we wait a bit we retry again
-
+            // Here we wait a bit and we retry again
             LinearHttpRetry = Policy.HandleResult<HttpResponseMessage>(res => !res.IsSuccessStatusCode)
                 .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(3));
 

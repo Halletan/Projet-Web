@@ -4,7 +4,9 @@ using System.Net.Http.Json;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using SpaceAdventures.Application.Common.Exceptions;
+using SpaceAdventures.Application.Common.Models;
 using SpaceAdventures.Application.Common.Models.UsersAuth0ManagementApi;
+using SpaceAdventures.Application.Common.Queries.Clients.GetClientsWithPagination;
 using SpaceAdventures.Application.Common.Services.Interfaces;
 
 
@@ -12,28 +14,28 @@ namespace SpaceAdventures.Application.Common.Services
 {
     public class UsersManagementApiService : IUsersManagementApiService
     {
-        private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
+        private readonly HttpClient _httpClient;
 
-        public UsersManagementApiService(HttpClient httpClient, IConfiguration configuration)
+        #region Constructor
+        public UsersManagementApiService(IConfiguration configuration, IHttpClientFactory httpClientFactory)
         {
-            this._httpClient = httpClient;
             this._configuration = configuration;
+            _httpClient = httpClientFactory.CreateClient("RetryPolicy");
         }
+        #endregion
 
-
-        public async Task<Roles> GetUserRoles(string userId, bool includeTotals,
-            CancellationToken cancellation) 
+        #region Get User's Roles
+        public async Task<List<UserRole>> GetUserRoles(string userId, CancellationToken cancellation)
         {
-            var tokenResponse = await GetToken();
+            var tokenResponse = await GetToken();   
             var tokenAccess = tokenResponse.access_token;
 
-            var requestUrl =
-                $"https://dev-etahkomt.us.auth0.com/api/v2/users/{userId}/roles?include_totals=true";
+            var url = _configuration["Auth0ManagementApi:Audience"] + "users/" + userId + "/roles";
 
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenAccess);
 
-            var httpResponse = await _httpClient.GetAsync(requestUrl, cancellation);
+            var httpResponse = await _httpClient.GetAsync(url, cancellation);
 
             if (!httpResponse.IsSuccessStatusCode)
             {
@@ -41,22 +43,26 @@ namespace SpaceAdventures.Application.Common.Services
             }
 
             var content = await httpResponse.Content.ReadAsStringAsync(cancellation);
-            var roles = JsonConvert.DeserializeObject<Roles>(content);
+            var roles = JsonConvert.DeserializeObject<List<UserRole>>(content);
             return roles;
         }
+
+        #endregion
+
+        #region Collecting Access Token
 
         public async Task<TokenData> GetToken()
         {
             var response =
-            await _httpClient.PostAsync(_configuration["Auth0ManagementApi:Path"], new FormUrlEncodedContent(
-                new Dictionary<string, string>
-                {
-                    { "client_id", _configuration["Auth0ManagementApi:ClientId"] },
-                    { "grant_type", _configuration["Auth0ManagementApi:GrantType"] },
-                    { "client_secret", _configuration["Auth0ManagementApi:ClientSecret"] },
-                    { "audience", _configuration["Auth0ManagementApi:Audience"] },
+                await _httpClient.PostAsync(_configuration["Auth0ManagementApi:Path"], new FormUrlEncodedContent(
+                    new Dictionary<string, string>
+                    {
+                        { "client_id", _configuration["Auth0ManagementApi:ClientId"] },
+                        { "grant_type", _configuration["Auth0ManagementApi:GrantType"] },
+                        { "client_secret", _configuration["Auth0ManagementApi:ClientSecret"] },
+                        { "audience", _configuration["Auth0ManagementApi:Audience"] },
 
-                }));
+                    }));
 
             if (!response.IsSuccessStatusCode)
             {
@@ -67,5 +73,8 @@ namespace SpaceAdventures.Application.Common.Services
             var tokenData = JsonConvert.DeserializeObject<TokenData>(content);
             return tokenData;
         }
+
+        #endregion
+
     }
 }

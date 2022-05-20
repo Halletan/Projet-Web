@@ -15,6 +15,10 @@ namespace SpaceAdventures.API.Controllers.v1
     {
         private readonly IMediator _mediator;
 
+        /// <summary>
+        /// Users Constructor
+        /// </summary>
+        /// <param name="mediator"></param>
         public UsersController(IMediator mediator)
         {
             _mediator = mediator;
@@ -26,11 +30,14 @@ namespace SpaceAdventures.API.Controllers.v1
         /// <param name="userId"></param>
         /// <returns>List of user's roles</returns>
         [HttpGet]
-        [Authorize]
+        [Authorize(Policy = "read:users")]
         [Route("UserRoles")]
-        public async Task<ActionResult<Roles>> GetUserRoles(string userId)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<List<UserRole>>> GetUserRoles(string userId)
         {
-            return await _mediator.Send(new GetUserRolesQuery(userId, false));  
+            return await _mediator.Send(new GetUserRolesQuery(userId));
         }
     }
 }

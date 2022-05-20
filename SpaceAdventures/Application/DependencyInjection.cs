@@ -10,6 +10,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using SpaceAdventures.Application.Common.Behaviours;
+using SpaceAdventures.Application.Common.RetryPolicies;
 using SpaceAdventures.Application.Common.Services;
 using SpaceAdventures.Application.Common.Services.Interfaces;
 
@@ -21,6 +22,7 @@ namespace Application
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
+
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IPlanetService, PlanetService>();
@@ -31,13 +33,18 @@ namespace Application
             services.AddScoped<IFlightService, FlightService>();
             services.AddScoped<IBookingService, BookingService>();
             services.AddScoped<IAircraftSeatService, AircraftSeatService>();
+            services.AddScoped<IUsersManagementApiService, UsersManagementApiService>();
 
-            services.AddHttpClient<IUsersManagementApiService, UsersManagementApiService>();
+
             services.AddHttpClient<IISSCLService, ISSCLService>();
             services.AddHttpClient<INasaApiService, NasaApiService>();
 
-            // Behaviors
 
+            // Policy Service
+            services.AddSingleton<ClientPolicy>(new ClientPolicy());
+            services.AddHttpClient("RetryPolicy").AddPolicyHandler(request => new ClientPolicy().ExponentialHttpRetry);
+
+            // Behaviors
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
 
             return services;

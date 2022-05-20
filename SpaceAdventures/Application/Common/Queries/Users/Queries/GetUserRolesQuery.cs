@@ -5,9 +5,9 @@ using SpaceAdventures.Application.Common.Services.Interfaces;
 
 namespace SpaceAdventures.Application.Common.Queries.Users.Queries
 {
-    public record GetUserRolesQuery(string UserId, bool IncludeTotals) : IRequest<Roles>;
+    public record GetUserRolesQuery(string UserId) : IRequest<List<UserRole>>;
 
-    public class GetUserRolesQueryHandler : IRequestHandler<GetUserRolesQuery, Roles>
+    public class GetUserRolesQueryHandler : IRequestHandler<GetUserRolesQuery, List<UserRole>>
     {
         private readonly IUsersManagementApiService _usersManagementApiService;
 
@@ -16,9 +16,9 @@ namespace SpaceAdventures.Application.Common.Queries.Users.Queries
             _usersManagementApiService = usersManagementApiService;
         }
 
-        public async Task<Roles> Handle(GetUserRolesQuery request, CancellationToken cancellationToken)
+        public async Task<List<UserRole>> Handle(GetUserRolesQuery request, CancellationToken cancellationToken)
         {
-            return await _usersManagementApiService.GetUserRoles(request.UserId, request.IncludeTotals, cancellationToken);
+            return await _usersManagementApiService.GetUserRoles(request.UserId, cancellationToken);
         }
     }
 

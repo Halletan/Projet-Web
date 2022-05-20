@@ -1,5 +1,5 @@
 using SpaceAdventures.MVC.Configurations;
-using SpaceAdventures.MVC.Policies;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,13 +15,12 @@ builder.Services.AddAuthenticationServiceCollection(configuration);
 builder.Services.AddSameSiteNoneCookiesServiceCollection();
 
 
+// HttpClient Service
+
+builder.Services.AddHttpClient();
+
 builder.Services.AddControllersWithViews();
 
-// Policy Service
-builder.Services.AddSingleton<ClientPolicy>(new ClientPolicy());
-
-builder.Services.AddHttpClient("RetryPolicy").AddPolicyHandler(
-    request => new ClientPolicy().ExponentialHttpRetry);
 
 var app = builder.Build();
 
