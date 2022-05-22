@@ -16,7 +16,6 @@ namespace SpaceAdventures.API.Controllers.V1
     {
         private readonly IMediator _mediator;
         
-        
         /// <summary>
         /// Clients Controller Constructor
         /// </summary>

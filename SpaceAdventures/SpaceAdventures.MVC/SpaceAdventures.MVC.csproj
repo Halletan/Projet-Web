@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Services\Interfaces\" />
     <Folder Include="wwwroot\backgrounds\" />
   </ItemGroup>
 

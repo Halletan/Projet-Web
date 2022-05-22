@@ -15,9 +15,8 @@ builder.Services.AddAuthenticationServiceCollection(configuration);
 builder.Services.AddSameSiteNoneCookiesServiceCollection();
 
 
-// HttpClient Service
-
-builder.Services.AddHttpClient();
+// Services
+builder.Services.AddServiceCollection();
 
 builder.Services.AddControllersWithViews();
 

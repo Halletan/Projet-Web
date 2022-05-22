@@ -2,7 +2,7 @@
     $.ajax({
         type: 'GET',
         dataType: 'json',
-        url: '/global/cars',
+        url: '',
         success: function (data) {
             $("#cars").append(data.length);
         },
@@ -12,9 +12,10 @@
     $.ajax({
         type: 'GET',
         dataType: 'json',
-        url: '/global/customers',
+        url: "/Clients/GetClientsCount",
         success: function (data) {
-            $("#customers").append(data.length);
+            console.log(data);
+            $("#customers").append(data);
         },
         cache: false
     });
@@ -22,7 +23,7 @@
     $.ajax({
         type: 'GET',
         dataType: 'json',
-        url: '/global/bookings',
+        url: '',
         success: function (data) {
             $("#bookings").append(data.length);
         },
@@ -32,7 +33,7 @@
     $.ajax({
         type: 'GET',
         dataType: 'json',
-        url: '/global/invoices',
+        url: '',
         success: function (data) {
             $("#invoices").append(data.length);
         },
