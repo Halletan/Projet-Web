@@ -9,8 +9,11 @@ namespace SpaceAdventures.MVC.Configurations
         public static IServiceCollection AddServiceCollection(this IServiceCollection services)
         {
             services.AddHttpContextAccessor();
-            services.AddHttpClient<IClientService, ClientService>();
             services.AddHttpClient<IGlobalService, GlobalService>();
+            services.AddHttpClient<IClientService, ClientService>();
+            services.AddHttpClient<IAircraftService, AircraftService>();
+            services.AddHttpClient<IBookingService, BookingService>();
+            services.AddHttpClient<IFlightService, FlightService>();
             return services;
 
         }
