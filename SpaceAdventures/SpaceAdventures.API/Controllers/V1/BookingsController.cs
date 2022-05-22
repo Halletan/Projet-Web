@@ -38,7 +38,6 @@ namespace SpaceAdventures.API.Controllers.V1
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<BookingsVm>> GetBookings()
         {
-
             return Ok(await _mediator.Send(new GetBookingsQuery()));
         }
 

@@ -2,9 +2,9 @@
     $.ajax({
         type: 'GET',
         dataType: 'json',
-        url: '',
+        url: "/Global/GetAircraftsCount",
         success: function (data) {
-            $("#cars").append(data.length);
+            $("#aircraft").append(data);
         },
         cache: false
     });
@@ -23,9 +23,9 @@
     $.ajax({
         type: 'GET',
         dataType: 'json',
-        url: '',
+        url: "/Global/GetBookingsCount",
         success: function (data) {
-            $("#bookings").append(data.length);
+            $("#bookings").append(data);
         },
         cache: false
     });
@@ -35,7 +35,7 @@
         dataType: 'json',
         url: '',
         success: function (data) {
-            $("#invoices").append(data.length);
+            $("#users").append(data);
         },
         cache: false
     });

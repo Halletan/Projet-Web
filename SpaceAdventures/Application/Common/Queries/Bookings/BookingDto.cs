@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Common.Interfaces;
 
 namespace SpaceAdventures.Application.Common.Queries.Bookings
 {
-    public  class BookingDto
+    public  class BookingDto : IMapFrom<Booking>
     {
-
         public int IdBooking { get; set; }
         public int IdFlight { get; set; }
         public int IdClient { get; set; }

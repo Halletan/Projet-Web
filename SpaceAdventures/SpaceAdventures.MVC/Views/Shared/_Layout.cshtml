@@ -87,11 +87,11 @@
                     <a class="nav-link mx-1" asp-controller="Home" asp-action="About"> <i class="fa-solid fa-address-card m-1"></i> About Us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mx-1" asp-controller="Home" asp-action="SolarSystem"> <i class="fa-solid fa-address-card m-1"></i> Solar System</a>
+                    <a class="nav-link mx-1" asp-controller="Home" asp-action="SolarSystem"> <i class="fa-solid fa-rocket - m-1"></i> Solar System</a>
                 </li>
             }
 
-            @{
+            @{  
                 System.Diagnostics.Debug.Assert(User.Identity != null, "User.Identity != null");
             }
             @if (User.Identity.IsAuthenticated)
