@@ -33,8 +33,30 @@ body {
     height: 100vh;
 }
 
-/************Sticky Footer CSS ***************/
 
+/**** DataTable CSS *****/
+
+#datatable {
+    background-color: rgba(255, 255, 255, 0.5)
+}
+
+#datatable_filter {
+    color: white
+}
+
+#datatable_length {
+    color: white
+}
+
+#datatable_info {
+    color: white
+}
+
+.dataTableColumn {
+   font-size: smaller         
+}
+
+/************Sticky Footer CSS ***************/
 .footer {
     position: absolute;
     bottom: 0;

@@ -6,13 +6,13 @@
 
 <link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 
-<h1>List Of Customers</h1>
+<h1 class="m-4 p-4 text-center text-white"></h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create"> <i class="fa-solid fa-plus"></i> Add New Customer</a>
 </p>
-<table id="datatable" class="table">
-    <thead>
+<table id="datatable" class="table border rounded">
+    <thead class="dataTableColumn">
     <tr>
         <th>Customer ID</th>
         <th>First name</th>
@@ -33,7 +33,7 @@
     </thead>
     <tbody>
     @foreach (var item in @Model.ClientsList) {
-        <tr>
+        <tr class="dataTableColumn">
             <td>
                 @Html.DisplayFor(modelItem => item.IdClient)
             </td>
@@ -53,9 +53,8 @@
                 @Html.DisplayFor(modelItem => item.IdMemberShipType)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <a class="btn btn-success btn-sm" asp-action="" asp-route-id="@item.IdClient">  <i class="fa-solid fa-pen m-2"></i></a> |
+                <a class="btn btn-danger btn-sm" asp-action="" asp-route-id="@item.IdClient"><i class="fa-solid fa-trash m-2"></i></a>
             </td>
         </tr>
     }

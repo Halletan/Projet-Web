@@ -16,7 +16,6 @@ namespace SpaceAdventures.Application.Common.Behaviours
             _logger = logger;
         }
 
-
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
             // Pre Logic
