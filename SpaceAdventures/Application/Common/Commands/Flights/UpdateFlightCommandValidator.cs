@@ -24,8 +24,21 @@ namespace SpaceAdventures.Application.Common.Commands.Flights
                 .GreaterThanOrEqualTo(DateTime.Now).WithMessage("Arrival time cannot be in the past");
 
 
-            // control for existing Idaircraft
-            // control for existing IdItineray
+            // Control existing IdAircraft
+            RuleFor(f => f.flightInput.IdAircraft)
+                .Must((idaircraft) =>
+                {
+                    bool exists = flightService.AircraftExists(idaircraft);
+                    return !exists;
+                }).WithMessage("This aircraft doesn't exist !");
+
+            // Control existing IdItinerary
+            RuleFor(f => f.flightInput.IdItinerary)
+                .Must((iditinerary) =>
+                {
+                    bool exists = flightService.ItineraryExists(iditinerary);
+                    return !exists;
+                }).WithMessage("This itinerary doesn't exist !");
 
             // FlightStatus validation ?
         }

@@ -102,6 +102,17 @@ namespace SpaceAdventures.Application.Common.Services
             }
             _context.Flights.Remove(flight);
         }
+
+        public bool AircraftExists(int id)
+        {
+            return _context.Aircraft.Any(a => a.IdAircraft == id);
+        }
+        public bool ItineraryExists(int id)
+        {
+            return _context.Itineraries.Any(i => i.IdItinerary == id);
+        }
+
+
     }
 }
 

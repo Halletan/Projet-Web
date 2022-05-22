@@ -18,7 +18,20 @@ namespace SpaceAdventures.Application.Common.Commands.Bookings
                 .InclusiveBetween(1, 1000000).WithMessage("Booking amount should be between 1 and 1000000");
 
             // Control existing IdFlight
+            RuleFor(b => b.bookingInput.IdFlight)
+                .Must((idflight) =>
+                {
+                    bool exists = bookingService.FlightExists(idflight);
+                    return !exists;
+                }).WithMessage("This flight doesn't exist !");
+
             // Control existing IdClient
+            RuleFor(b => b.bookingInput.IdClient)
+                .Must((idclient) =>
+                {
+                    bool exists = bookingService.ClientExists(idclient);
+                    return !exists;
+                }).WithMessage("This client doesn't exist !");
 
         }
     }

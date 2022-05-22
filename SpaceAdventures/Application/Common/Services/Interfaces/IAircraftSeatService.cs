@@ -15,7 +15,9 @@ namespace SpaceAdventures.Application.Common.Services.Interfaces
         Task<AircraftSeatDto> CreateAircraftSeat(AircraftSeatInput AircraftSeatInput, CancellationToken cancellation = default);
         Task<AircraftSeatDto> UpdateAircraftSeat(int AircraftSeatId, AircraftSeatInput AircraftSeatInput, CancellationToken cancellation = default);
         Task DeleteAircraftSeat(int AircraftSeatId, CancellationToken cancellation = default);
-        //Task<bool> AircraftSeatExists(string email);
+       
         //bool AircraftSeatExists(int? id, AircraftSeatInput AircraftSeatInput);
+        bool BookingExists(int id);
+        bool FlightExists(int id);
     }
 }
