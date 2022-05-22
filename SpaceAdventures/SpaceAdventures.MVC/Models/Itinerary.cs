@@ -7,7 +7,7 @@
         public int IdAirport1 { get; set; }
         public int IdAirport2 { get; set; }
         public double Rate { get; set; }
-        public virtual ICollection<Flight> Flights { get; set; }
+        
     }
 
     [Serializable]
