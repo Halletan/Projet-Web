@@ -75,8 +75,17 @@
                             <li><a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-trash m-2"></i> Delete</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-1" href="#"><i class="fas fa-rocket m-1"></i>Itineraries</a>
+                    <li class="nav-item dropdown">
+                        
+                        <a class="nav-link mx-2 dropdown-toggle" asp-controller="" asp-action="" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-rocket m-1"></i>Other
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-list m-2"></i>Aircrafts </a></li>
+                            <li><a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-plus m-2"></i>Airports</a></li>
+                            <li><a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-pen m-2"></i>Itineraries</a></li>
+                            <li><a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-trash m-2"></i>Other</a></li>
+                        </ul>
                     </li>
                 }
                 
