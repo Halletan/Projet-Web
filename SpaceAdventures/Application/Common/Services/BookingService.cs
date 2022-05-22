@@ -99,14 +99,19 @@ namespace SpaceAdventures.Application.Common.Services
             await _context.SaveChangesAsync(cancellation);
         }
 
-        //public async Task<bool> BookingExists(string email)
-        //{
-        //    return await _context.Bookings.AnyAsync(c => c.Email == email);
-        //}
-
         //public bool BookingExists(int? id, BookingInput BookingInput)
         //{
-        //    return _context.Bookings.Any(c => c.IdBooking != id && c.Email == BookingInput.Email);
+        //    return _context.Bookings.Any(c => c.IdBooking != id);
         //}
+
+        public bool FlightExists(int id)
+        {
+            return _context.Flights.Any(f => f.IdFlight == id);
+        }
+        public bool ClientExists(int id)
+        {
+            return _context.Clients.Any(c => c.IdClient == id);
+        }
+
     }
 }

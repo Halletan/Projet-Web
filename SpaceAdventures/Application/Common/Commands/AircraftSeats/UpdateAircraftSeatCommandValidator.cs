@@ -25,7 +25,23 @@ namespace SpaceAdventures.Application.Common.Commands.AircraftSeats
                 .MaximumLength(50).WithMessage("Passenger lastname should be maximum 50 characters");
 
             // Control on existing IdBooking
+            RuleFor(a => a.aircraftSeatInput.IdBooking)
+                .Must((idbooking) =>
+                {
+                    bool exists = aircraftSeatService.BookingExists(idbooking);
+                    return !exists;
+                }).WithMessage("This booking doesn't exist !");
+
             // Control on existing IdFlight
+            RuleFor(a => a.aircraftSeatInput.IdFlight)
+                .Must((idflight) =>
+                {
+                    bool exists = aircraftSeatService.FlightExists(idflight);
+                    return !exists;
+                }).WithMessage("This flight doesn't exist !");
+            
+            
+            
             // Reg ex for the name
 
         }

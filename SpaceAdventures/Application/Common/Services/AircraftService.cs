@@ -98,6 +98,10 @@ namespace SpaceAdventures.Application.Common.Services
         _context.Aircraft.Remove(aircraft);
         }
 
-       
+        //public bool AircraftExists(int? id, AircraftInput aircraftInput)
+        //{
+        //    return _context.Aircraft.Any(c => c.IdAircraft == id);
+        //}
+
     }
 }
