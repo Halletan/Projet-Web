@@ -1,9 +1,8 @@
 ﻿using SpaceAdventures.MVC.Models;
 
-namespace SpaceAdventures.MVC.Services.Interfaces
+namespace SpaceAdventures.MVC.Services.Interfaces;
+
+public interface IItineraryService
 {
-    public interface IItineraryService
-    {
-        Task<Itineraries> GetAllItineraries(string? accessToken);
-    }
+    Task<Itineraries> GetAllItineraries(string? accessToken);
 }

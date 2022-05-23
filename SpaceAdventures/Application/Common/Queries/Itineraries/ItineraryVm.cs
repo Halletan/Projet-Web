@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Common.Interfaces;
-using AutoMapper;
-using Domain.Entities;
+﻿namespace SpaceAdventures.Application.Common.Queries.Itineraries;
 
-namespace SpaceAdventures.Application.Common.Queries.Itineraries
+public class ItineraryVm
 {
-    public class ItineraryVm
-    {
-        public IList<ItineraryDto> ItinerariesList { get; set; }
-    }
+    public IList<ItineraryDto> ItinerariesList { get; set; }
 }

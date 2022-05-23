@@ -1,21 +1,22 @@
-﻿<!DOCTYPE html>
+﻿@using System.Diagnostics
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - SpaceAdventures.MVC</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.css"/>
-    <link rel="stylesheet" href="~/SpaceAdventures.MVC.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/NavBar.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/SpaceAdventures.MVC.styles.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/NavBar.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" asp-append-version="true"/>
 
 </head>
 
 <span id="message" class="d-none">Logged as : @TempData["Message"]</span>
 
-<body class="bg"style="background-image:url('/backgrounds/backround_2.jpg')">
+<body class="bg"style="background-image: url('/backgrounds/backround_2.jpg')">
 
 
 @*Navbar Start*@
@@ -34,7 +35,7 @@
                 </li>
 
                 @{
-                    System.Diagnostics.Debug.Assert(User.Identity != null, "User.Identity != null");
+                    Debug.Assert(User.Identity != null, "User.Identity != null");
                 }
                 @if (User.Identity.IsAuthenticated)
                 {
@@ -46,12 +47,24 @@
                             <i class="fa-solid fa-user-cog m-1"></i>Users
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-list m-2"></i> All</a></li>
-                            <li><a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-plus m-2"></i> New</a></li>
-                            <li><a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-pen m-2"></i> Update</a></li>
-                            <li><a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-trash m-2"></i> Delete</a></li>
-                            <li><a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-eye m-2"></i> Assign Role</a></li>
-                            <li><a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-key m-2"></i>Send Password Reset</a></li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-list m-2"></i> All</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-plus m-2"></i> New</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-pen m-2"></i> Update</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-trash m-2"></i> Delete</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-eye m-2"></i> Assign Role</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-key m-2"></i>Send Password Reset</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -59,55 +72,75 @@
                             <i class="fas fa-cart-shopping m-1"></i>Bookings
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" asp-controller="" asp-action=""><i class="fa-solid fa-list m-2"></i> All</a></li>
-                            <li><a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-plus m-2"></i>New</a></li>
-                            <li><a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-pen m-2"></i> Update</a></li>
-                            <li><a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-trash m-2"></i> Delete</a></li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="" asp-action=""><i class="fa-solid fa-list m-2"></i> All</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-plus m-2"></i>New</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-pen m-2"></i> Update</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-trash m-2"></i> Delete</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        
+
                         <a class="nav-link mx-2 dropdown-toggle" asp-controller="" asp-action="" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-gears m-2"></i>Settings
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" asp-controller="Aircrafts" asp-action="GetAircrafts"> <i class="fa-solid fa-jet-fighter m-2"></i>Aircrafts </a></li>
-                            <li><a class="dropdown-item" asp-controller="Airports" asp-action="GetAirports"> <i class="fa-solid fa-plane-departure m-2"></i>Airports</a></li>
-                            <li><a class="dropdown-item" asp-controller="Itineraries" asp-action="GetItineraries"> <i class="fa-solid fa-rocket m-2"></i>Itineraries</a></li>
-                            <li><a class="dropdown-item" asp-controller="Clients" asp-action="GetClients"> <i class="fa-solid fa-user-group m-2"></i>Customers</a></li>
-                            <li><a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-rocket m-2"></i>Other</a></li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Aircrafts" asp-action="GetAircrafts"> <i class="fa-solid fa-jet-fighter m-2"></i>Aircrafts </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Airports" asp-action="GetAirports"> <i class="fa-solid fa-plane-departure m-2"></i>Airports</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Itineraries" asp-action="GetItineraries"> <i class="fa-solid fa-rocket m-2"></i>Itineraries</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Clients" asp-action="GetClients"> <i class="fa-solid fa-user-group m-2"></i>Customers</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-rocket m-2"></i>Other</a>
+                            </li>
                         </ul>
                     </li>
                 }
-                
-                
-            @if (!User.Identity.IsAuthenticated)
-            {
-                <li class="nav-item">
-                    <a class="nav-link mx-1" asp-controller="Home" asp-action="About"> <i class="fa-solid fa-address-card m-1"></i> About Us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link mx-1" asp-controller="Home" asp-action="SolarSystem"> <i class="fa-solid fa-rocket - m-1"></i> Solar System</a>
-                </li>
-            }
 
-            @{  
-                System.Diagnostics.Debug.Assert(User.Identity != null, "User.Identity != null");
-            }
-            @if (User.Identity.IsAuthenticated)
-            {
-                <li class="nav-item">
-                    <a class="nav-link btn btn-outline-light mx-1" asp-controller="Account" asp-action="Logout"> <i class="fa-solid fa-user-astronaut m-1"></i>Logout</a>
-                </li>
 
-                <li><a class="nav-link mx-1 d-none"> @TempData["Message"]</a></li>
-            }
-            else
-            {
-                <li class="nav-item">
-                    <a class="nav-link btn btn-outline-light mx-1" asp-controller="Account" asp-action="Login"><i class="fa-solid fa-arrow-right-to-bracket m-1"></i>Login</a>
-                </li>
-            }
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link mx-1" asp-controller="Home" asp-action="About"> <i class="fa-solid fa-address-card m-1"></i> About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-1" asp-controller="Home" asp-action="SolarSystem"> <i class="fa-solid fa-rocket - m-1"></i> Solar System</a>
+                    </li>
+                }
+
+                @{
+                    Debug.Assert(User.Identity != null, "User.Identity != null");
+                }
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-light mx-1" asp-controller="Account" asp-action="Logout"> <i class="fa-solid fa-user-astronaut m-1"></i>Logout</a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link mx-1 d-none"> @TempData["Message"]</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-light mx-1" asp-controller="Account" asp-action="Login"><i class="fa-solid fa-arrow-right-to-bracket m-1"></i>Login</a>
+                    </li>
+                }
             </ul>
         </div>
     </div>
@@ -133,12 +166,10 @@
 </body>
 </html>
 
-<script src="~/lib/toastr.js/toastr.min.js"></script>   
+<script src="~/lib/toastr.js/toastr.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 <script src="~/js/toast-notifications.js" asp-append-version="true"></script>
 
-@await RenderSectionAsync("Scripts", required: false)
-
-
+@await RenderSectionAsync("Scripts", false)

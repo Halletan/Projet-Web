@@ -1,21 +1,23 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using SpaceAdventures.Domain.Entities;
 
-namespace SpaceAdventures.Application.Common.Interfaces
+namespace SpaceAdventures.Application.Common.Interfaces;
+
+public interface ISpaceAdventureDbContext
 {
-    public interface ISpaceAdventureDbContext
-    {
-        DbSet<Aircraft> Aircraft { get; set; }
-        DbSet<AircraftSeat> AircraftSeats { get; set; }
-        DbSet<Airport> Airports { get; set; }
-        DbSet<Booking> Bookings { get; set; }
-        DbSet<Client> Clients { get; set; }
-        DbSet<Flight> Flights { get; set; }
-        DbSet<Itinerary> Itineraries { get; set; }
-        DbSet<MembershipType> MembershipTypes { get; set; }
-        DbSet<Planet> Planets { get; set; }
+    DbSet<Aircraft> Aircraft { get; set; }
+    DbSet<AircraftSeat> AircraftSeats { get; set; }
+    DbSet<Airport> Airports { get; set; }
+    DbSet<Booking> Bookings { get; set; }
+    DbSet<Client> Clients { get; set; }
+    DbSet<Flight> Flights { get; set; }
+    DbSet<Itinerary> Itineraries { get; set; }
+    DbSet<MembershipType> MembershipTypes { get; set; }
+    DbSet<Planet> Planets { get; set; }
+    DbSet<Role> Roles { get; set; }
+    DbSet<User> Users { get; set; }
 
-        // Ajout by Antoine
-        Task<int> SaveChangesAsync(CancellationToken cancellation);
-    }
+    // Ajout by Antoine
+    Task<int> SaveChangesAsync(CancellationToken cancellation);
 }

@@ -1,142 +1,116 @@
-.order-card {
-    color: #fff;
-}
+.order-card { color: #fff; }
 
-.bg-c-blue {
-    background: linear-gradient(45deg,#FBCEB1,#73b4ff);
-}
+.bg-c-blue { background: linear-gradient(45deg, #FBCEB1, #73b4ff); }
 
-.bg-c-green {
-    background: linear-gradient(45deg,#FBCEB1,#E9967A);
-}
+.bg-c-green { background: linear-gradient(45deg, #FBCEB1, #E9967A); }
 
-.bg-c-yellow {
-    background: linear-gradient(45deg,#FFB64D,#ffcb80);
-}
+.bg-c-yellow { background: linear-gradient(45deg, #FFB64D, #ffcb80); }
 
-.bg-c-pink {
-    background: linear-gradient(45deg,#FBCEB1,#ff869a);
-}
+.bg-c-pink { background: linear-gradient(45deg, #FBCEB1, #ff869a); }
 
 
 .card {
-    border-radius: 5px;
-    -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
-    box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
-    border: none;
-    margin-bottom: 30px;
+    -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
     -webkit-transition: all 0.3s ease-in-out;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+    margin-bottom: 30px;
     transition: all 0.3s ease-in-out;
 }
 
-    .card .card-block {
-        padding: 25px;
-    }
+.card .card-block { padding: 25px; }
 
-.order-card i {
-    font-size: 26px;
-}
+.order-card i { font-size: 26px; }
 
-.f-left {
-    float: left;
-}
+.f-left { float: left; }
 
-.f-right {
-    float: right;
-}
+.f-right { float: right; }
 
 
-@media(min-width: 992px) {
+@media (min-width: 992px) {
     .navbar-expand-custom {
         -ms-flex-flow: row nowrap;
-        flex-flow: row nowrap;
         -ms-flex-pack: start;
+        flex-flow: row nowrap;
         justify-content: flex-start;
     }
 
-        .navbar-expand-custom .navbar-nav {
-            -ms-flex-direction: row;
-            flex-direction: row;
-        }
+    .navbar-expand-custom .navbar-nav {
+        -ms-flex-direction: row;
+        flex-direction: row;
+    }
 
-        .navbar-expand-custom .navbar-toggler {
-            display: none;
-        }
+    .navbar-expand-custom .navbar-toggler { display: none; }
 
-        .navbar-expand-custom .navbar-collapse {
-            display: -ms-flexbox !important;
-            display: flex !important;
-            -ms-flex-preferred-size: auto;
-            flex-basis: auto;
-        }
+    .navbar-expand-custom .navbar-collapse {
+        -ms-flex-preferred-size: auto;
+        display: -ms-flexbox !important;
+        display: flex !important;
+        flex-basis: auto;
+    }
 }
 
 
 @media (max-width: 991px) {
-    #navbarSupportedContent ul li a {
-        padding: 12px 30px;
-    }
+    #navbarSupportedContent ul li a { padding: 12px 30px; }
 
     .hori-selector {
-        margin-top: 0px;
-        margin-left: 10px;
+        border-bottom-left-radius: 25px;
         border-radius: 0;
         border-top-left-radius: 25px;
-        border-bottom-left-radius: 25px;
+        margin-left: 10px;
+        margin-top: 0px;
     }
 
-        .hori-selector .left,
-        .hori-selector .right {
-            right: 10px;
-        }
+    .hori-selector .left,
+    .hori-selector .right { right: 10px; }
 
-        .hori-selector .left {
-            top: -25px;
-            left: auto;
-        }
+    .hori-selector .left {
+        left: auto;
+        top: -25px;
+    }
 
-        .hori-selector .right {
-            bottom: -25px;
-        }
+    .hori-selector .right { bottom: -25px; }
 
-        .hori-selector .left:before {
-            left: -25px;
-            top: -25px;
-        }
+    .hori-selector .left:before {
+        left: -25px;
+        top: -25px;
+    }
 
-        .hori-selector .right:before {
-            bottom: -25px;
-            left: -25px;
-        }
+    .hori-selector .right:before {
+        bottom: -25px;
+        left: -25px;
+    }
 }
 
 
 #app {
-    width: 100%;
-    display: flex;
     align-items: center;
+    display: flex;
     justify-content: center;
+    width: 100%;
 }
 
 .summary {
-    width: 1020px;
     display: flex;
     flex-direction: row;
     flex-shrink: 0;
     justify-content: space-between;
     margin: 10px;
+    width: 1020px;
 }
 
 .summary--tiles--value {
+    fill: #707173;
     font-family: 'Montserrat', sans-serif;
     font-size: 25px;
-    fill: #707173
 }
 
 .summary--tiles--label {
-    text-align: center;
-    font-size: 15px;
     fill: #BA6A5D;
+    font-size: 15px;
+    text-align: center;
 }
 
 
@@ -148,61 +122,51 @@
 
 /**********/
 
-body {
-    background: #eee;
-}
+body { background: #eee; }
+
+.card { box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%); }
 
 .card {
-    box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
-}
-
-.card {
-    position: relative;
+    background-clip: border-box;
+    background-color: #fff;
+    border: 0 solid rgba(0, 0, 0, .125);
+    border-radius: 1rem;
     display: flex;
     flex-direction: column;
     min-width: 0;
+    position: relative;
     word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
-    border: 0 solid rgba(0,0,0,.125);
-    border-radius: 1rem;
 }
 
 .card-body {
-    -webkit-box-flex: 1;
     -ms-flex: 1 1 auto;
+    -webkit-box-flex: 1;
     flex: 1 1 auto;
     padding: 1.5rem 1.5rem;
 }
 
 .avatar-text {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
     -ms-flex-align: center;
+    -ms-flex-pack: center;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
     align-items: center;
     background: #000;
     color: #fff;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
     font-weight: 700;
+    justify-content: center;
 }
 
 .avatar {
-    width: 3rem;
     height: 3rem;
+    width: 3rem;
 }
 
-.rounded-3 {
-    border-radius: 0.5rem !important;
-}
+.rounded-3 { border-radius: 0.5rem !important; }
 
-.mb-2 {
-    margin-bottom: 0.5rem !important;
-}
+.mb-2 { margin-bottom: 0.5rem !important; }
 
-.me-4 {
-    margin-right: 1.5rem !important;
-}
+.me-4 { margin-right: 1.5rem !important; }

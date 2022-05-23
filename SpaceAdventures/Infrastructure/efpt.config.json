@@ -1,71 +1,71 @@
 ﻿{
-   "CodeGenerationMode": 0,
-   "ContextClassName": "SpaceAdventuresDbContext",
-   "ContextNamespace": null,
-   "DefaultDacpacSchema": null,
-   "FilterSchemas": false,
-   "IncludeConnectionString": false,
-   "ModelNamespace": null,
-   "OutputContextPath": null,
-   "OutputPath": ".\/Persistence",
-   "ProjectRootNamespace": "Infrastructure",
-   "Schemas": null,
-   "SelectedHandlebarsLanguage": 0,
-   "SelectedToBeGenerated": 1,
-   "Tables": [
-      {
-         "Name": "[dbo].[Aircraft]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[AircraftSeat]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Airport]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Booking]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Client]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Flight]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Itinerary]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[MembershipType]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Planet]",
-         "ObjectType": 0
-      }
-   ],
-   "UiHint": "madi.SpaceAdventures",
-   "UseBoolPropertiesWithoutDefaultSql": false,
-   "UseDatabaseNames": false,
-   "UseDbContextSplitting": false,
-   "UseFluentApiOnly": true,
-   "UseHandleBars": false,
-   "UseHierarchyId": false,
-   "UseInflector": true,
-   "UseLegacyPluralizer": false,
-   "UseManyToManyEntity": false,
-   "UseNoConstructor": false,
-   "UseNoDefaultConstructor": false,
-   "UseNoNavigations": false,
-   "UseNoObjectFilter": false,
-   "UseNodaTime": false,
-   "UseNullableReferences": false,
-   "UseSchemaFolders": false,
-   "UseSpatial": false
+  "CodeGenerationMode": 0,
+  "ContextClassName": "SpaceAdventuresDbContext",
+  "ContextNamespace": null,
+  "DefaultDacpacSchema": null,
+  "FilterSchemas": false,
+  "IncludeConnectionString": false,
+  "ModelNamespace": null,
+  "OutputContextPath": null,
+  "OutputPath": ".\/Persistence",
+  "ProjectRootNamespace": "Infrastructure",
+  "Schemas": null,
+  "SelectedHandlebarsLanguage": 0,
+  "SelectedToBeGenerated": 1,
+  "Tables": [
+    {
+      "Name": "[dbo].[Aircraft]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[AircraftSeat]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[Airport]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[Booking]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[Client]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[Flight]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[Itinerary]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[MembershipType]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[Planet]",
+      "ObjectType": 0
+    }
+  ],
+  "UiHint": "madi.SpaceAdventures",
+  "UseBoolPropertiesWithoutDefaultSql": false,
+  "UseDatabaseNames": false,
+  "UseDbContextSplitting": false,
+  "UseFluentApiOnly": true,
+  "UseHandleBars": false,
+  "UseHierarchyId": false,
+  "UseInflector": true,
+  "UseLegacyPluralizer": false,
+  "UseManyToManyEntity": false,
+  "UseNoConstructor": false,
+  "UseNoDefaultConstructor": false,
+  "UseNoNavigations": false,
+  "UseNoObjectFilter": false,
+  "UseNodaTime": false,
+  "UseNullableReferences": false,
+  "UseSchemaFolders": false,
+  "UseSpatial": false
 }

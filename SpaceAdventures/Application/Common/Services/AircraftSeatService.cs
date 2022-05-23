@@ -7,110 +7,95 @@ using SpaceAdventures.Application.Common.Exceptions;
 using SpaceAdventures.Application.Common.Interfaces;
 using SpaceAdventures.Application.Common.Queries.AircraftSeats;
 using SpaceAdventures.Application.Common.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SpaceAdventures.Application.Common.Services
+namespace SpaceAdventures.Application.Common.Services;
+
+public class AircraftSeatService : IAircraftSeatService
 {
-    public class AircraftSeatService : IAircraftSeatService
+    private readonly ISpaceAdventureDbContext _context;
+    private readonly IMapper _mapper;
+
+    public AircraftSeatService(ISpaceAdventureDbContext context, IMapper mapper)
     {
-        private readonly ISpaceAdventureDbContext _context;
-        private readonly IMapper _mapper;
+        _context = context;
+        _mapper = mapper;
+    }
 
-        public AircraftSeatService(ISpaceAdventureDbContext context, IMapper mapper)
+    public async Task<AircraftSeatsVm> GetAllAircraftSeats(CancellationToken cancellationToken)
+    {
+        return new AircraftSeatsVm
         {
-            _context = context;
-            _mapper = mapper;
-        }
+            AircraftSeatsList = await _context.AircraftSeats
+                .ProjectTo<AircraftSeatDto>(_mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken)
+        };
+    }
 
-        public async Task<AircraftSeatsVm> GetAllAircraftSeats(CancellationToken cancellationToken)
+    public async Task<AircraftSeatDto> GetAircraftSeatById(int aircraftSeatId, CancellationToken cancellation = default)
+    {
+        var aircraftSeat = await _context.AircraftSeats.FindAsync(aircraftSeatId);
+        if (aircraftSeat == null) throw new NotFoundException("AircraftSeat", aircraftSeatId);
+
+        return _mapper.Map<AircraftSeatDto>(aircraftSeat);
+    }
+
+    public async Task<AircraftSeatDto> CreateAircraftSeat(AircraftSeatInput aircraftSeatInput,
+        CancellationToken cancellation = default)
+    {
+        var aircraftSeat = _mapper.Map<AircraftSeat>(aircraftSeatInput);
+
+        try
         {
-            return new AircraftSeatsVm
-            {
-                     AircraftSeatsList = await _context.AircraftSeats
-                    .ProjectTo<AircraftSeatDto>(_mapper.ConfigurationProvider)
-                    
-                    .ToListAsync(cancellationToken)
-            };
-        }
-
-        public async Task<AircraftSeatDto> GetAircraftSeatById(int aircraftSeatId, CancellationToken cancellation = default)
-        {
-            var aircraftSeat = await _context.AircraftSeats.FindAsync(aircraftSeatId);
-            if (aircraftSeat == null)
-            {
-                throw new NotFoundException("AircraftSeat", aircraftSeatId);
-            }
-
+            await _context.AircraftSeats.AddAsync(aircraftSeat, cancellation);
+            await _context.SaveChangesAsync(cancellation);
             return _mapper.Map<AircraftSeatDto>(aircraftSeat);
         }
-
-        public async Task<AircraftSeatDto> CreateAircraftSeat(AircraftSeatInput aircraftSeatInput, CancellationToken cancellation = default)
+        catch (Exception)
         {
-            var aircraftSeat = _mapper.Map<AircraftSeat>(aircraftSeatInput);
-
-            try
-            {
-                await _context.AircraftSeats.AddAsync(aircraftSeat, cancellation);
-                await _context.SaveChangesAsync(cancellation);
-                return _mapper.Map<AircraftSeatDto>(aircraftSeat);
-            }
-            catch (Exception)
-            {
-                throw new ValidationException();
-            }
+            throw new ValidationException();
         }
+    }
 
-        public async Task<AircraftSeatDto> UpdateAircraftSeat(int aircraftSeatId, AircraftSeatInput AircraftSeatInput, CancellationToken cancellation = default)
+    public async Task<AircraftSeatDto> UpdateAircraftSeat(int aircraftSeatId, AircraftSeatInput AircraftSeatInput,
+        CancellationToken cancellation = default)
+    {
+        var AircraftSeat = await _context.AircraftSeats.FindAsync(aircraftSeatId);
+
+        if (AircraftSeat == null) throw new NotFoundException("AircraftSeat", aircraftSeatId);
+
+        try
         {
-            var AircraftSeat = await _context.AircraftSeats.FindAsync(aircraftSeatId);
-
-            if (AircraftSeat == null)
-            {
-                throw new NotFoundException("AircraftSeat", aircraftSeatId);
-            }
-
-            try
-            {
-                
-                _context.AircraftSeats.Update(AircraftSeat);
-                await _context.SaveChangesAsync(cancellation);
-                return _mapper.Map<AircraftSeatDto>(AircraftSeat);
-            }
-            catch (Exception)
-            {
-                throw new ValidationException();
-            }
-        }
-
-        public async Task DeleteAircraftSeat(int AircraftSeatId, CancellationToken cancellation = default)
-        {
-            var AircraftSeat = await _context.AircraftSeats.FindAsync(AircraftSeatId);
-
-            if (AircraftSeat == null)
-            {
-                throw new NotFoundException("AircraftSeat", AircraftSeatId);
-            }
-            _context.AircraftSeats.Remove(AircraftSeat);
+            _context.AircraftSeats.Update(AircraftSeat);
             await _context.SaveChangesAsync(cancellation);
+            return _mapper.Map<AircraftSeatDto>(AircraftSeat);
         }
-
-        //public bool AircraftSeatExists(int? id, AircraftSeatInput aircraftseatinput)
-        //{
-        //    return _context.AircraftSeats.Any(a => a.IdAircraftSeat == id);
-        //}
-
-        public bool BookingExists(int id)
+        catch (Exception)
         {
-            return _context.Bookings.Any(b => b.IdBooking == id);
+            throw new ValidationException();
         }
-        public bool FlightExists(int id)
-        {
-            return _context.Flights.Any(f => f.IdFlight == id);
-        }
+    }
 
+    public async Task DeleteAircraftSeat(int AircraftSeatId, CancellationToken cancellation = default)
+    {
+        var AircraftSeat = await _context.AircraftSeats.FindAsync(AircraftSeatId);
+
+        if (AircraftSeat == null) throw new NotFoundException("AircraftSeat", AircraftSeatId);
+        _context.AircraftSeats.Remove(AircraftSeat);
+        await _context.SaveChangesAsync(cancellation);
+    }
+
+    //public bool AircraftSeatExists(int? id, AircraftSeatInput aircraftseatinput)
+    //{
+    //    return _context.AircraftSeats.Any(a => a.IdAircraftSeat == id);
+    //}
+
+    public bool BookingExists(int id)
+    {
+        return _context.Bookings.Any(b => b.IdBooking == id);
+    }
+
+    public bool FlightExists(int id)
+    {
+        return _context.Flights.Any(f => f.IdFlight == id);
     }
 }

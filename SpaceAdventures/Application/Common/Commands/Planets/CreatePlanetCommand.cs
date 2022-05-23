@@ -1,29 +1,23 @@
-﻿using Application.Common.Interfaces;
-using AutoMapper;
-using Domain.Entities;
-using MediatR;
-
-using SpaceAdventures.Application.Common.Interfaces;
+﻿using MediatR;
 using SpaceAdventures.Application.Common.Queries.Planets;
 using SpaceAdventures.Application.Common.Services.Interfaces;
 
-namespace SpaceAdventures.Application.Common.Commands.Planets
+namespace SpaceAdventures.Application.Common.Commands.Planets;
+
+public record CreatePlanetCommand(PlanetInput planetInput) : IRequest<PlanetDto>;
+
+public class CreatePlanetCommandHandler : IRequestHandler<CreatePlanetCommand, PlanetDto>
 {
-    public record CreatePlanetCommand(PlanetInput planetInput) : IRequest<PlanetDto>;
+    private readonly IPlanetService _planetService;
 
-    public class CreatePlanetCommandHandler : IRequestHandler<CreatePlanetCommand, PlanetDto>
+
+    public CreatePlanetCommandHandler(IPlanetService planetService)
     {
-        private readonly IPlanetService _planetService;
+        _planetService = planetService;
+    }
 
-
-        public CreatePlanetCommandHandler(IPlanetService planetService)
-        {
-            _planetService = planetService;
-        }
-
-        public async Task<PlanetDto> Handle(CreatePlanetCommand command, CancellationToken cancellationToken)
-        {
-            return await _planetService.CreatePlanet(command.planetInput,cancellationToken);
-        }
+    public async Task<PlanetDto> Handle(CreatePlanetCommand command, CancellationToken cancellationToken)
+    {
+        return await _planetService.CreatePlanet(command.planetInput, cancellationToken);
     }
 }

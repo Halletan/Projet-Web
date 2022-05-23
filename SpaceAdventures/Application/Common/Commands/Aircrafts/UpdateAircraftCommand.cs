@@ -2,25 +2,21 @@
 using SpaceAdventures.Application.Common.Queries.Aircrafts;
 using SpaceAdventures.Application.Common.Services.Interfaces;
 
+namespace SpaceAdventures.Application.Common.Commands.Aircrafts;
 
-namespace SpaceAdventures.Application.Common.Commands.Aircrafts
+public record UpdateAircraftCommand(int Id, AircraftInput aircraftInput) : IRequest<AircraftDto>;
+
+public class UpdateAircraftCommandHandler : IRequestHandler<UpdateAircraftCommand, AircraftDto>
 {
-    public record UpdateAircraftCommand(int Id, AircraftInput aircraftInput) : IRequest<AircraftDto>;   
+    private readonly IAircraftService _aircraftService;
 
-
-    public class UpdateAircraftCommandHandler : IRequestHandler<UpdateAircraftCommand, AircraftDto>
+    public UpdateAircraftCommandHandler(IAircraftService aircraftService)
     {
+        _aircraftService = aircraftService;
+    }
 
-        private readonly IAircraftService _aircraftService;
-
-        public UpdateAircraftCommandHandler(IAircraftService aircraftService)
-        {
-            _aircraftService = aircraftService; 
-        }
-
-        public async Task<AircraftDto> Handle(UpdateAircraftCommand request, CancellationToken cancellationToken)
-        {
-            return await _aircraftService.UpdateAircraft(request.Id, request.aircraftInput, cancellationToken);
-        }
+    public async Task<AircraftDto> Handle(UpdateAircraftCommand request, CancellationToken cancellationToken)
+    {
+        return await _aircraftService.UpdateAircraft(request.Id, request.aircraftInput, cancellationToken);
     }
 }

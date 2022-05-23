@@ -1,35 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Common.Services;
-using Application.Common.Services.Interfaces;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using SpaceAdventures.Application.Common.Interfaces;
+﻿using MediatR;
 using SpaceAdventures.Application.Common.Services.Interfaces;
 
-namespace SpaceAdventures.Application.Common.Queries.Itineraries
+namespace SpaceAdventures.Application.Common.Queries.Itineraries;
+
+// Query
+public class GetItineraryQuery : IRequest<ItineraryVm>
 {
-    // Query
-    public class GetItineraryQuery : IRequest<ItineraryVm> { }
+}
 
-    // Handler
-    public class GetItineraryQueryHandler : IRequestHandler<GetItineraryQuery, ItineraryVm>
+// Handler
+public class GetItineraryQueryHandler : IRequestHandler<GetItineraryQuery, ItineraryVm>
+{
+    private readonly IItineraryService _ItineraryService;
+
+    public GetItineraryQueryHandler(IItineraryService ItineraryService)
     {
-        private readonly IItineraryService _ItineraryService;
+        _ItineraryService = ItineraryService;
+    }
 
-        public GetItineraryQueryHandler(IItineraryService ItineraryService)
-        {
-            _ItineraryService = ItineraryService;
-        }
-
-        public async Task<ItineraryVm> Handle(GetItineraryQuery request, CancellationToken cancellationToken)
-        {
-            return await _ItineraryService.GetAllItineraries(cancellationToken);  
-        }
+    public async Task<ItineraryVm> Handle(GetItineraryQuery request, CancellationToken cancellationToken)
+    {
+        return await _ItineraryService.GetAllItineraries(cancellationToken);
     }
 }

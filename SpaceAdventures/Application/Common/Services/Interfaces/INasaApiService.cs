@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SpaceAdventures.Application.Common.Models.APIConsume;
+﻿using SpaceAdventures.Application.Common.Models.APIConsume;
 
-namespace SpaceAdventures.Application.Common.Services.Interfaces
+namespace SpaceAdventures.Application.Common.Services.Interfaces;
+
+public interface INasaApiService
 {
-    public interface INasaApiService
-    {
-        Task<NasaCollection> GetAlbum(string search,CancellationToken cancellation = default);
-    }
+    Task<NasaCollection> GetAlbum(string search, CancellationToken cancellation = default);
 }
