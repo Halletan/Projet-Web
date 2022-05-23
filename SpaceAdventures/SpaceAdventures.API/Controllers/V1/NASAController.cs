@@ -22,9 +22,9 @@ namespace SpaceAdventures.API.Controllers.V1
         }
 
         /// <summary>
-        /// Get the International Space Station Current Location
+        /// Get the Nasa Album of a specific planet
         /// </summary>
-        /// <returns>The position of the space station</returns>
+        /// <returns>The Nasa's albums</returns>
         [HttpGet]
         [Route("GetAlbum/{search}")]
         public async Task<ActionResult<NasaCollection>> GetAlbum(string search)
