@@ -17,7 +17,5 @@ public interface ISpaceAdventureDbContext
     DbSet<Planet> Planets { get; set; }
     DbSet<Role> Roles { get; set; }
     DbSet<User> Users { get; set; }
-
-        Task<int> SaveChangesAsync(CancellationToken cancellation);
-    }
+    Task<int> SaveChangesAsync(CancellationToken cancellation);
 }
