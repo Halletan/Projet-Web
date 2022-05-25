@@ -76,6 +76,8 @@ public class UsersManagementApiService : IUsersManagementApiService
         return tokenData;
     }
     #endregion
+
+
     public async Task<UserDto> CreateUser(UserInput userInput,CancellationToken cancellationToken)
     {
         var user = _mapper.Map<User>(userInput);

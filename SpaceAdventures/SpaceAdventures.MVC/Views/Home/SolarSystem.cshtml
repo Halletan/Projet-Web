@@ -14,8 +14,10 @@
 <div id="navbar">
     <a id="toggle-data" href="#data"><i class="icon-data"></i>Planets</a>
     <h1> Space Adventures - 3D Solar System<br><span>by <a href="#" target="_blank"></a>Antoine, Corentin and Hammadi</span></h1>
+    <h1 class="text-lg-center" id="home" style="cursor: pointer">Home</h1>
     <a id="toggle-controls" href="#controls"><i class="icon-controls"></i>Controls</a>
 </div>
+
 <div id="data">
     <a class="sun" title="sun" href="#sunspeed">Sun</a>
     <a class="mercury" title="mercury" href="#mercuryspeed">Mercury</a>
@@ -45,11 +47,6 @@
     <label>
         <input type="radio" class="set-distance" name="scale">
         <span>Distance</span>
-    </label>
-
-    <label>
-        <input type="radio" class="set-distance" name="scale">
-        <span>Home</span>
     </label>
 </div>
 <div id="universe" class="scale-stretched">
@@ -181,3 +178,10 @@
 
 <script src="~/js/solarsystem.js"></script>
 <script src="~/lib/toastr.js/toastr.min.js"></script>
+
+
+<script>
+    $("#home").on("click", function() {
+        window.location.href = "/Home/Index";
+    })
+</script>
