@@ -1,29 +1,22 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Common.Services.Interfaces;
+﻿using Application.Common.Services.Interfaces;
 using MediatR;
 
-namespace SpaceAdventures.Application.Common.Commands.Clients
+namespace SpaceAdventures.Application.Common.Commands.Clients;
+
+public record DeleteClientCommand(int Id) : IRequest;
+
+public class DeleteClientCommandHandler : IRequestHandler<DeleteClientCommand>
 {
-    public record DeleteClientCommand(int Id) : IRequest;
+    private readonly IClientService _clientService;
 
-    public class DeleteClientCommandHandler : IRequestHandler<DeleteClientCommand>
+    public DeleteClientCommandHandler(IClientService clientService)
     {
-        private readonly IClientService _clientService;
+        _clientService = clientService;
+    }
 
-        public DeleteClientCommandHandler(IClientService clientService)
-        {
-            _clientService = clientService;
-        }
-
-        public async Task<Unit> Handle(DeleteClientCommand request, CancellationToken cancellationToken)
-        {
-            await _clientService.DeleteClient(request.Id, cancellationToken);
-            return Unit.Value;
-        }
+    public async Task<Unit> Handle(DeleteClientCommand request, CancellationToken cancellationToken)
+    {
+        await _clientService.DeleteClient(request.Id, cancellationToken);
+        return Unit.Value;
     }
 }

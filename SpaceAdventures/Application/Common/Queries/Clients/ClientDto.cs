@@ -2,22 +2,21 @@
 using AutoMapper;
 using Domain.Entities;
 
-namespace SpaceAdventures.Application.Common.Queries.Clients
+namespace SpaceAdventures.Application.Common.Queries.Clients;
+
+public class ClientDto : IMapFrom<Client>
 {
-    public class ClientDto : IMapFrom<Client>
+    public int IdClient { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string Phone { get; set; }
+    public string Email { get; set; }
+    public int? IdMemberShipType { get; set; }
+
+    public virtual ICollection<Booking> Bookings { get; set; }
+
+    public void Mapping(Profile profile)
     {
-        public int IdClient { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
-        public int? IdMemberShipType { get; set; }
-
-        public virtual ICollection<Booking> Bookings { get; set; }
-
-        public void Mapping(Profile profile)
-        {
-            profile.CreateMap<Client, ClientDto>().ReverseMap();
-        }
+        profile.CreateMap<Client, ClientDto>().ReverseMap();
     }
 }

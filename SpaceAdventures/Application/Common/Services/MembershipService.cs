@@ -1,116 +1,100 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using SpaceAdventures.Application.Common.Commands.Membership;
-using SpaceAdventures.Application.Common.Commands.Planets;
 using SpaceAdventures.Application.Common.Exceptions;
 using SpaceAdventures.Application.Common.Interfaces;
 using SpaceAdventures.Application.Common.Queries.Membership;
-using SpaceAdventures.Application.Common.Queries.Planets;
 using SpaceAdventures.Application.Common.Services.Interfaces;
 
-namespace SpaceAdventures.Application.Common.Services
+namespace SpaceAdventures.Application.Common.Services;
+
+public class MembershipService : IMembershipService
 {
-    public class MembershipService : IMembershipService
+    private readonly ISpaceAdventureDbContext _context;
+    private readonly IMapper _mapper;
+
+    public MembershipService(ISpaceAdventureDbContext context, IMapper mapper)
     {
-        private readonly ISpaceAdventureDbContext _context;
-        private readonly IMapper _mapper;
+        _context = context;
+        _mapper = mapper;
+    }
 
-        public MembershipService(ISpaceAdventureDbContext context, IMapper mapper)
+    public async Task<MembershipVm> GetAllMemberships(CancellationToken cancellationToken)
+    {
+        return new MembershipVm
         {
-            _context = context;
-            _mapper = mapper;
-        }
+            MembershipsList = await _context.MembershipTypes
+                .ProjectTo<MembershipDto>(_mapper.ConfigurationProvider)
+                .OrderBy(c => c.Name)
+                .ToListAsync(cancellationToken)
+        };
+    }
 
-        public async Task<MembershipVm> GetAllMemberships(CancellationToken cancellationToken)
+    public async Task<MembershipDto> GetMembershipById(int MembershipId, CancellationToken cancellation = default)
+    {
+        var Membership = await _context.MembershipTypes.FindAsync(MembershipId);
+        if (Membership == null) throw new NotFoundException("Membership", MembershipId);
+
+        return _mapper.Map<MembershipDto>(Membership);
+    }
+
+    public async Task<MembershipDto> CreateMembership(MembershipInput MembershipInput,
+        CancellationToken cancellation = default)
+    {
+        var Membership = _mapper.Map<MembershipType>(MembershipInput);
+
+        try
         {
-            return new MembershipVm
-            {
-                MembershipsList = await _context.MembershipTypes
-                    .ProjectTo<MembershipDto>(_mapper.ConfigurationProvider)
-                    .OrderBy(c => c.Name)
-                    .ToListAsync(cancellationToken)
-            };
-        }
-
-        public async Task<MembershipDto> GetMembershipById(int MembershipId, CancellationToken cancellation = default)
-        {
-            var Membership = await _context.MembershipTypes.FindAsync(MembershipId);
-            if (Membership == null)
-            {
-                throw new NotFoundException("Membership", MembershipId);
-            }
-
+            await _context.MembershipTypes.AddAsync(Membership, cancellation);
+            await _context.SaveChangesAsync(cancellation);
             return _mapper.Map<MembershipDto>(Membership);
         }
-
-        public async Task<MembershipDto> CreateMembership(MembershipInput MembershipInput, CancellationToken cancellation = default)
+        catch (Exception)
         {
-            var Membership = _mapper.Map<MembershipType>(MembershipInput);
-
-            try
-            {
-                await _context.MembershipTypes.AddAsync(Membership, cancellation);
-                await _context.SaveChangesAsync(cancellation);
-                return _mapper.Map<MembershipDto>(Membership);
-            }
-            catch (Exception)
-            {
-                throw new ValidationException();
-            }
-        }
-
-        public async Task<MembershipDto> UpdateMembership(int MembershipId, MembershipInput MembershipInput, CancellationToken cancellation = default)
-        {
-            var Membership = await _context.MembershipTypes.FindAsync(MembershipId);
-
-            if (Membership == null)
-            {
-                throw new NotFoundException("Membership", MembershipId);
-            }
-
-            try
-            {
-                Membership.Name = MembershipInput.Name;
-                Membership.IdMemberShipType = MembershipInput.IdMemberShipType;
-
-                _context.MembershipTypes.Update(Membership);
-                await _context.SaveChangesAsync(cancellation);
-                return _mapper.Map<MembershipDto>(Membership);
-            }
-            catch (Exception)
-            {
-                throw new ValidationException();
-            }
-        }
-
-        public async Task DeleteMembership(int MembershipId, CancellationToken cancellation = default)
-        {
-            var Membership = await _context.MembershipTypes.FindAsync(MembershipId);
-
-            if (Membership == null)
-            {
-                throw new NotFoundException("Membership", MembershipId);
-            }
-            _context.MembershipTypes.Remove(Membership);
-            await _context.SaveChangesAsync(cancellation);
-        }
-
-        public async Task<bool> MembershipExists(string name)
-        {
-            return await _context.MembershipTypes.AnyAsync(c => c.Name == name);
-        }
-
-        public bool MembershipExists(int id, MembershipInput MembershipInput)
-        {
-            return _context.MembershipTypes.Any(c => c.IdMemberShipType != id && c.Name == MembershipInput.Name);
+            throw new ValidationException();
         }
     }
 
+    public async Task<MembershipDto> UpdateMembership(int MembershipId, MembershipInput MembershipInput,
+        CancellationToken cancellation = default)
+    {
+        var Membership = await _context.MembershipTypes.FindAsync(MembershipId);
+
+        if (Membership == null) throw new NotFoundException("Membership", MembershipId);
+
+        try
+        {
+            Membership.Name = MembershipInput.Name;
+            Membership.IdMemberShipType = MembershipInput.IdMemberShipType;
+
+            _context.MembershipTypes.Update(Membership);
+            await _context.SaveChangesAsync(cancellation);
+            return _mapper.Map<MembershipDto>(Membership);
+        }
+        catch (Exception)
+        {
+            throw new ValidationException();
+        }
+    }
+
+    public async Task DeleteMembership(int MembershipId, CancellationToken cancellation = default)
+    {
+        var Membership = await _context.MembershipTypes.FindAsync(MembershipId);
+
+        if (Membership == null) throw new NotFoundException("Membership", MembershipId);
+        _context.MembershipTypes.Remove(Membership);
+        await _context.SaveChangesAsync(cancellation);
+    }
+
+    public async Task<bool> MembershipExists(string name)
+    {
+        return await _context.MembershipTypes.AnyAsync(c => c.Name == name);
+    }
+
+    public bool MembershipExists(int id, MembershipInput MembershipInput)
+    {
+        return _context.MembershipTypes.Any(c => c.IdMemberShipType != id && c.Name == MembershipInput.Name);
+    }
 }

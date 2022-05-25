@@ -1,28 +1,22 @@
 ﻿using MediatR;
 using SpaceAdventures.Application.Common.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SpaceAdventures.Application.Common.Commands.Flights
+namespace SpaceAdventures.Application.Common.Commands.Flights;
+
+public record DeleteFlightCommand(int Id) : IRequest;
+
+public class DeleteFlightCommandHandler : IRequestHandler<DeleteFlightCommand>
 {
-    public record DeleteFlightCommand(int Id) : IRequest;
+    private readonly IFlightService _flightService;
 
-    public class DeleteFlightCommandHandler : IRequestHandler<DeleteFlightCommand>
+    public DeleteFlightCommandHandler(IFlightService flightService)
     {
-        private readonly IFlightService _flightService;
+        _flightService = flightService;
+    }
 
-        public DeleteFlightCommandHandler(IFlightService flightService)
-        {
-            _flightService = flightService;
-        }
-
-        public async Task<Unit> Handle(DeleteFlightCommand request, CancellationToken cancellationToken)
-        {
-            await _flightService.DeleteFlight(request.Id, cancellationToken);
-            return Unit.Value;
-        }
+    public async Task<Unit> Handle(DeleteFlightCommand request, CancellationToken cancellationToken)
+    {
+        await _flightService.DeleteFlight(request.Id, cancellationToken);
+        return Unit.Value;
     }
 }

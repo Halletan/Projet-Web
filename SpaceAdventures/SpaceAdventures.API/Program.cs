@@ -1,10 +1,7 @@
 using Application;
-using FluentValidation.AspNetCore;
 using Infrastructure;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.OpenApi.Models;
 using Serilog;
 using Serilog.Exceptions;
 using Serilog.Exceptions.Core;
@@ -12,7 +9,6 @@ using Serilog.Exceptions.EntityFrameworkCore.Destructurers;
 using SpaceAdventures.API.Configurations;
 using SpaceAdventures.API.Handlers;
 using SpaceAdventures.API.Middlewares;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +20,7 @@ builder.Host.UseSerilog((ctx, lc) => lc
     .ReadFrom.Configuration(configuration)
     .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder()
         .WithDefaultDestructurers()
-        .WithDestructurers(new []{new DbUpdateExceptionDestructurer()})));
+        .WithDestructurers(new[] {new DbUpdateExceptionDestructurer()})));
 
 // Jwt Bearer Authentication
 builder.Services.AddAuthenticationJwtBearer(configuration);
@@ -59,7 +55,6 @@ builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 var app = builder.Build();
 
 
-
 /*********  Middleware  **********/
 
 
@@ -82,9 +77,7 @@ if (app.Environment.IsDevelopment())
         var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
         foreach (var description in provider.ApiVersionDescriptions)
-        {
             opt.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.ApiVersion.ToString());
-        }
     });
 }
 
@@ -98,7 +91,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
-
-
-

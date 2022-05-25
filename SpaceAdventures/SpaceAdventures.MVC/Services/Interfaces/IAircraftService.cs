@@ -1,11 +1,8 @@
-﻿using Newtonsoft.Json;
-using SpaceAdventures.MVC.Models;
+﻿using SpaceAdventures.MVC.Models;
 
-namespace SpaceAdventures.MVC.Services.Interfaces
+namespace SpaceAdventures.MVC.Services.Interfaces;
+
+public interface IAircraftService
 {
-    public interface IAircraftService
-    {
-        Task<Aircrafts> GetAllAircrafts(string? accessToken);
-
-    }
+    Task<Aircrafts> GetAllAircrafts(string? accessToken);
 }

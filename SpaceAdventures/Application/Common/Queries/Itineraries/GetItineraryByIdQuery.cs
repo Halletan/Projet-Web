@@ -1,28 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Common.Services.Interfaces;
-using MediatR;
+﻿using MediatR;
 using SpaceAdventures.Application.Common.Services.Interfaces;
 
-namespace SpaceAdventures.Application.Common.Queries.Itineraries
+namespace SpaceAdventures.Application.Common.Queries.Itineraries;
+
+public record GetItineraryByIdQuery(int Id) : IRequest<ItineraryDto>;
+
+public class GetItineraryByIdQueryHandler : IRequestHandler<GetItineraryByIdQuery, ItineraryDto>
 {
-    public record GetItineraryByIdQuery(int Id) : IRequest<ItineraryDto>;
+    private readonly IItineraryService _itineraryService;
 
-    public class GetItineraryByIdQueryHandler : IRequestHandler<GetItineraryByIdQuery, ItineraryDto>
+    public GetItineraryByIdQueryHandler(IItineraryService itineraryService)
     {
-        private readonly IItineraryService _itineraryService;
+        _itineraryService = itineraryService;
+    }
 
-        public GetItineraryByIdQueryHandler(IItineraryService itineraryService)
-        {
-            _itineraryService = itineraryService;
-        }
-
-        public async Task<ItineraryDto> Handle(GetItineraryByIdQuery request, CancellationToken cancellationToken)
-        {
-            return await _itineraryService.GetItineraryById(request.Id, cancellationToken);
-        }
+    public async Task<ItineraryDto> Handle(GetItineraryByIdQuery request, CancellationToken cancellationToken)
+    {
+        return await _itineraryService.GetItineraryById(request.Id, cancellationToken);
     }
 }

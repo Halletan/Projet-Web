@@ -1,28 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using SpaceAdventures.Application.Common.Services.Interfaces;
 
-namespace SpaceAdventures.Application.Common.Commands.Itineraries
+namespace SpaceAdventures.Application.Common.Commands.Itineraries;
+
+public record DeleteItineraryCommand(int Id) : IRequest;
+
+public class DeleteItineraryCommandHandler : IRequestHandler<DeleteItineraryCommand>
 {
-    public record DeleteItineraryCommand(int Id) : IRequest;
+    private readonly IItineraryService _itineraryService;
 
-    public class DeleteItineraryCommandHandler : IRequestHandler<DeleteItineraryCommand>
+    public DeleteItineraryCommandHandler(IItineraryService itineraryService)
     {
-        private readonly IItineraryService _itineraryService;
+        _itineraryService = itineraryService;
+    }
 
-        public DeleteItineraryCommandHandler(IItineraryService itineraryService)
-        {
-            _itineraryService = itineraryService;
-        }
-
-        public async Task<Unit> Handle(DeleteItineraryCommand request, CancellationToken cancellationToken)
-        {
-            await _itineraryService.DeleteItinerary(request.Id, cancellationToken);
-            return Unit.Value;
-        }
+    public async Task<Unit> Handle(DeleteItineraryCommand request, CancellationToken cancellationToken)
+    {
+        await _itineraryService.DeleteItinerary(request.Id, cancellationToken);
+        return Unit.Value;
     }
 }

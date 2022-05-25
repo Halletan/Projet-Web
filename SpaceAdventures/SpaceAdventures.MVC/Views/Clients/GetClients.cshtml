@@ -1,10 +1,10 @@
-﻿@model SpaceAdventures.MVC.Models.Clients
+﻿@model Clients
 
 @{
     ViewData["Title"] = "GetClients";
 }
 
-<link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
 
 <h1 class="m-4 p-4 text-center text-white"></h1>
 
@@ -32,7 +32,8 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in @Model.ClientsList) {
+    @foreach (var item in Model.ClientsList)
+    {
         <tr class="dataTableColumn">
             <td>
                 @Html.DisplayFor(modelItem => item.IdClient)
@@ -53,8 +54,12 @@
                 @Html.DisplayFor(modelItem => item.IdMemberShipType)
             </td>
             <td>
-                <a class="btn btn-success btn-sm" asp-action="" asp-route-id="@item.IdClient">  <i class="fa-solid fa-pen m-2"></i></a> |
-                <a class="btn btn-danger btn-sm" asp-action="" asp-route-id="@item.IdClient"><i class="fa-solid fa-trash m-2"></i></a>
+                <a class="btn btn-success btn-sm" asp-action="" asp-route-id="@item.IdClient">
+                    <i class="fa-solid fa-pen m-2"></i>
+                </a> |
+                <a class="btn btn-danger btn-sm" asp-action="" asp-route-id="@item.IdClient">
+                    <i class="fa-solid fa-trash m-2"></i>
+                </a>
             </td>
         </tr>
     }
@@ -64,11 +69,10 @@
 
 @section Scripts
 {
-    
+
     <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
     <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/js/datatable.js"></script>
 
 
 }
-

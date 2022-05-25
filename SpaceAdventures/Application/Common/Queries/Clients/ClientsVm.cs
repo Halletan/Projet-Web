@@ -1,9 +1,6 @@
-﻿
+﻿namespace SpaceAdventures.Application.Common.Queries.Clients;
 
-namespace SpaceAdventures.Application.Common.Queries.Clients
+public class ClientsVm
 {
-    public class ClientsVm
-    {
-        public IList<ClientDto> ClientsList { get; set; }
-    }
+    public IList<ClientDto> ClientsList { get; set; }
 }

@@ -1,9 +1,8 @@
 ﻿using SpaceAdventures.MVC.Models;
 
-namespace SpaceAdventures.MVC.Services.Interfaces
+namespace SpaceAdventures.MVC.Services.Interfaces;
+
+public interface IFlightService
 {
-    public interface IFlightService
-    {
-        Task<Flights> GetAllFlights(string? accessToken);
-    }
+    Task<Flights> GetAllFlights(string? accessToken);
 }

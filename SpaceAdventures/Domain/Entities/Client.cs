@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using SpaceAdventures.Domain.Entities;
 
 namespace Domain.Entities
 {
@@ -15,10 +16,11 @@ namespace Domain.Entities
         public int IdClient { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Phone { get; set; }
         public string Email { get; set; }
         public int? IdMemberShipType { get; set; }
+        public int IdUser { get; set; }
 
+        public virtual User IdUserNavigation { get; set; }
         public virtual MembershipType IdMemberShipTypeNavigation { get; set; }
         public virtual ICollection<Booking> Bookings { get; set; }
     }

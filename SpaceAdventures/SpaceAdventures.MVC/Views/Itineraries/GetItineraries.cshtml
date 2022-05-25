@@ -1,10 +1,10 @@
-﻿@model SpaceAdventures.MVC.Models.Itineraries
+﻿@model Itineraries
 
 @{
     ViewData["Title"] = "GetItineraries";
 }
 
-<link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
 
 <h1 class="m-4 p-4 text-center text-white"></h1>
 
@@ -18,12 +18,13 @@
         <th>ID Airport1</th>
         <th>ID Airport2</th>
         <th>Rate</th>
-        
+
         <th></th>
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in @Model.ItinerariesList) {
+    @foreach (var item in Model.ItinerariesList)
+    {
         <tr class="dataTableColumn">
             <td>
                 @Html.DisplayFor(modelItem => item.IdItinerary)
@@ -37,10 +38,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Rate)
             </td>
-           
+
             <td>
-                <a class="btn btn-success btn-sm" asp-action="" asp-route-id="@item.IdItinerary">  <i class="fa-solid fa-pen m-2"></i></a> |
-                <a class="btn btn-danger btn-sm" asp-action="" asp-route-id="@item.IdItinerary"><i class="fa-solid fa-trash m-2"></i></a>
+                <a class="btn btn-success btn-sm" asp-action="" asp-route-id="@item.IdItinerary">
+                    <i class="fa-solid fa-pen m-2"></i>
+                </a> |
+                <a class="btn btn-danger btn-sm" asp-action="" asp-route-id="@item.IdItinerary">
+                    <i class="fa-solid fa-trash m-2"></i>
+                </a>
             </td>
         </tr>
     }
@@ -50,7 +55,7 @@
 
 @section Scripts
 {
-    
+
     <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
     <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/js/datatable.js"></script>

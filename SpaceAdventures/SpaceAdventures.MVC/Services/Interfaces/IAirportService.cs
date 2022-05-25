@@ -1,9 +1,8 @@
 ﻿using SpaceAdventures.MVC.Models;
 
-namespace SpaceAdventures.MVC.Services.Interfaces
+namespace SpaceAdventures.MVC.Services.Interfaces;
+
+public interface IAirportService
 {
-    public interface IAirportService
-    {
-        Task<Airports> GetAllAirports(string? accessToken);
-    }
+    Task<Airports> GetAllAirports(string? accessToken);
 }

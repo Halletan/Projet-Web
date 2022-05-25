@@ -32,8 +32,8 @@ namespace Infrastructure.Persistence
         public virtual DbSet<Itinerary> Itineraries { get; set; }
         public virtual DbSet<MembershipType> MembershipTypes { get; set; }
         public virtual DbSet<Planet> Planets { get; set; }
-
-        //Ajout Antoine
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<User> Users { get; set; }
         public override Task<int> SaveChangesAsync(CancellationToken cancellation = new CancellationToken())
         {
             return base.SaveChangesAsync(cancellation);
@@ -127,38 +127,7 @@ namespace Infrastructure.Persistence
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Booking_Flight");
             });
-
-            modelBuilder.Entity<Client>(entity =>
-            {
-                entity.HasKey(e => e.IdClient);
-
-                entity.ToTable("Client");
-
-                entity.HasIndex(e => e.Email, "IX_Client_Email")
-                    .IsUnique();
-
-                entity.Property(e => e.Email)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Phone)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.HasOne(d => d.IdMemberShipTypeNavigation)
-                    .WithMany(p => p.Clients)
-                    .HasForeignKey(d => d.IdMemberShipType)
-                    .HasConstraintName("FK_Client_MembershipType");
-            });
-
+            
             modelBuilder.Entity<Flight>(entity =>
             {
                 entity.HasKey(e => e.IdFlight);
@@ -233,9 +202,39 @@ namespace Infrastructure.Persistence
                     .HasMaxLength(50);
             });
 
+            modelBuilder.Entity<Client>(entity =>
+            {
+                entity.HasKey(e => e.IdClient);
+
+                entity.ToTable("Client");
+
+                entity.HasIndex(e => e.Email, "IX_Client_Email")
+                    .IsUnique();
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.FirstName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.LastName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.HasOne(d => d.IdUserNavigation)
+                    .WithMany(p => p.Clients)
+                    .HasForeignKey(d => d.IdUser)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Client_User");
+            });
+
             modelBuilder.Entity<Role>(entity =>
             {
                 entity.HasKey(e => e.IdRole);
+
+                entity.ToTable("Role");
 
                 entity.Property(e => e.IdRole).ValueGeneratedNever();
 
@@ -252,27 +251,25 @@ namespace Infrastructure.Persistence
             {
                 entity.HasKey(e => e.IdUser);
 
+                entity.ToTable("User");
+
                 entity.Property(e => e.IdUser).ValueGeneratedNever();
 
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.PhoneNumber)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.IdUserAuth0).IsRequired();
 
                 entity.Property(e => e.Username)
                     .IsRequired()
                     .HasMaxLength(50);
+
+                entity.HasOne(d => d.IdRoleNavigation)
+                    .WithMany(p => p.Users)
+                    .HasForeignKey(d => d.IdRole)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_User_Role");
             });
 
             OnModelCreatingPartial(modelBuilder);

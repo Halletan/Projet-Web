@@ -1,19 +1,19 @@
-﻿$(document).ready(function () {
+﻿$(document).ready(function() {
     $.ajax({
-        type: 'GET',
-        dataType: 'json',
+        type: "GET",
+        dataType: "json",
         url: "/Global/GetAircraftsCount",
-        success: function (data) {
+        success: function(data) {
             $("#aircraft").append(data);
         },
         cache: false
     });
 
     $.ajax({
-        type: 'GET',
-        dataType: 'json',
+        type: "GET",
+        dataType: "json",
         url: "/Clients/GetClientsCount",
-        success: function (data) {
+        success: function(data) {
             console.log(data);
             $("#customers").append(data);
         },
@@ -21,23 +21,22 @@
     });
 
     $.ajax({
-        type: 'GET',
-        dataType: 'json',
+        type: "GET",
+        dataType: "json",
         url: "/Global/GetBookingsCount",
-        success: function (data) {
+        success: function(data) {
             $("#bookings").append(data);
         },
         cache: false
     });
 
     $.ajax({
-        type: 'GET',
-        dataType: 'json',
-        url: '',
-        success: function (data) {
+        type: "GET",
+        dataType: "json",
+        url: "",
+        success: function(data) {
             $("#users").append(data);
         },
         cache: false
     });
 });
-

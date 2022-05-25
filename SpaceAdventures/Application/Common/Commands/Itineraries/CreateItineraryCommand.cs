@@ -1,28 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using SpaceAdventures.Application.Common.Queries.Itineraries;
 using SpaceAdventures.Application.Common.Services.Interfaces;
 
-namespace SpaceAdventures.Application.Common.Commands.Itineraries
+namespace SpaceAdventures.Application.Common.Commands.Itineraries;
+
+public record CreateItineraryCommand(ItineraryInput itineraryInput) : IRequest<ItineraryDto>;
+
+public class CreateItineraryCommandHandler : IRequestHandler<CreateItineraryCommand, ItineraryDto>
 {
-    public record CreateItineraryCommand(ItineraryInput itineraryInput) : IRequest<ItineraryDto>;
+    private readonly IItineraryService _itineraryService;
 
-    public class CreateItineraryCommandHandler : IRequestHandler<CreateItineraryCommand, ItineraryDto>
+    public CreateItineraryCommandHandler(IItineraryService itineraryService)
     {
-        private readonly IItineraryService _itineraryService;
+        _itineraryService = itineraryService;
+    }
 
-        public CreateItineraryCommandHandler(IItineraryService itineraryService)
-        {
-            _itineraryService = itineraryService;
-        }
-
-        public async Task<ItineraryDto> Handle(CreateItineraryCommand request, CancellationToken cancellationToken)
-        {
-            return await _itineraryService.CreateItinerary(request.itineraryInput, cancellationToken);
-        }
+    public async Task<ItineraryDto> Handle(CreateItineraryCommand request, CancellationToken cancellationToken)
+    {
+        return await _itineraryService.CreateItinerary(request.itineraryInput, cancellationToken);
     }
 }

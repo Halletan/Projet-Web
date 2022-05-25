@@ -1,29 +1,23 @@
-﻿using Application.Common.Interfaces;
-using AutoMapper;
-using Domain.Entities;
-using MediatR;
-
-using SpaceAdventures.Application.Common.Interfaces;
+﻿using MediatR;
 using SpaceAdventures.Application.Common.Queries.Membership;
 using SpaceAdventures.Application.Common.Services.Interfaces;
 
-namespace SpaceAdventures.Application.Common.Commands.Membership
+namespace SpaceAdventures.Application.Common.Commands.Membership;
+
+public record CreateMembershipCommand(MembershipInput membershipInput) : IRequest<MembershipDto>;
+
+public class CreateMembershipCommandHandler : IRequestHandler<CreateMembershipCommand, MembershipDto>
 {
-    public record CreateMembershipCommand(MembershipInput membershipInput) : IRequest<MembershipDto>;
+    private readonly IMembershipService _membershipService;
 
-    public class CreateMembershipCommandHandler : IRequestHandler<CreateMembershipCommand, MembershipDto>
+
+    public CreateMembershipCommandHandler(IMembershipService membershipService)
     {
-        private readonly IMembershipService _membershipService;
+        _membershipService = membershipService;
+    }
 
-
-        public CreateMembershipCommandHandler(IMembershipService membershipService)
-        {
-            _membershipService = membershipService;
-        }
-
-        public async Task<MembershipDto> Handle(CreateMembershipCommand command, CancellationToken cancellationToken)
-        {
-            return await _membershipService.CreateMembership(command.membershipInput,cancellationToken);
-        }
+    public async Task<MembershipDto> Handle(CreateMembershipCommand command, CancellationToken cancellationToken)
+    {
+        return await _membershipService.CreateMembership(command.membershipInput, cancellationToken);
     }
 }

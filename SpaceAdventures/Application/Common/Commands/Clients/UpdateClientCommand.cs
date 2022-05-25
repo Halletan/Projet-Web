@@ -1,32 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Common.Services.Interfaces;
-using Domain.Entities;
+﻿using Application.Common.Services.Interfaces;
 using MediatR;
 using SpaceAdventures.Application.Common.Queries.Clients;
 
-namespace SpaceAdventures.Application.Common.Commands.Clients
+namespace SpaceAdventures.Application.Common.Commands.Clients;
+
+public record UpdateClientCommand(int Id, ClientInput clientInput) : IRequest<ClientDto>;
+
+public class UpdateClientCommandHandler : IRequestHandler<UpdateClientCommand, ClientDto>
 {
-    public record UpdateClientCommand(int Id, ClientInput clientInput) : IRequest<ClientDto>;
+    private readonly IClientService _clientService;
 
-
-    public class UpdateClientCommandHandler : IRequestHandler<UpdateClientCommand, ClientDto>
+    public UpdateClientCommandHandler(IClientService clientService)
     {
+        _clientService = clientService;
+    }
 
-        private readonly IClientService _clientService;
-
-        public UpdateClientCommandHandler(IClientService clientService)
-        {
-            _clientService = clientService;
-        }
-
-        public async Task<ClientDto> Handle(UpdateClientCommand request, CancellationToken cancellationToken)
-        {
-            return await _clientService.UpdateClient(request.Id, request.clientInput, cancellationToken);
-        }
+    public async Task<ClientDto> Handle(UpdateClientCommand request, CancellationToken cancellationToken)
+    {
+        return await _clientService.UpdateClient(request.Id, request.clientInput, cancellationToken);
     }
 }
-        

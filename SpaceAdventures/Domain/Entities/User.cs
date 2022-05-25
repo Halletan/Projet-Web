@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Domain.Entities;
 
-namespace SpaceAdventures.Domain.Entities
+namespace SpaceAdventures.Domain.Entities;
+
+public class User
 {
-    public partial class User
-    {
-        public int IdUser { get; set; }
-        public string Username { get; set; }
-        public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public bool VerifiedEmail { get; set; }
-        public bool VerifiedPhone { get; set; }
-    }
+    public int IdUser { get; set; }
+    public string Username { get; set; }
+    public string Email { get; set; }
+    public bool VerifiedEmail { get; set; }
+    public int IdRole { get; set; }
+    public string IdUserAuth0 { get; set; }
+
+    public virtual Role IdRoleNavigation { get; set; }
+    public virtual ICollection<Client> Clients { get; set; }
 }

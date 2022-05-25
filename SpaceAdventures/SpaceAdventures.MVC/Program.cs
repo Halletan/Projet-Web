@@ -1,6 +1,5 @@
 using SpaceAdventures.MVC.Configurations;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
@@ -32,9 +31,6 @@ if (!app.Environment.IsDevelopment())
 }
 
 
-
-
-
 app.UseHttpsRedirection();
 app.UseCookiePolicy();
 app.UseStaticFiles();
@@ -44,7 +40,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    "default",
+    "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
