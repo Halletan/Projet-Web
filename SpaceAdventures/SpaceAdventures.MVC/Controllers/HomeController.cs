@@ -23,6 +23,7 @@ namespace SpaceAdventures.MVC.Controllers
         {
             if (User.Identity is { IsAuthenticated: true })
             {
+
                 string? accessToken = await HttpContext.GetTokenAsync("access_token");
                 DateTime accessTokenExpiresAt = DateTime.Parse(
                     await HttpContext.GetTokenAsync("expires_at") ?? string.Empty,
