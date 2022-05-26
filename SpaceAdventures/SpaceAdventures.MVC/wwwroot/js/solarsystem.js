@@ -42,6 +42,17 @@
             }
         };
 
+        var sunSettings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://sunrise-sunset-times.p.rapidapi.com/getSunriseAndSunset?date=2022-05-25&latitude=50.8476&longitude=4.3572&timeZoneId=Europe%2FBrussels",
+            "method": "GET",
+            "headers": {
+                "X-RapidAPI-Host": "sunrise-sunset-times.p.rapidapi.com",
+                "X-RapidAPI-Key": "3398f4ab61msh2fec552303aed05p1babbajsn4969aa1f509b"
+            }
+        };
+
         // AJAX Call to Planets Info by NewbAPI (RapidAPI)
 
         $.ajax(settings).done(function (response) {
@@ -54,7 +65,7 @@
                         "Mass : " + response._items[7].basicDetails[0].mass
                         + "<br>" +
                         "Volume : " + response._items[7].basicDetails[0].volume,
-                        "Planet Info",
+                        response._items[7].name,
                     {
                         positionClass:"toast-bottom-right"
                     });
@@ -65,9 +76,9 @@
                         "Mass : " + response._items[4].basicDetails[0].mass
                         + "<br>" +
                         "Volume : " + response._items[4].basicDetails[0].volume,
-                        "Planet Info",
+                        response._items[4].name,
                         {
-                            positionClass: "toast-bottom-right"
+                            positionClass: "toast-bottom-left"
                         });
                 break;
                 case "saturn":
@@ -76,7 +87,7 @@
                         "Mass : " + response._items[0].basicDetails[0].mass
                         + "<br>" +
                         "Volume : " + response._items[0].basicDetails[0].volume,
-                        "Planet Info",
+                        response._items[0].name,
                         {
                             positionClass: "toast-bottom-right"
                         });
@@ -87,9 +98,9 @@
                         "Mass : " + response._items[1].basicDetails[0].mass
                         + "<br>" +
                         "Volume : " + response._items[1].basicDetails[0].volume,
-                        "Planet Info",
+                        response._items[1].name,
                         {
-                            positionClass: "toast-bottom-right"
+                            positionClass: "toast-bottom-left"
                         });
                 break;
                 case "uranus":
@@ -98,7 +109,7 @@
                         "Mass : " + response._items[2].basicDetails[0].mass
                         + "<br>" +
                         "Volume : " + response._items[2].basicDetails[0].volume,
-                        "Planet Info",
+                        response._items[0].name,
                         {
                             positionClass: "toast-bottom-right"
                         });
@@ -110,9 +121,9 @@
                         "Mass : " + response._items[3].basicDetails[0].mass
                         + "<br>" +
                         "Volume : " + response._items[3].basicDetails[0].volume,
-                        "Planet Info",
+                        response._items[3].name,
                         {
-                            positionClass: "toast-bottom-right"
+                            positionClass: "toast-bottom-left"
                         });
                 break;
                 case "earth":
@@ -121,7 +132,7 @@
                         "Mass : " + response._items[5].basicDetails[0].mass
                         + "<br>" +
                         "Volume : " + response._items[5].basicDetails[0].volume,
-                        "Planet Info",
+                        response._items[5].name,
                         {
                             positionClass: "toast-bottom-right"
                         });
@@ -132,13 +143,23 @@
                         "Mass : " + response._items[6].basicDetails[0].mass
                         + "<br>" +
                         "Volume : " + response._items[6].basicDetails[0].volume,
-                        "Planet Info",
+                        response._items[6].name,
                         {
-                            positionClass: "toast-bottom-right"
+                            positionClass: "toast-bottom-left"
                         });
+                break;
+                case "sun": $.ajax(sunSettings).done(function (response) {
+                    toastr.success("Sunrise : " + response.sunrise + "<br>" + "Sunset : " + response.sunset, "Europe - Brussels :",
+                        {
+                            positionClass: "toast-bottom-left"
+                        });
+                });
                 break;
             }
         });
+
+
+
 
         solarsys.removeClass().addClass(ref);
         $(this).parent().find("a").removeClass("active");
