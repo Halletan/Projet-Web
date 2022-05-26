@@ -54,7 +54,7 @@ public class ItinerariesController : ControllerBase
     }
 
     /// <summary>
-    ///     Create a new itinerary
+    ///     Create a new Itinerary
     /// </summary>
     /// <param name="command"></param>
     [HttpPost]
@@ -62,14 +62,14 @@ public class ItinerariesController : ControllerBase
     [Authorize(Policy = "write:messages")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<ItineraryDto>> CreatePlanet([FromBody] CreateItineraryCommand command)
+    public async Task<ActionResult<ItineraryDto>> CreateItinerary([FromBody] CreateItineraryCommand command)
     {
         return Ok(await _mediator.Send(command));
     }
 
 
     /// <summary>
-    ///     Update an existing itinerary
+    ///     Update an existing Itinerary
     /// </summary>
     /// <param name="command"></param>
     /// <returns></returns>
@@ -78,14 +78,14 @@ public class ItinerariesController : ControllerBase
     [Authorize(Policy = "write:messages")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ItineraryDto>> UpdatePlanet([FromBody] UpdateItineraryCommand command)
+    public async Task<ActionResult<ItineraryDto>> UpdateItinerary([FromBody] UpdateItineraryCommand command)
     {
         return Ok(await _mediator.Send(command));
     }
 
 
     /// <summary>
-    ///     Delete an existing Itineraries
+    ///     Delete an existing Itinerary
     /// </summary>
     /// <param name="command"></param>
     /// <returns></returns>
