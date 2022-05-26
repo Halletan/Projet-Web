@@ -21,18 +21,24 @@ namespace SpaceAdventures.MVC.Services
 
         public async Task<User> CreateUser(string? accessToken, User user)
         {
-            // Check if UserExists in DB
+            // Check if UserExists in DB by calling our APIController
             //...
 
-            //if not, Create User on Auth0 by calling Auth0 Management API
+            //if Ok, Create User on Auth0 by calling Auth0 Management API
 
             string result = await CreateUserOnAuth0(accessToken, user);
 
-            // IF OK, Create User in DB
+            // Else, display message
+
+            // IF OK create user in Auth0, Create User in DB
+
+            // Return user to display
 
             return await CreateUserInDb(accessToken, user);   
 
-            // IF not, ...
+                // IF not, ...
+
+            
 
         }
 

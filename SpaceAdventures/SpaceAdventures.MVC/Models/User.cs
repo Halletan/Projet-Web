@@ -11,6 +11,9 @@
         //public string IdUserAuth0 { get; set; }
     }
 
+
+
+
     [Serializable]
     public class Users
     {
