@@ -1,4 +1,4 @@
-﻿@model SpaceAdventures.MVC.Models.User
+﻿@model SpaceAdventures.MVC.Models.UserInput
 
 @{
     ViewData["Title"] = "CreateUser";
@@ -22,11 +22,22 @@
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" hidden="hidden">
                 <label asp-for="Connection" class="control-label"></label>
-                <input asp-for="Connection"  value="test" class="form-control" />
+                <input asp-for="Connection"  value="test" class="form-control" readonly="readonly"/>
                 <span asp-validation-for="Connection" class="text-danger"></span>
             </div>
+             <div class="form-group" hidden="hidden">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password"  value="test" class="form-control" readonly="readonly" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="IdRole" class="control-label"></label>
+                <input asp-for="IdRole" class="form-control" />
+                <span asp-validation-for="IdRole" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
