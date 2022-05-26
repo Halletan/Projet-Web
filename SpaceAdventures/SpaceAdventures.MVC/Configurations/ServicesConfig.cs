@@ -15,6 +15,10 @@ public static class ServicesConfig
         services.AddHttpClient<IBookingService, BookingService>();
         services.AddHttpClient<IFlightService, FlightService>();
         services.AddHttpClient<IItineraryService, ItineraryService>();
+
+        //Test Corentin API
+        services.AddHttpClient<IUserManagementMvcService, UserManagementMvcService>();
+
         return services;
     }
 }
