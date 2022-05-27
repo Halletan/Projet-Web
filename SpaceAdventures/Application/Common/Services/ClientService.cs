@@ -6,7 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using SpaceAdventures.Application.Common.Commands.Clients;
 using SpaceAdventures.Application.Common.Exceptions;
 using SpaceAdventures.Application.Common.Interfaces;
+using SpaceAdventures.Application.Common.Mappings;
+using SpaceAdventures.Application.Common.Models;
 using SpaceAdventures.Application.Common.Queries.Clients;
+using SpaceAdventures.Application.Common.Queries.Clients.GetClientsWithPagination;
 
 namespace SpaceAdventures.Application.Common.Services;
 
@@ -30,6 +33,14 @@ public class ClientService : IClientService
                 .OrderBy(c => c.LastName)
                 .ToListAsync(cancellationToken)
         };
+    }
+
+    public async Task<PaginatedList<ClientsBriefDto>> GetAllClientsWithPagination(int pageNumber, int pageSize, CancellationToken cancellation = default)
+    {
+        var paginatedList = await _context.Clients
+            .ProjectTo<ClientsBriefDto>(_mapper.ConfigurationProvider)
+            .PaginatedListAsync(pageNumber, pageSize);
+        return paginatedList;
     }
 
     public async Task<ClientDto> GetClientById(int clientId, CancellationToken cancellation = default)

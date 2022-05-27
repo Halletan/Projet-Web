@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Application.Common.Services.Interfaces;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using SpaceAdventures.Application.Common.Interfaces;
@@ -17,21 +18,17 @@ public class
     GetClientsWithPaginationQueryHandler : IRequestHandler<GetClientsWithPaginationQuery,
         PaginatedList<ClientsBriefDto>>
 {
-    private readonly ISpaceAdventureDbContext _context;
-    private readonly IMapper _mapper;
+    private readonly IClientService _clientService;
 
-    public GetClientsWithPaginationQueryHandler(ISpaceAdventureDbContext context, IMapper mapper)
+    public GetClientsWithPaginationQueryHandler(IClientService clientService)
     {
-        _context = context;
-        _mapper = mapper;
+        _clientService = clientService;
     }
 
     public async Task<PaginatedList<ClientsBriefDto>> Handle(GetClientsWithPaginationQuery request,
         CancellationToken cancellationToken)
     {
-        var paginatedList = await _context.Clients
-            .ProjectTo<ClientsBriefDto>(_mapper.ConfigurationProvider)
-            .PaginatedListAsync(request.PageNumber, request.PageSize);
-        return paginatedList;
+        return await _clientService.GetAllClientsWithPagination(request.PageNumber, request.PageSize,
+            cancellationToken);
     }
 }
