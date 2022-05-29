@@ -18,7 +18,7 @@ namespace Domain.Entities
         public string LastName { get; set; }
         public string Email { get; set; }
         public int? IdMemberShipType { get; set; }
-        public int IdUser { get; set; }
+        public int? IdUser { get; set; }
 
         public virtual User IdUserNavigation { get; set; }
         public virtual MembershipType IdMemberShipTypeNavigation { get; set; }
