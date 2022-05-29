@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 
 namespace SpaceAdventures.MVC.Services
@@ -14,21 +15,36 @@ namespace SpaceAdventures.MVC.Services
     {
         private readonly HttpClient _httpClient;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IConfiguration _configuration;
 
-        public UserManagementMvcService(HttpClient httpClient, IHttpContextAccessor httpContextAccessor, IConfiguration configuration)
+        public UserManagementMvcService(HttpClient httpClient, IHttpContextAccessor httpContextAccessor)
         {
             _httpClient = httpClient;
             _httpContextAccessor = httpContextAccessor;
-            _configuration = configuration;
+            
 
 
         }
 
-
-
         public async Task<User> CreateUser( string accessToken, UserInput user)
         {
+
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            User u = new User
+            {
+                Email = user.Email,
+                Username = user.Username,
+                Connection = "Username-Password-Authentication"
+            };
+
+            var postBody = JsonConvert.SerializeObject(u);
+
+
+             await _httpClient.PostAsync("https://localhost:7195/api/v1.0/Users/CreateUser",
+                new StringContent(postBody, Encoding.UTF8, "application/json"));
+
+            
+
+
             // Create user in Auth0 (Call API Auth0)
             // Create user in DB (call API)
             // Give userRole set by admin
@@ -62,30 +78,38 @@ namespace SpaceAdventures.MVC.Services
             
 
         }
-
         public async Task<string> CreateUserOnAuth0( string token, UserInput user)
         {
-            User u = new User
+            try
             {
-                Email = user.Email,
-                Username = user.Username,
-                //password = "test",
-                Connection = "Username-Password-Authentication"
-                //app_metadata = new Dictionary<string, string>
-                //    {
-                //        {"companyId", "987"},
-                //        {"fakeId", "447"}
-                //    }
-            };
+                User u = new User
+                {
+                    Email = user.Email,
+                    Username = user.Username,
+                    //password = "test",
+                    Connection = "Username-Password-Authentication"
+                    //app_metadata = new Dictionary<string, string>
+                    //    {
+                    //        {"companyId", "987"},
+                    //        {"fakeId", "447"}
+                    //    }
+                };
 
-            var postBody = JsonConvert.SerializeObject(u);
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-            var response = _httpClient.PostAsync(
-                "https://" + _configuration["Auth0:Domain"]+"/api/v2/users",  // a changer, faire passer le configuration[Auth0:domain]
-                new StringContent(postBody, Encoding.UTF8, "application/json")).Result;
-            var responseString = response.Content.ReadAsStringAsync().Result;
+                var postBody = JsonConvert.SerializeObject(u);
+                _httpClient.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
-            return responseString;
+                var response = _httpClient.PostAsync(
+                    "https://dev-hlpjlsil.eu.auth0.com/api/v2/users", // a changer, faire passer le configuration[Auth0:domain]
+                    new StringContent(postBody, Encoding.UTF8, "application/json")).Result;
+                var responseString = response.Content.ReadAsStringAsync().Result;
+
+                return responseString;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     
 

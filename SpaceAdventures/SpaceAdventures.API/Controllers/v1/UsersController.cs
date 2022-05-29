@@ -45,7 +45,7 @@ public class UsersController : ControllerBase
     /// </summary>
     /// <param name="command"></param>
     [HttpPost]
-    [Authorize(Policy = "write:users")]
+    [Authorize(Policy = "Create:users")]
     [Route("CreateUser")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
