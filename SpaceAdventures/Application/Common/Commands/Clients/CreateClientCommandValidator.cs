@@ -9,13 +9,18 @@ public class CreateClientCommandValidator : AbstractValidator<CreateClientComman
     {
         RuleFor(c => c.ClientInput.FirstName)
             .MaximumLength(50).WithMessage("Max 50 characters")
-            .NotNull().WithMessage("Firstname is required");
+            .NotNull().WithMessage("Firstname is required")
+            .NotEmpty().WithMessage("Firstname cannot be empty");
+
         RuleFor(c => c.ClientInput.LastName)
             .MaximumLength(50).WithMessage("Max 50 characters")
-            .NotNull().WithMessage("Lastname is required");
+            .NotNull().WithMessage("Lastname is required")
+            .NotEmpty().WithMessage("Lastname cannot be empty");
+        
         RuleFor(c => c.ClientInput.Phone)
             .MaximumLength(50).WithMessage("Max 50 characters")
-            .NotNull().WithMessage("Phone is required");
+            .NotNull().WithMessage("Phone is required")
+            .NotEmpty().WithMessage("Phone cannot be empty");
 
         RuleFor(c => c.ClientInput.Email)
             .MaximumLength(50).WithMessage("Max 50 characters")

@@ -39,7 +39,9 @@ public static class DependencyInjection
         services.AddHttpClient("RetryPolicy").AddPolicyHandler(request => new ClientPolicy().ExponentialHttpRetry);
 
         // Behaviors
-        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
+
 
         return services;
     }

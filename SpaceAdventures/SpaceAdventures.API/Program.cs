@@ -7,6 +7,7 @@ using Serilog.Exceptions;
 using Serilog.Exceptions.Core;
 using Serilog.Exceptions.EntityFrameworkCore.Destructurers;
 using SpaceAdventures.API.Configurations;
+using SpaceAdventures.API.Filters;
 using SpaceAdventures.API.Handlers;
 using SpaceAdventures.API.Middlewares;
 
@@ -16,11 +17,12 @@ var configuration = builder.Configuration;
 
 // Serilog Service
 
-builder.Host.UseSerilog((ctx, lc) => lc
+builder.Host.UseSerilog((context,logger) => logger
     .ReadFrom.Configuration(configuration)
     .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder()
         .WithDefaultDestructurers()
         .WithDestructurers(new[] {new DbUpdateExceptionDestructurer()})));
+
 
 // Jwt Bearer Authentication
 builder.Services.AddAuthenticationJwtBearer(configuration);
@@ -31,7 +33,8 @@ builder.Services.AddInfrastructure(configuration);
 // Injection Application Services
 builder.Services.AddApplication();
 
-builder.Services.AddControllers();
+// Exception Middleware on top of all controllers
+builder.Services.AddControllers(options => options.Filters.Add<ApiExceptionFilterAttribute>());
 
 // Swagger EndpointsApiExplorer Service
 builder.Services.AddEndpointsApiExplorer();
@@ -60,10 +63,8 @@ var app = builder.Build();
 
 app.UseSerilogRequestLogging();
 
-// Our Custom Exception Middleware
-app.UseExceptionMiddleware();
 
-//  Our Log Request Middleware
+//Our Log Request Middleware
 //app.UseLogRequestMiddleware();
 
 

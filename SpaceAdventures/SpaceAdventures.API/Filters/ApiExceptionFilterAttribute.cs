@@ -14,7 +14,8 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
         _exceptionHandlers = new Dictionary<Type, Action<ExceptionContext>>
         {
             {typeof(ValidationException), HandleValidationException},
-            {typeof(NotFoundException), HandleNotFoundException}
+            {typeof(NotFoundException), HandleNotFoundException},
+            {typeof(ForbiddenAccessException), HandleForbiddenAccessException}
         };
     }
 
@@ -97,6 +98,26 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
         };
 
         context.Result = new NotFoundObjectResult(details);
+
+        context.ExceptionHandled = true;
+    }
+
+    private void HandleForbiddenAccessException(ExceptionContext context)
+    {
+        var exception = context.Exception as ForbiddenAccessException;
+
+        var details = new ProblemDetails
+        {
+            Type = "https://tools.ietf.org/html/rfc7231#section-6.5.3",
+            Title = "Forbidden",
+            Status = StatusCodes.Status403Forbidden,
+            Detail = exception.Message
+        };
+
+        context.Result = new ObjectResult(details)
+        {
+            StatusCode = StatusCodes.Status403Forbidden
+        };
 
         context.ExceptionHandled = true;
     }

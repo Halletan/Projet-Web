@@ -6,8 +6,7 @@ public class HasScopeHandler : AuthorizationHandler<HasScopeRequirement>
 {
     protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, HasScopeRequirement requirement)
     {
-        var issuer = context.User;
-        var scope = context.User.Claims;
+
 
         // If user current user does not have a scope claim => so no permission
         if (!context.User
