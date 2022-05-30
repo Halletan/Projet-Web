@@ -117,14 +117,12 @@ public class UsersManagementApiService : IUsersManagementApiService
                 {"password", "Test1234**/"}
             }));
 
-
-
         if (!response.IsSuccessStatusCode)
         {
             throw new ValidationException();
         }
         
-        var content = await response.Content.ReadAsStringAsync();
+        var content = await response.Content.ReadAsStringAsync(cancellationToken);
 
         UserDto u=new();
         return u;

@@ -21,7 +21,6 @@ namespace SpaceAdventures.Application.Common.Queries.Users.Queries
         public void Mapping(Profile profile)
         {
             profile.CreateMap<User, UserDto>().ReverseMap();
-
         }
     }
 }

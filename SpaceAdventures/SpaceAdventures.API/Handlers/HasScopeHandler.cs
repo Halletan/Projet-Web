@@ -14,9 +14,6 @@ public class HasScopeHandler : AuthorizationHandler<HasScopeRequirement>
         // Otherwise we split the scopes string into an array
         var scopes = context.User.FindFirst(c => c.Type == "scope" && c.Issuer == requirement.Issuer).Value.Split(' ');
         var permissions = context.User.FindAll(c => c.Type == "permissions");
-        var result = string.Join(",", permissions);
-
-        var permissions = context.User.FindAll(c => c.Type == "permissions");
 
         var result = string.Join(",", permissions); 
 
