@@ -7,7 +7,6 @@ using SpaceAdventures.Application.Common.Commands.Users;
 using SpaceAdventures.Application.Common.Exceptions;
 using SpaceAdventures.Application.Common.Interfaces;
 using SpaceAdventures.Application.Common.Models.UsersAuth0ManagementApi;
-using SpaceAdventures.Application.Common.Queries.Clients;
 using SpaceAdventures.Application.Common.Queries.Users.Queries;
 using SpaceAdventures.Application.Common.Services.Interfaces;
 using SpaceAdventures.Domain.Entities;
@@ -23,12 +22,12 @@ public class UsersManagementApiService : IUsersManagementApiService
     private readonly ISpaceAdventureDbContext _context;
     #region Constructor
 
-    public UsersManagementApiService(IConfiguration configuration, IHttpClientFactory httpClientFactory, IMapper mapper, ISpaceAdventureDbContext context)
+    public UsersManagementApiService(IConfiguration configuration, HttpClient httpClient, IMapper mapper, ISpaceAdventureDbContext context)
     {
         _configuration = configuration;
         _mapper = mapper;
         _context = context;
-        _httpClient = httpClientFactory.CreateClient("RetryPolicy");
+        _httpClient = httpClient;
     }
 
     #endregion

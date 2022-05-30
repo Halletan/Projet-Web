@@ -22,7 +22,8 @@ public class ClientService : IClientService
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
         var response = await _httpClient.GetAsync("https://localhost:7195/api/v1.0/Clients");
 
-        if (!response.IsSuccessStatusCode) throw new Exception("Cannot retrieve data");
+        if (!response.IsSuccessStatusCode) 
+            throw new Exception("Cannot retrieve data");
 
         var content = await response.Content.ReadAsStringAsync();
         return JsonConvert.DeserializeObject<Clients>(content);

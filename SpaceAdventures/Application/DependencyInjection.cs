@@ -27,7 +27,7 @@ public static class DependencyInjection
         services.AddScoped<IFlightService, FlightService>();
         services.AddScoped<IBookingService, BookingService>();
         services.AddScoped<IAircraftSeatService, AircraftSeatService>();
-        services.AddScoped<IUsersManagementApiService, UsersManagementApiService>();
+        services.AddHttpClient<IUsersManagementApiService, UsersManagementApiService>();
 
 
         services.AddHttpClient<IISSCLService, ISSCLService>();

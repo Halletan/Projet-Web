@@ -27,7 +27,7 @@ public class ClientsController : ControllerBase
     ///     Get all clients
     /// </summary>
     [HttpGet]
-    [Authorize(Policy = "read:messages")]
+    [Authorize(Policy = "read:users")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ClientsVm>> GetClients()

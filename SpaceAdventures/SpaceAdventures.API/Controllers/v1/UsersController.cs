@@ -30,7 +30,7 @@ public class UsersController : ControllerBase
     /// <param name="userId"></param>
     /// <returns>List of user's roles</returns>
     [HttpGet]
-    [Authorize(Policy = "read:users")]
+    // [Authorize(Policy = "read:users")]
     [Route("UserRoles")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]

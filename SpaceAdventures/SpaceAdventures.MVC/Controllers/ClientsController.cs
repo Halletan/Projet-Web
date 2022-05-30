@@ -24,4 +24,10 @@ public class ClientsController : Controller
     {
         return await _clientService.GetClientsCount(await HttpContext.GetTokenAsync("access_token"));
     }
+
+    [HttpGet]
+    public IActionResult Create()
+    {
+        return View();
+    }
 }
