@@ -15,7 +15,9 @@ namespace SpaceAdventures.Application.Common.Commands.Users
     {
         public string Username { get; set; }
         public string Email { get; set; }
-        public string connection { get; set; }
+        public string Connection { get; set; }
+        public string Password { get; set; }
+        public int IdRole { get; set; }
 
         public void Mapping(Profile profile)
         {

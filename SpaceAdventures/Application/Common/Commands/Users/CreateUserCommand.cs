@@ -23,7 +23,7 @@ namespace SpaceAdventures.Application.Common.Commands.Users
 
         public async Task<UserDto> Handle(CreateUserCommand command, CancellationToken cancellationToken)
         {
-            return await _userService.CreateUser(command.userInput, cancellationToken);
+            return await _userService.CreateUserAuth0(command.userInput, cancellationToken);
         }
     }
 }

@@ -97,4 +97,36 @@ public class UsersManagementApiService : IUsersManagementApiService
     {
         return await _context.Users.AnyAsync(c => c.Email==email);
     }
+
+    public async Task<UserDto> CreateUserAuth0(UserInput userInput, CancellationToken cancellationToken)
+    {
+        var token = await GetToken();
+        var accessToken = token.access_token;
+
+        var response = await _httpClient.PostAsync(_configuration["Auth0ManagementApi:Audience"] + "users",new FormUrlEncodedContent(
+            new Dictionary<string, string>
+            {
+                {"email", userInput.Email},
+                {"email_verified", "false"},
+                {"connection", "Username-Password-Authentication"},
+                {"verify_email","false"},
+                {"given_name", "John"},
+                {"family_name", "Doe"},
+                {"name", "John Doe"},
+                {"nickname", "Johnny"},
+                {"password", "Test1234**/"}
+            }));
+
+
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new ValidationException();
+        }
+        
+        var content = await response.Content.ReadAsStringAsync();
+
+        UserDto u=new();
+        return u;
+    }
 }
