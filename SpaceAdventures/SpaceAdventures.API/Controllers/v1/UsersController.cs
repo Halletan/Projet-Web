@@ -54,7 +54,20 @@ public class UsersController : ControllerBase
         return Ok(await _mediator.Send(command));
     }
 
-
+    /// <summary>
+    ///     Get Lis of users from DB
+    /// </summary>
+    /// <returns>List of users</returns>
+    [HttpGet]
+    // [Authorize(Policy = "read:users")]
+    [Route("GetAllUsers")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<UsersVm>> GetAllUsers()
+    {
+        return await _mediator.Send(new GetUsersQuery());
+    }
 
 
 }

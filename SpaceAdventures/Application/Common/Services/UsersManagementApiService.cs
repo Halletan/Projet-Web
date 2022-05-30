@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -31,6 +32,22 @@ public class UsersManagementApiService : IUsersManagementApiService
     }
 
     #endregion
+
+
+
+
+    public async Task<UsersVm> GetAllUsers(CancellationToken cancellationToken)
+    {
+        return new UsersVm
+        {
+            UsersList = await _context.Users
+                .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
+                .OrderBy(u => u.IdUser)
+                .ToListAsync(cancellationToken)
+        };
+    }
+
+
 
     #region Get User's Roles
 
@@ -76,7 +93,7 @@ public class UsersManagementApiService : IUsersManagementApiService
     }
     #endregion
 
-
+    #region CreateUser
     public async Task<UserDto> CreateUser(UserInput userInput,CancellationToken cancellationToken)
     {
         try
@@ -138,5 +155,5 @@ public class UsersManagementApiService : IUsersManagementApiService
         await _context.SaveChangesAsync(cancellationToken);
         return _mapper.Map<UserDto>(user);
     }
-
+    #endregion
 }
