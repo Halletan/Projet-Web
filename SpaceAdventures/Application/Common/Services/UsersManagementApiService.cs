@@ -23,12 +23,12 @@ public class UsersManagementApiService : IUsersManagementApiService
     private readonly ISpaceAdventureDbContext _context;
     #region Constructor
 
-    public UsersManagementApiService(IConfiguration configuration, IHttpClientFactory httpClientFactory, IMapper mapper, ISpaceAdventureDbContext context)
+    public UsersManagementApiService(IConfiguration configuration, HttpClient httpClient, IMapper mapper, ISpaceAdventureDbContext context)
     {
         _configuration = configuration;
         _mapper = mapper;
         _context = context;
-        _httpClient = httpClientFactory.CreateClient("RetryPolicy");
+        _httpClient = httpClient;
     }
 
     #endregion
@@ -97,5 +97,37 @@ public class UsersManagementApiService : IUsersManagementApiService
     public async Task<bool> UserExists(string email)
     {
         return await _context.Users.AnyAsync(c => c.Email==email);
+    }
+
+    public async Task<UserDto> CreateUserAuth0(UserInput userInput, CancellationToken cancellationToken)
+    {
+        var token = await GetToken();
+        var accessToken = token.access_token;
+
+        var response = await _httpClient.PostAsync(_configuration["Auth0ManagementApi:Audience"] + "users",new FormUrlEncodedContent(
+            new Dictionary<string, string>
+            {
+                {"email", userInput.Email},
+                {"email_verified", "false"},
+                {"connection", "Username-Password-Authentication"},
+                {"verify_email","false"},
+                {"given_name", "John"},
+                {"family_name", "Doe"},
+                {"name", "John Doe"},
+                {"nickname", "Johnny"},
+                {"password", "Test1234**/"}
+            }));
+
+
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new ValidationException();
+        }
+        
+        var content = await response.Content.ReadAsStringAsync();
+
+        UserDto u=new();
+        return u;
     }
 }

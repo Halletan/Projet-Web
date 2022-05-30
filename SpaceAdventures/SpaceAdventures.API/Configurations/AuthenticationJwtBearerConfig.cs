@@ -31,6 +31,8 @@ public static class AuthenticationJwtBearerConfig
                 policy => policy.Requirements.Add(new HasScopeRequirement("read:users", domain)));
             options.AddPolicy("write:users",
                 policy => policy.Requirements.Add(new HasScopeRequirement("write:users", domain)));
+            options.AddPolicy("create:users",
+                policy => policy.Requirements.Add(new HasScopeRequirement("create:users", domain)));
         });
 
         return services;

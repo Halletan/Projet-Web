@@ -27,7 +27,7 @@ public static class DependencyInjection
         services.AddScoped<IFlightService, FlightService>();
         services.AddScoped<IBookingService, BookingService>();
         services.AddScoped<IAircraftSeatService, AircraftSeatService>();
-        services.AddScoped<IUsersManagementApiService, UsersManagementApiService>();
+        services.AddHttpClient<IUsersManagementApiService, UsersManagementApiService>();
 
 
         services.AddHttpClient<IISSCLService, ISSCLService>();
@@ -35,8 +35,8 @@ public static class DependencyInjection
 
 
         // Policy Service
-        services.AddSingleton(new ClientPolicy());
-        services.AddHttpClient("RetryPolicy").AddPolicyHandler(request => new ClientPolicy().ExponentialHttpRetry);
+       /* services.AddSingleton(new ClientPolicy());
+        services.AddHttpClient("RetryPolicy").AddPolicyHandler(request => new ClientPolicy().ExponentialHttpRetry);*/
 
         // Behaviors
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));

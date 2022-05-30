@@ -26,4 +26,6 @@ namespace SpaceAdventures.Application.Common.Models.UsersAuth0ManagementApi
         public string username { get; set; }
 
     }
+
+
 }

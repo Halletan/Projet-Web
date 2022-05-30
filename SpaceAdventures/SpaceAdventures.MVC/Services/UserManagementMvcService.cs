@@ -28,29 +28,23 @@ namespace SpaceAdventures.MVC.Services
         public async Task<User> CreateUser( string accessToken, UserInput user)
         {
 
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            User u = new User
-            {
-                Email = user.Email,
-                Username = user.Username,
-                Connection = "Username-Password-Authentication"
-            };
+            /*  _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+             User u = new User
+              {
+                  Email = user.Email,
+                  Username = user.Username,
+                  Connection = "Username-Password-Authentication"
+              };*/
 
-            var postBody = JsonConvert.SerializeObject(u);
-
-
-             await _httpClient.PostAsync("https://localhost:7195/api/v1.0/Users/CreateUser",
-                new StringContent(postBody, Encoding.UTF8, "application/json"));
-
-            
+            //await CreateUserInDb(accessToken,user);
 
 
-            // Create user in Auth0 (Call API Auth0)
-            // Create user in DB (call API)
-            // Give userRole set by admin
-            // Give customer role in Auth0
-            //Else  (modified user that already exist) or send error message ? 
-            //Else Access denied
+           // Create user in Auth0 (Call API Auth0)
+           // Create user in DB (call API)
+           // Give userRole set by admin
+           // Give customer role in Auth0
+           //Else  (modified user that already exist) or send error message ? 
+           //Else Access denied
 
 
 
@@ -62,7 +56,7 @@ namespace SpaceAdventures.MVC.Services
             //if Ok, Create User on Auth0 by calling Auth0 Management API
             string result = await CreateUserOnAuth0(accessToken, user);
 
-            
+
 
 
             // Else, display message
@@ -78,7 +72,7 @@ namespace SpaceAdventures.MVC.Services
             
 
         }
-        public async Task<string> CreateUserOnAuth0( string token, UserInput user)
+        public async Task<string> CreateUserOnAuth0(string token, UserInput user)
         {
             try
             {

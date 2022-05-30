@@ -32,7 +32,11 @@ public static class AuthenticationConfig
                 options.Scope.Clear();
                 options.Scope.Add("openid");
                 options.Scope.Add("profile");
+                options.Scope.Add("write:users");
                 options.Scope.Add("read:messages");
+                options.Scope.Add("write:messages");
+                options.Scope.Add("read:users");
+                options.Scope.Add("create:users");
                 options.CallbackPath = new PathString("/callback");
                 options.ClaimsIssuer = "AuthO"; // Allow the AuthO as authenticator
                 options.SaveTokens =

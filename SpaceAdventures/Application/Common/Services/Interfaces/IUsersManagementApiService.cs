@@ -9,5 +9,6 @@ public interface IUsersManagementApiService
     Task<List<UserRole>> GetUserRoles(string userId, CancellationToken cancellation = default);
     Task<TokenData> GetToken(); // APi Management Auth0
     Task<UserDto> CreateUser(UserInput userInput,CancellationToken cancellationToken);
+    Task<UserDto> CreateUserAuth0(UserInput userInput,CancellationToken cancellationToken);
     Task<bool> UserExists(string email);
 }

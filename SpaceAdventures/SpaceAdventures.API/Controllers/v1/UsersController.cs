@@ -45,14 +45,16 @@ public class UsersController : ControllerBase
     /// </summary>
     /// <param name="command"></param>
     [HttpPost]
-    [Authorize(Policy = "Create:users")]
+   // [Authorize(Policy = "write:users")]
     [Route("CreateUser")]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<UserDto>> CreateUser([FromBody] CreateUserCommand command)
     {
         return Ok(await _mediator.Send(command));
     }
+
+
 
 
 }

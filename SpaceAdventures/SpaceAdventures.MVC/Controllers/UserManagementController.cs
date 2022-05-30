@@ -40,6 +40,7 @@ namespace SpaceAdventures.MVC.Controllers
 
             if (ModelState.IsValid)
             {
+                
                 User userCreated=  await _userManagementMvcService.CreateUser(accessToken, userInput);
 
                 return View(userCreated); // Sera une RedirectToAction vers GetUserDetails(user)
