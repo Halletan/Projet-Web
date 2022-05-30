@@ -92,7 +92,6 @@ public static class AuthenticationConfig
                             context.HandleResponse();
                             context.Response.Redirect("/Account/AccessDenied");
                         }
-
                         return Task.FromResult(0);
                     }
                 };

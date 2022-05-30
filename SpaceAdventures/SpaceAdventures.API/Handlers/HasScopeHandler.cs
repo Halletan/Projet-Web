@@ -6,9 +6,7 @@ public class HasScopeHandler : AuthorizationHandler<HasScopeRequirement>
 {
     protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, HasScopeRequirement requirement)
     {
-
-
-        // If user current user does not have a scope claim => so no permission
+        // If current user does not have a scope claim => so no permission
         if (!context.User
                 .HasClaim(c => c.Type == "scope" && c.Issuer == requirement.Issuer))
             return Task.CompletedTask;
@@ -18,10 +16,16 @@ public class HasScopeHandler : AuthorizationHandler<HasScopeRequirement>
         var permissions = context.User.FindAll(c => c.Type == "permissions");
         var result = string.Join(",", permissions);
 
+        var permissions = context.User.FindAll(c => c.Type == "permissions");
+
+        var result = string.Join(",", permissions); 
+
+        if(result.Contains(requirement.Scope))
+            context.Succeed(requirement);
 
         // If the scope array contains the required scope => access is granted
-        if (result.Contains(requirement.Scope))
-            context.Succeed(requirement);
+        //if (scopes.Any(str => str == requirement.Scope))
+        //    context.Succeed(requirement);
 
         return Task.CompletedTask;
     }

@@ -28,7 +28,6 @@ public class HomeController : Controller
                 DateTimeStyles.RoundtripKind);
 
             var idToken = await HttpContext.GetTokenAsync("id_token");
-
             var isOwner = User.IsInRole("Owner");
 
             TempData["Message"] = User.Identity.Name;
