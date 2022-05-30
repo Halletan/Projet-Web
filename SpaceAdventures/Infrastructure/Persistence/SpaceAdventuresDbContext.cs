@@ -228,6 +228,13 @@ namespace Infrastructure.Persistence
                     .HasForeignKey(d => d.IdUser)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Client_User");
+
+                entity.HasOne(d => d.IdMemberShipTypeNavigation)
+                    .WithMany(p => p.Clients)
+                    .HasForeignKey(d => d.IdMemberShipType)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Client_MembershipType");
+
             });
 
             modelBuilder.Entity<Role>(entity =>

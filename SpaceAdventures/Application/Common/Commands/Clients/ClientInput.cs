@@ -10,7 +10,8 @@ public class ClientInput : IMapFrom<Client>
     public string LastName { get; set; }
     public string Phone { get; set; }
     public string Email { get; set; }
-    public int? IdMemberShipType { get; set; } = null;
+    public int? IdMemberShipType { get; set; }
+    public int? IdUser { get; set; }
 
     public void Mapping(Profile profile)
     {

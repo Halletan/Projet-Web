@@ -349,3 +349,7 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 SpaceAdventures/SpaceAdventures.API/appsettings.json
+SpaceAdventures/SpaceAdventures.API/appsettings.json
+SpaceAdventures/SpaceAdventures.MVC/appsettings.json
+SpaceAdventures/SpaceAdventures.API/appsettings.json
+SpaceAdventures/SpaceAdventures.MVC/appsettings.json

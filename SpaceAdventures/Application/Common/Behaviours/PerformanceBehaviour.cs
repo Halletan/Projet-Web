@@ -4,16 +4,16 @@ using Microsoft.Extensions.Logging;
 
 namespace SpaceAdventures.Application.Common.Behaviours;
 
-public class LoggingBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
 {
-    private readonly ILogger<LoggingBehaviour<TRequest, TResponse>> _logger;
+    private readonly ILogger<PerformanceBehaviour<TRequest, TResponse>> _logger;
 
-    public LoggingBehaviour(ILogger<LoggingBehaviour<TRequest, TResponse>> logger)
+    public PerformanceBehaviour(ILogger<PerformanceBehaviour<TRequest, TResponse>> logger)
     {
         _logger = logger;
     }
-
+        
     public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
         RequestHandlerDelegate<TResponse> next)
     {

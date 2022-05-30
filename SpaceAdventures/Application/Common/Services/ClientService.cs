@@ -46,7 +46,7 @@ public class ClientService : IClientService
     public async Task<ClientDto> GetClientById(int clientId, CancellationToken cancellation = default)
     {
         var client = await _context.Clients.FindAsync(clientId);
-        if (client == null) throw new NotFoundException("Client", clientId);
+        if (client == null) throw new NotFoundException(nameof(Client), clientId);
 
         return _mapper.Map<ClientDto>(client);
     }
@@ -54,7 +54,6 @@ public class ClientService : IClientService
     public async Task<ClientDto> CreateClient(ClientInput clientInput, CancellationToken cancellation = default)
     {
         var client = _mapper.Map<Client>(clientInput);
-
         try
         {
             await _context.Clients.AddAsync(client, cancellation);
@@ -72,7 +71,7 @@ public class ClientService : IClientService
     {
         var client = await _context.Clients.FindAsync(clientId);
 
-        if (client == null) throw new NotFoundException("Client", clientId);
+        if (client == null) throw new NotFoundException(nameof(Client), clientId);
 
         try
         {
@@ -80,6 +79,7 @@ public class ClientService : IClientService
             client.LastName = clientInput.LastName;
             client.Email = clientInput.Email;
             client.IdMemberShipType = clientInput.IdMemberShipType;
+            client.IdUser = clientInput.IdUser;
 
             _context.Clients.Update(client);
             await _context.SaveChangesAsync(cancellation);
@@ -95,7 +95,7 @@ public class ClientService : IClientService
     {
         var client = await _context.Clients.FindAsync(clientId);
 
-        if (client == null) throw new NotFoundException("Client", clientId);
+        if (client == null) throw new NotFoundException(nameof(Client), clientId);
         _context.Clients.Remove(client);
         await _context.SaveChangesAsync(cancellation);
     }
