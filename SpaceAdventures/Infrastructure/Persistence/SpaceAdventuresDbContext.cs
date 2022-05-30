@@ -260,7 +260,7 @@ namespace Infrastructure.Persistence
 
                 entity.ToTable("User");
 
-                entity.Property(e => e.IdUser).ValueGeneratedNever();
+                entity.Property(e => e.IdUser);
 
                 entity.Property(e => e.Email)
                     .IsRequired()

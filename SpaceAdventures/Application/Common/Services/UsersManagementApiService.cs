@@ -80,13 +80,10 @@ public class UsersManagementApiService : IUsersManagementApiService
 
     public async Task<UserDto> CreateUser(UserInput userInput,CancellationToken cancellationToken)
     {
-        var user = _mapper.Map<User>(userInput);
-
         try
         {
-            await _context.Users.AddAsync(user, cancellationToken);
-            await _context.SaveChangesAsync(cancellationToken);
-            return _mapper.Map<UserDto>(user);
+            User user = await CreateUserAuth0(userInput, cancellationToken);
+            return await CreateUserInDb(user,cancellationToken);
         }
         catch (Exception)
         {
@@ -99,10 +96,11 @@ public class UsersManagementApiService : IUsersManagementApiService
         return await _context.Users.AnyAsync(c => c.Email==email);
     }
 
-    public async Task<UserDto> CreateUserAuth0(UserInput userInput, CancellationToken cancellationToken)
+    public async Task<User> CreateUserAuth0(UserInput userInput, CancellationToken cancellationToken)
     {
         var token = await GetToken();
         var accessToken = token.access_token;
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
         var response = await _httpClient.PostAsync(_configuration["Auth0ManagementApi:Audience"] + "users",new FormUrlEncodedContent(
             new Dictionary<string, string>
@@ -125,9 +123,23 @@ public class UsersManagementApiService : IUsersManagementApiService
             throw new ValidationException();
         }
         
-        var content = await response.Content.ReadAsStringAsync();
+        var content = await response.Content.ReadAsStringAsync(cancellationToken);
 
-        UserDto u=new();
-        return u;
+        UserAuth0 userAuth = JsonConvert.DeserializeObject<UserAuth0>(content);
+
+        User userDB = new User();  
+        userDB.IdRole = userInput.IdRole;
+        userDB.Username = userInput.Username;
+        userDB= _mapper.Map<User>(userAuth);
+
+        return userDB;
     }
+
+    public async Task<UserDto> CreateUserInDb(User user, CancellationToken cancellationToken)
+    {
+        await _context.Users.AddAsync(user, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+        return _mapper.Map<UserDto>(user);
+    }
+
 }
