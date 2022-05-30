@@ -99,6 +99,7 @@ public class UsersManagementApiService : IUsersManagementApiService
     {
         var token = await GetToken();
         var accessToken = token.access_token;
+
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
         var response = await _httpClient.PostAsync(_configuration["Auth0ManagementApi:Audience"] + "users",new FormUrlEncodedContent(
@@ -107,13 +108,14 @@ public class UsersManagementApiService : IUsersManagementApiService
                 {"email", userInput.Email},
                 {"email_verified", "false"},
                 {"connection", "Username-Password-Authentication"},
-                {"verify_email","false"},
+                {"verify_email","true"},
                 {"given_name", "John"},
                 {"family_name", "Doe"},
                 {"name", "John Doe"},
                 {"nickname", "Johnny"},
-                {"password", "Test1234**/"}
-            }));
+                {"password", "Test1234**/"},
+                {"username", userInput.Username}
+            }), cancellationToken);
 
         if (!response.IsSuccessStatusCode)
         {
@@ -122,14 +124,13 @@ public class UsersManagementApiService : IUsersManagementApiService
         
         var content = await response.Content.ReadAsStringAsync(cancellationToken);
 
-        UserAuth0 userAuth = JsonConvert.DeserializeObject<UserAuth0>(content);
+        var userAuth = JsonConvert.DeserializeObject<UserAuth0>(content);
 
-        User userDB = new User();  
-        userDB.IdRole = userInput.IdRole;
-        userDB.Username = userInput.Username;
-        userDB= _mapper.Map<User>(userAuth);
+        var userDb = _mapper.Map<User>(userAuth);
+        userDb.IdRole = userInput.IdRole;
+        userDb.Username = userInput.Username;
 
-        return userDB;
+        return userDb;
     }
 
     public async Task<UserDto> CreateUserInDb(User user, CancellationToken cancellationToken)
