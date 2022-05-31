@@ -191,12 +191,12 @@ public class UsersManagementApiService : IUsersManagementApiService
         var result = lst.Find(c => c.name == role.Name);
         string[] tab = new string[1];
         tab[0] = user.IdUserAuth0;
-        string JsonToPost = "users:[" + tab[0] + "]";
+        string JsonToPost = "{\"users\":["+"\""+user.IdUserAuth0+"\"]}"; 
 
-        var json = JsonConvert.SerializeObject(JsonToPost);
+        //var json = JsonConvert.SerializeObject(JsonToPost);
 
         var response = await _httpClient.PostAsync(_configuration["Auth0ManagementApi:Audience"] + result.id + "/users",
-            new StringContent(json, Encoding.UTF8, "application/json"));
+            new StringContent(JsonToPost, Encoding.UTF8, "application/json"));
             
 
 
