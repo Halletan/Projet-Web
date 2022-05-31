@@ -25,9 +25,9 @@ namespace SpaceAdventures.MVC.Services
 
         public async Task<User> CreateUser(string? accessToken, UserInput user)
         {
-            var postBody = JsonConvert.SerializeObject(user);
+           var postBody = JsonConvert.SerializeObject(user);
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            var response = await _httpClient.PostAsync("https://localhost:7195/api/v1.0/Users/CreateUser", new StringContent(postBody, Encoding.UTF8, "application/json"));
+           var response = await _httpClient.PostAsync("https://localhost:7195/api/v1.0/Users/CreateUser", new StringContent(postBody, Encoding.UTF8, "application/json"));
 
             if (!response.IsSuccessStatusCode) throw new Exception("Cannot retrieve data");
 

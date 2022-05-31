@@ -9,7 +9,14 @@ using SpaceAdventures.Application.Common.Services.Interfaces;
 
 namespace SpaceAdventures.Application.Common.Commands.Users
 {
-    public record CreateUserCommand(UserInput userInput) : IRequest<UserDto>;
+    public record CreateUserCommand (UserInput UserInput): IRequest<UserDto>
+    {
+        /*public CreateUserCommand(UserInput userInput)
+        {
+            _userInput=userInput;
+        }*/
+
+    }
 
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, UserDto>
     {
@@ -23,7 +30,7 @@ namespace SpaceAdventures.Application.Common.Commands.Users
 
         public async Task<UserDto> Handle(CreateUserCommand command, CancellationToken cancellationToken)
         {
-            return await _userService.CreateUser(command.userInput, cancellationToken);
+            return await _userService.CreateUser(command.UserInput , cancellationToken);
         }
     }
 }

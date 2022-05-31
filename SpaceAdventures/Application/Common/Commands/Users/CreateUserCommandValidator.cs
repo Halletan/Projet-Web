@@ -15,7 +15,7 @@ namespace SpaceAdventures.Application.Common.Commands.Users
     {
         public CreateUserCommandValidator(IUsersManagementApiService UserManagementApiService)
         {
-            RuleFor(n => n.userInput.Email)
+            RuleFor(n => n.UserInput.Email)
                 .NotEmpty().WithMessage("Email is mandatory")
                 .EmailAddress().WithMessage("Invalid email address")
                 .MustAsync(async (email, cancel) =>
