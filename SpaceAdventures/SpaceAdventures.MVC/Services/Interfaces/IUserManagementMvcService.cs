@@ -7,6 +7,6 @@ namespace SpaceAdventures.MVC.Services.Interfaces
         Task<User> CreateUser(string token, UserInput user);
         Task<Users> GetAllUsers(string? accessToken);
 
-        Task<UserRole> GetRoleById(string? accessToken);
+        Task<UserRole> GetRoleByIdRole(int id, string? accessToken);
     }
 }

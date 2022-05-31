@@ -49,5 +49,18 @@ namespace SpaceAdventures.MVC.Services
 
         }
 
+        public async Task<UserRole> GetRoleByIdRole(int id, string? accessToken)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            var response = await _httpClient.GetAsync("https://localhost:7195/api/v1.0/Users/GetRoleByIdRole/" + id);
+
+            if (!response.IsSuccessStatusCode)
+                throw new Exception("Cannot retrieve data");
+
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<UserRole>(content);
+
+        }
+
     }
 }

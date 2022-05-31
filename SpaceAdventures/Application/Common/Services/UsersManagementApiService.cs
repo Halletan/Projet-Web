@@ -34,8 +34,6 @@ public class UsersManagementApiService : IUsersManagementApiService
 
     #endregion
 
-
-
     #region Get All Users
     public async Task<UsersVm> GetAllUsers(CancellationToken cancellationToken)
     {
@@ -85,15 +83,7 @@ public class UsersManagementApiService : IUsersManagementApiService
 
     }
 
-    private async Task<RoleDto> GetRoleInDbByIDRole(int id, CancellationToken cancellationToken)
-    {
-        return new RoleDto
-        {
-             await _context.Roles
-                .ProjectTo<RoleDto>(_mapper.ConfigurationProvider)
-                .Where(n=>n.IdRole==id)
-        };
-    }
+   
 
     #endregion
 
@@ -235,4 +225,23 @@ public class UsersManagementApiService : IUsersManagementApiService
 
     #endregion
 
+    #region Get Role By IdRole
+    public async Task<RoleDto> GetRoleInDbByIdRole(int id, CancellationToken cancellationToken)
+    {
+        //return new RoleDto
+        //{
+        //     await _context.Roles
+        //        .ProjectTo<RoleDto>(_mapper.ConfigurationProvider)
+        //        .Where(n=>n.IdRole==id)
+        //        .ToListAsync(cancellationToken)
+        //};
+
+
+        var role = await _context.Roles.FindAsync(id);
+        if (role == null) throw new NotFoundException(nameof(Role), id);
+
+        return _mapper.Map<RoleDto>(role);
+
+    }
+    #endregion
 }

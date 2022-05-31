@@ -20,20 +20,21 @@ namespace SpaceAdventures.MVC.Controllers
 
         public async Task<IActionResult> GetAllUsers()
         {
-            var result = await _userManagementMvcService.GetAllUsers(await HttpContext.GetTokenAsync("access_token"));
+            Users result = await _userManagementMvcService.GetAllUsers(await HttpContext.GetTokenAsync("access_token"));
             List<UserVm> lst = new List<UserVm>();
 
-            foreach( User user in result)
+            foreach( User user in result.UsersList)
             {
                 UserVm vm = new UserVm();
                 vm.Email=user.Email;
                 vm.Username=user.Username;
-                vm.Role = await _userManagementMvcService.GetRoleById(user.idRole);
-                lst.Add();
+                UserRole userRole = await _userManagementMvcService.GetRoleByIdRole(user.idRole, await HttpContext.GetTokenAsync("access_token"));
+                vm.Role = userRole.name;
+                lst.Add(vm);
             }
 
 
-            return View();
+            return View(lst);
         }
 
         #region CreateUser

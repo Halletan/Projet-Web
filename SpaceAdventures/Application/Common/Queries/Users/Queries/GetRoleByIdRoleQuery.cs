@@ -9,9 +9,9 @@ using SpaceAdventures.Domain.Entities;
 
 namespace SpaceAdventures.Application.Common.Queries.Users.Queries
 {
-    public record GetRoleByIdRoleQuery(int id) : IRequest<Role>;
+    public record GetRoleByIdRoleQuery(int id) : IRequest<RoleDto>;
 
-    public class GetRoleByIdRoleQueryHandler : IRequestHandler<GetRoleByIdQuery, Role>
+    public class GetRoleByIdRoleQueryHandler : IRequestHandler<GetRoleByIdRoleQuery, RoleDto>
     {
         private readonly IUsersManagementApiService _usersManagementApiService;
 
@@ -20,9 +20,9 @@ namespace SpaceAdventures.Application.Common.Queries.Users.Queries
             _usersManagementApiService = usersManagementApiService;
         }
 
-        public async Task<Role> Handle(GetRoleByIdRoleQuery request, CancellationToken cancellationToken)
+        public async Task<RoleDto> Handle(GetRoleByIdRoleQuery request, CancellationToken cancellationToken)
         {
-            return await _usersManagementApiService.GetRoleInDbByIDRole(request.id, cancellationToken);
+            return await _usersManagementApiService.GetRoleInDbByIdRole(request.id, cancellationToken);
         }
 
     }

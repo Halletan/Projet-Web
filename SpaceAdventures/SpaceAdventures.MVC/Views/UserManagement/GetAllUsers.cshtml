@@ -1,5 +1,4 @@
-﻿@model Users
-
+﻿@model IEnumerable<UserVm>
 @{
     ViewData["Title"] = "GetAllUser";
 }
@@ -20,11 +19,11 @@
             <th>
                 Email
             </th>
-            <th></th>
+            <th>Role</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.UsersList) {
+@foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Username)
@@ -34,7 +33,7 @@
             </td>
 
             <td>
-
+                @Html.DisplayFor(modelItem => item.Role)
             </td>
         </tr>
 }
