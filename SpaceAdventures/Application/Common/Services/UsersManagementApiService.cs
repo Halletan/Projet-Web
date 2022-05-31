@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -12,6 +13,7 @@ using SpaceAdventures.Application.Common.Models.UsersAuth0ManagementApi;
 using SpaceAdventures.Application.Common.Queries.Users.Queries;
 using SpaceAdventures.Application.Common.Services.Interfaces;
 using SpaceAdventures.Domain.Entities;
+
 
 
 namespace SpaceAdventures.Application.Common.Services;
@@ -189,18 +191,32 @@ public class UsersManagementApiService : IUsersManagementApiService
         Role role = await GetRoleInDb(user, cancellation);
 
         var result = lst.Find(c => c.name == role.Name);
+
         string[] tab = new string[1];
         tab[0] = user.IdUserAuth0;
-        string JsonToPost = "{\"users\":["+"\""+user.IdUserAuth0+"\"]}"; 
+        string testUserAuth = user.IdUserAuth0;
+        string JsonToPost = "users\":[\""+testUserAuth+"\"]";
+        //var value = new List<KeyValuePair<string,string[]>>();
+        //value.Add(new KeyValuePair<string, string[]>("users",tab));
+        //var content = new FormUrlEncodedContent(value);
+        //var test = new FormUrlEncodedContent(new Dictionary<string, string>
+        //{
+        //    { "users", JsonToPost }
+        //});
 
-        //var json = JsonConvert.SerializeObject(JsonToPost);
+        //var json = JsonConvert.SerializeObject(tab);
 
-        var response = await _httpClient.PostAsync(_configuration["Auth0ManagementApi:Audience"] + result.id + "/users",
-            new StringContent(JsonToPost, Encoding.UTF8, "application/json"));
+        UserTempData users = new UserTempData();
+        users.users = tab;
+        var json = JsonConvert.SerializeObject(users);
+
+        //var response = await _httpClient.PostAsync(_configuration["Auth0ManagementApi:Audience"] + result.id + "/users",
             
+        //    new StringContent(json, Encoding.UTF8, "application/json"));
 
+        var response = await _httpClient.PostAsJsonAsync(_configuration["Auth0ManagementApi:Audience"] + result.id + "/users",
 
-
+            users);
 
         // var response = await _httpClient.PostAsync()
 
@@ -228,15 +244,6 @@ public class UsersManagementApiService : IUsersManagementApiService
     #region Get Role By IdRole
     public async Task<RoleDto> GetRoleInDbByIdRole(int id, CancellationToken cancellationToken)
     {
-        //return new RoleDto
-        //{
-        //     await _context.Roles
-        //        .ProjectTo<RoleDto>(_mapper.ConfigurationProvider)
-        //        .Where(n=>n.IdRole==id)
-        //        .ToListAsync(cancellationToken)
-        //};
-
-
         var role = await _context.Roles.FindAsync(id);
         if (role == null) throw new NotFoundException(nameof(Role), id);
 
