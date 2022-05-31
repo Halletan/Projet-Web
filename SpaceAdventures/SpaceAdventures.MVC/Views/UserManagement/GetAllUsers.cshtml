@@ -8,7 +8,7 @@
 <h1 class="m-4 p-4 text-center text-white"></h1>
 
 <p>
-<a class="btn btn-primary" asp-action="CreateUser"> <i class="fa-solid fa-plus"></i> Add New Customer</a>
+<a class="btn btn-primary" asp-action="CreateUser"> <i class="fa-solid fa-plus"></i> Add New User</a>
 </p>
 <table id="datatable" class="table border rounded">
     <thead class="dataTableColumn">
@@ -19,7 +19,12 @@
             <th>
                 Email
             </th>
-            <th>Role</th>
+            <th>
+                Role
+            </th>
+            <th>
+
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -31,9 +36,17 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
-
             <td>
                 @Html.DisplayFor(modelItem => item.Role)
+            </td>
+            <td>
+                 <a class="btn btn-success btn-sm" asp-action="" asp-route-id="@item.Username">
+                    <i class="fa-solid fa-pen m-2"></i>
+                </a> |
+                <a class="btn btn-danger btn-sm" asp-action="" asp-route-id="@item.Username">
+                    <i class="fa-solid fa-trash m-2"></i>
+                </a>
+                
             </td>
         </tr>
 }

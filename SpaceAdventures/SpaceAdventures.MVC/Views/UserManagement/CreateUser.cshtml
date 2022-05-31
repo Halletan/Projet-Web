@@ -4,6 +4,9 @@
     ViewData["Title"] = "CreateUser";
 }
 
+
+
+
 <h1>CreateUser</h1>
 
 <h4>User</h4>
@@ -12,42 +15,46 @@
     <div class="col-md-4">
         <form asp-action="CreateUser">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
+            <div class="form-group mb-2">
+                <label asp-for="Username" class="control-label text-white"></label>
                 <input asp-for="Username" class="form-control" />
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
+            <div class="form-group mb-2">
+                <label asp-for="Email" class="control-label text-white"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group" hidden="hidden">
-                <label asp-for="Connection" class="control-label"></label>
+                <label asp-for="Connection" class="control-label text-white"></label>
                 <input asp-for="Connection"  value="test" class="form-control" readonly="readonly"/>
                 <span asp-validation-for="Connection" class="text-danger"></span>
             </div>
              <div class="form-group" hidden="hidden">
-                <label asp-for="Password" class="control-label"></label>
+                <label asp-for="Password" class="control-labelvtext-white"></label>
                 <input asp-for="Password"  value="test" class="form-control" readonly="readonly" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-             <div class="form-group">
-                <label asp-for="IdRole" class="control-label"></label>
-                <input asp-for="IdRole" class="form-control" />
+             <div class="form-group mb-2">
+                <label asp-for="IdRole" class="control-label text-white"></label>
+                @Html.DropDownListFor(x => Model.IdRole, new SelectList(ViewBag.ListRole, "Value", "Text"));
                 <span asp-validation-for="IdRole" class="text-danger"></span>
             </div>
-
+            </br>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-success" />
             </div>
         </form>
     </div>
 </div>
 
+</br>
+
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-primary" asp-action="GetAllUsers">Back to List</a>
 </div>
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
