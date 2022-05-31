@@ -35,7 +35,7 @@ public class UsersManagementApiService : IUsersManagementApiService
 
 
 
-
+    #region Get All Users
     public async Task<UsersVm> GetAllUsers(CancellationToken cancellationToken)
     {
         return new UsersVm
@@ -46,8 +46,7 @@ public class UsersManagementApiService : IUsersManagementApiService
                 .ToListAsync(cancellationToken)
         };
     }
-
-
+    #endregion
 
     #region Get User's Roles
 
@@ -156,4 +155,25 @@ public class UsersManagementApiService : IUsersManagementApiService
         return _mapper.Map<UserDto>(user);
     }
     #endregion
+
+    #region Assign Role to a user
+
+    public async Task<UserDto> AssignRole(int IdRole, User user) // ou directement UserId
+    {
+        // AccessToken AuthManagement API
+        var token = await GetToken();
+        var accessToken = token.access_token;
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+
+
+
+        // var response = await _httpClient.PostAsync()
+
+        // Endpoint https://auth0.com/docs/api/management/v2#!/Roles/post_role_users
+
+        throw new NotImplementedException();
+    }
+    #endregion
+
 }

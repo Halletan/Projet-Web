@@ -20,9 +20,7 @@ namespace SpaceAdventures.MVC.Services
         {
             _httpClient = httpClient;
             _httpContextAccessor = httpContextAccessor;
-            
-
-
+           
         }
 
         public async Task<User> CreateUser( string accessToken, UserInput user)
@@ -39,14 +37,8 @@ namespace SpaceAdventures.MVC.Services
                 User u = new User
                 {
                     Email = user.Email,
-                    Username = user.Username,
-                    //password = "test",
-                    Connection = "Username-Password-Authentication"
-                    //app_metadata = new Dictionary<string, string>
-                    //    {
-                    //        {"companyId", "987"},
-                    //        {"fakeId", "447"}
-                    //    }
+                    Username = user.Username,                    
+                    Connection = "Username-Password-Authentication"                   
                 };
 
                 var postBody = JsonConvert.SerializeObject(u);
