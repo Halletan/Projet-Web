@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 
@@ -21,6 +22,18 @@ namespace SpaceAdventures.MVC.Services
             _httpClient = httpClient;
             _httpContextAccessor = httpContextAccessor;
            
+        }
+
+        public async Task<Users> GetAllUsers(string? accessToken)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            var response = await _httpClient.GetAsync("https://localhost:7195/api/v1.0/Users/GetAllUsers");
+
+            if (!response.IsSuccessStatusCode)
+                throw new Exception("Cannot retrieve data");
+
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<Users>(content);
         }
 
         public async Task<User> CreateUser(string? accessToken, UserInput user)

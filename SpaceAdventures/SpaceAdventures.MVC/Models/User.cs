@@ -7,10 +7,25 @@
         public string Email { get; set; }
         public string Connection { get; set; }
 
+        public int idRole { get; set; }
+
         // public bool VerifiedEmail { get; set; }
         //public int IdRole { get; set; }
         //public string IdUserAuth0 { get; set; }
     }
+
+    public class UserVm
+    {
+        public string Username { get; set; }
+        public string Email { get; set; }
+
+        public string Role { get; set; }
+
+        // public bool VerifiedEmail { get; set; }
+        //public int IdRole { get; set; }
+        //public string IdUserAuth0 { get; set; }
+    }
+
 
     [Serializable]
     public class Users

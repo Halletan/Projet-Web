@@ -85,6 +85,16 @@ public class UsersManagementApiService : IUsersManagementApiService
 
     }
 
+    private async Task<RoleDto> GetRoleInDbByIDRole(int id, CancellationToken cancellationToken)
+    {
+        return new RoleDto
+        {
+             await _context.Roles
+                .ProjectTo<RoleDto>(_mapper.ConfigurationProvider)
+                .Where(n=>n.IdRole==id)
+        };
+    }
+
     #endregion
 
     #region Collecting Access Token

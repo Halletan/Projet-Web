@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using SpaceAdventures.MVC.Models;
 using SpaceAdventures.MVC.Services.Interfaces;
 
@@ -14,6 +15,25 @@ namespace SpaceAdventures.MVC.Controllers
         public UserManagementController(IUserManagementMvcService userManagementMvcService)
         {
             _userManagementMvcService = userManagementMvcService;
+        }
+
+
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var result = await _userManagementMvcService.GetAllUsers(await HttpContext.GetTokenAsync("access_token"));
+            List<UserVm> lst = new List<UserVm>();
+
+            foreach( User user in result)
+            {
+                UserVm vm = new UserVm();
+                vm.Email=user.Email;
+                vm.Username=user.Username;
+                vm.Role = await _userManagementMvcService.GetRoleById(user.idRole);
+                lst.Add();
+            }
+
+
+            return View();
         }
 
         #region CreateUser

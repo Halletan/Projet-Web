@@ -18,4 +18,5 @@ public interface IUsersManagementApiService
     Task<bool> UserExists(string email);
 
     Task<Role> GetRoleInDb(User user ,CancellationToken cancellationToken = default);
+    Task<Role> GetRoleInDbByIDRole(int id, CancellationToken cancellationToken = default);
 }

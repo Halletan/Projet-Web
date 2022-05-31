@@ -1,0 +1,52 @@
+﻿@model Users
+
+@{
+    ViewData["Title"] = "GetAllUser";
+}
+
+<link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
+
+<h1 class="m-4 p-4 text-center text-white"></h1>
+
+<p>
+<a class="btn btn-primary" asp-action="CreateUser"> <i class="fa-solid fa-plus"></i> Add New Customer</a>
+</p>
+<table id="datatable" class="table border rounded">
+    <thead class="dataTableColumn">
+    <tr>
+            <th>
+                Username
+            </th>
+            <th>
+                Email
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.UsersList) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+
+            <td>
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@section Scripts
+{
+
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/js/datatable.js"></script>
+
+
+}

@@ -70,5 +70,17 @@ public class UsersController : ControllerBase
         return await _mediator.Send(new GetUsersQuery());
     }
 
+    [HttpGet]
+    // [Authorize(Policy = "read:users")]
+    [Route("GetRoleById")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<UserRole>> GetUserRoleById(int Id)
+    {
+        Get
+        return await _mediator.Send(GetUserRoleById(id));
+    }
+
 
 }
