@@ -8,6 +8,7 @@ namespace SpaceAdventures.Application.Common.Services.Interfaces;
 public interface IUsersManagementApiService
 {
     Task<List<UserRole>> GetUserRoles(string userId, CancellationToken cancellation = default);
+    Task<UsersVm> GetAllUsers(CancellationToken cancellation = default);
     Task<TokenData> GetToken(); // APi Management Auth0
     Task<UserDto> CreateUser(UserInput userInput,CancellationToken cancellationToken);
     Task<User> CreateUserAuth0(UserInput userInput,CancellationToken cancellationToken);

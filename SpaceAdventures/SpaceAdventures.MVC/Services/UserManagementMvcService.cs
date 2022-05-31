@@ -20,56 +20,14 @@ namespace SpaceAdventures.MVC.Services
         {
             _httpClient = httpClient;
             _httpContextAccessor = httpContextAccessor;
-            
-
-
+           
         }
 
         public async Task<User> CreateUser( string accessToken, UserInput user)
-        {
-
-            /*  _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-             User u = new User
-              {
-                  Email = user.Email,
-                  Username = user.Username,
-                  Connection = "Username-Password-Authentication"
-              };*/
-
-            //await CreateUserInDb(accessToken,user);
-
-
-           // Create user in Auth0 (Call API Auth0)
-           // Create user in DB (call API)
-           // Give userRole set by admin
-           // Give customer role in Auth0
-           //Else  (modified user that already exist) or send error message ? 
-           //Else Access denied
-
-
-
-            // Check if UserExists in DB by calling our APIController
-            //...
-
-
-
-            //if Ok, Create User on Auth0 by calling Auth0 Management API
+        {      
             string result = await CreateUserOnAuth0(accessToken, user);
 
-
-
-
-            // Else, display message
-
-            // IF OK create user in Auth0, Create User in DB
-
-            // Return user to display
-
-            return await CreateUserInDb(accessToken, user);   
-
-                // IF not, ...
-
-            
+            return await CreateUserInDb(accessToken, user);               
 
         }
         public async Task<string> CreateUserOnAuth0(string token, UserInput user)
@@ -79,14 +37,8 @@ namespace SpaceAdventures.MVC.Services
                 User u = new User
                 {
                     Email = user.Email,
-                    Username = user.Username,
-                    //password = "test",
-                    Connection = "Username-Password-Authentication"
-                    //app_metadata = new Dictionary<string, string>
-                    //    {
-                    //        {"companyId", "987"},
-                    //        {"fakeId", "447"}
-                    //    }
+                    Username = user.Username,                    
+                    Connection = "Username-Password-Authentication"                   
                 };
 
                 var postBody = JsonConvert.SerializeObject(u);

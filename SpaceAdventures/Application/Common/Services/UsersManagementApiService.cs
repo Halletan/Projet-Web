@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -30,6 +31,21 @@ public class UsersManagementApiService : IUsersManagementApiService
         _httpClient = httpClient;
     }
 
+    #endregion
+
+
+
+    #region Get All Users
+    public async Task<UsersVm> GetAllUsers(CancellationToken cancellationToken)
+    {
+        return new UsersVm
+        {
+            UsersList = await _context.Users
+                .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
+                .OrderBy(u => u.IdUser)
+                .ToListAsync(cancellationToken)
+        };
+    }
     #endregion
 
     #region Get User's Roles
@@ -76,7 +92,7 @@ public class UsersManagementApiService : IUsersManagementApiService
     }
     #endregion
 
-
+    #region CreateUser
     public async Task<UserDto> CreateUser(UserInput userInput,CancellationToken cancellationToken)
     {
         try
@@ -139,5 +155,26 @@ public class UsersManagementApiService : IUsersManagementApiService
         await _context.SaveChangesAsync(cancellationToken);
         return _mapper.Map<UserDto>(user);
     }
+    #endregion
+
+    #region Assign Role to a user
+
+    public async Task<UserDto> AssignRole(int IdRole, User user) // ou directement UserId
+    {
+        // AccessToken AuthManagement API
+        var token = await GetToken();
+        var accessToken = token.access_token;
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+
+
+
+        // var response = await _httpClient.PostAsync()
+
+        // Endpoint https://auth0.com/docs/api/management/v2#!/Roles/post_role_users
+
+        throw new NotImplementedException();
+    }
+    #endregion
 
 }
