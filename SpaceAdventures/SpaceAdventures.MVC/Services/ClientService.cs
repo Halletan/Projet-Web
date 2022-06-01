@@ -16,7 +16,6 @@ public class ClientService : IClientService
         _httpContextAccessor = httpContextAccessor;
     }
 
-
     public async Task<Clients> GetAllClients(string? accessToken)
     {
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);

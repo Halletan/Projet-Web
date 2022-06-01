@@ -83,4 +83,22 @@ public class UsersController : ControllerBase
     }
 
 
+
+    /// <summary>
+    ///     Assign roles to a specific user
+    /// </summary>
+    /// <param name="command"></param>
+    [HttpPost]
+    //[Authorize(Policy = "write:users")]
+    [Route("AssignRoles")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<ActionResult> CreateUser([FromQuery] AssignRolesCommand command)
+    {
+        return Ok(await _mediator.Send(command));
+    }
+
+
 }

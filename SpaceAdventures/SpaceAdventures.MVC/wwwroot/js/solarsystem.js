@@ -59,95 +59,94 @@
             console.log(response);   // Planets
 
             switch (ref) {
-                case "mercury":
-                    toastr.info(response._items[7].description
-                        + "<br>" +
-                        "Mass : " + response._items[7].basicDetails[0].mass
-                        + "<br>" +
-                        "Volume : " + response._items[7].basicDetails[0].volume,
-                        response._items[7].name,
-                    {
-                        positionClass:"toast-bottom-right"
-                    });
-                break;
-                case "venus":
-                    toastr.info(response._items[4].description
-                        + "<br>" +
-                        "Mass : " + response._items[4].basicDetails[0].mass
-                        + "<br>" +
-                        "Volume : " + response._items[4].basicDetails[0].volume,
-                        response._items[4].name,
-                        {
-                            positionClass: "toast-bottom-left"
-                        });
-                break;
                 case "saturn":
-                    toastr.info(response._items[0].description
+                    toastr.info(response[0].description
                         + "<br>" +
-                        "Mass : " + response._items[0].basicDetails[0].mass
-                        + "<br>" +
-                        "Volume : " + response._items[0].basicDetails[0].volume,
-                        response._items[0].name,
+                        "Mass : " + response[0].basicDetails.mass
+                        + "<br>" + 
+                        "Volume : " + response[0].basicDetails.volume,
+                        response[0].name,
                         {
-                            positionClass: "toast-bottom-right"
+                        positionClass:"toast-bottom-right"
                         });
                 break;
                 case "jupiter":
-                    toastr.info(response._items[1].description
+                    toastr.info(response[1].description
                         + "<br>" +
-                        "Mass : " + response._items[1].basicDetails[0].mass
+                        "Mass : " + response[1].basicDetails.mass
                         + "<br>" +
-                        "Volume : " + response._items[1].basicDetails[0].volume,
-                        response._items[1].name,
+                        "Volume : " + response[1].basicDetails.volume,
+                        response[1].name,
                         {
-                            positionClass: "toast-bottom-left"
+                            positionClass: "toast-bottom-right"
                         });
-                break;
+                    break;
                 case "uranus":
-                    toastr.info(response._items[2].description
+                    toastr.info(response[2].description
                         + "<br>" +
-                        "Mass : " + response._items[2].basicDetails[0].mass
+                        "Mass : " + response[2].basicDetails.mass
                         + "<br>" +
-                        "Volume : " + response._items[2].basicDetails[0].volume,
-                        response._items[0].name,
+                        "Volume : " + response[2].basicDetails.volume,
+                        response[2].name,
                         {
                             positionClass: "toast-bottom-right"
                         });
-                break;
-
+                    break;
                 case "neptune":
-                    toastr.info(response._items[3].description
+                    toastr.info(response[3].description
                         + "<br>" +
-                        "Mass : " + response._items[3].basicDetails[0].mass
+                        "Mass : " + response[3].basicDetails.mass
                         + "<br>" +
-                        "Volume : " + response._items[3].basicDetails[0].volume,
-                        response._items[3].name,
-                        {
-                            positionClass: "toast-bottom-left"
-                        });
-                break;
-                case "earth":
-                    toastr.info(response._items[5].description
-                        + "<br>" +
-                        "Mass : " + response._items[5].basicDetails[0].mass
-                        + "<br>" +
-                        "Volume : " + response._items[5].basicDetails[0].volume,
-                        response._items[5].name,
+                        "Volume : " + response[3].basicDetails.volume,
+                        response[3].name,
                         {
                             positionClass: "toast-bottom-right"
                         });
-                break;
-                case "mars":
-                    toastr.info(response._items[6].description
+                    break;
+                case "venus":
+                    toastr.info(response[4].description
                         + "<br>" +
-                        "Mass : " + response._items[6].basicDetails[0].mass
+                        "Mass : " + response[4].basicDetails.mass
                         + "<br>" +
-                        "Volume : " + response._items[6].basicDetails[0].volume,
-                        response._items[6].name,
+                        "Volume : " + response[4].basicDetails.volume,
+                        response[4].name,
                         {
-                            positionClass: "toast-bottom-left"
+                            positionClass: "toast-bottom-right"
                         });
-                break;
+                    break;
+                case "earth":
+                    toastr.info(response[5].description
+                        + "<br>" +
+                        "Mass : " + response[5].basicDetails.mass
+                        + "<br>" +
+                        "Volume : " + response[5].basicDetails.volume,
+                        response[5].name,
+                        {
+                            positionClass: "toast-bottom-right"
+                        });
+                    break;
+                case "maris":
+                    toastr.info(response[6].description
+                        + "<br>" +
+                        "Mass : " + response[6].basicDetails.mass
+                        + "<br>" +
+                        "Volume : " + response[6].basicDetails.volume,
+                        response[6].name,
+                        {
+                            positionClass: "toast-bottom-right"
+                        });
+                    break;
+                case "mercury":
+                    toastr.info(response[7].description
+                        + "<br>" +
+                        "Mass : " + response[7].basicDetails.mass
+                        + "<br>" +
+                        "Volume : " + response[7].basicDetails.volume,
+                        response[7].name,
+                        {
+                            positionClass: "toast-bottom-right"
+                        });
+                    break;
                 case "sun": $.ajax(sunSettings).done(function (response) {
                     toastr.success("Sunrise : " + response.sunrise + "<br>" + "Sunset : " + response.sunset, "Europe - Brussels :",
                         {
@@ -157,9 +156,6 @@
                 break;
             }
         });
-
-
-
 
         solarsys.removeClass().addClass(ref);
         $(this).parent().find("a").removeClass("active");

@@ -24,6 +24,7 @@ public class UsersManagementApiService : IUsersManagementApiService
     private readonly HttpClient _httpClient;
     private readonly IMapper _mapper;
     private readonly ISpaceAdventureDbContext _context;
+
     #region Constructor
 
     public UsersManagementApiService(IConfiguration configuration, HttpClient httpClient, IMapper mapper, ISpaceAdventureDbContext context)
@@ -69,6 +70,9 @@ public class UsersManagementApiService : IUsersManagementApiService
         return roles;
     }
 
+    #endregion
+
+    #region Get All Auth0 Roles
     public async Task<List<UserRole>> GetAllRoles(CancellationToken cancellationToken)
     {
         var tokenResponse = await GetToken();
@@ -84,9 +88,6 @@ public class UsersManagementApiService : IUsersManagementApiService
         return roles;
 
     }
-
-   
-
     #endregion
 
     #region Collecting Access Token
@@ -125,6 +126,7 @@ public class UsersManagementApiService : IUsersManagementApiService
             throw new ValidationException();
         }
     }
+
 
     public async Task<bool> UserExists(string email)
     {
@@ -178,7 +180,6 @@ public class UsersManagementApiService : IUsersManagementApiService
     #endregion
 
     #region Assign Role to a user
-
     public async Task<bool> AssignRole(User user,CancellationToken cancellation) // ou directement UserId
     {
 
@@ -224,21 +225,6 @@ public class UsersManagementApiService : IUsersManagementApiService
 
         return true;
     }
-
-    public async Task<Role> GetRoleInDb(User user, CancellationToken cancellation)
-    {
-        try
-        {
-            var userRole = _context.Roles.SingleOrDefault(c => c.IdRole == user.IdRole);
-            return userRole;
-        } 
-        catch (Exception ex)
-        {
-            throw ex;
-        }
-
-    }
-
     #endregion
 
     #region Get Role By IdRole
@@ -251,4 +237,40 @@ public class UsersManagementApiService : IUsersManagementApiService
 
     }
     #endregion
+
+    #region GetRole from DB
+    public async Task<Role> GetRoleInDb(User user, CancellationToken cancellation)
+    {
+        try
+        {
+            var userRole = _context.Roles.SingleOrDefault(c => c.IdRole == user.IdRole);
+            return userRole;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    #endregion
+
+
+    public async Task AssignRole(string id, AssignRolesRequest request, CancellationToken cancellationToken = default)  
+    {
+        var tokenResponse = await GetToken();
+        var tokenAccess = tokenResponse.access_token;
+
+        var url = _configuration["Auth0ManagementApi:Audience"] + "users/auth0|" + id + "/roles";
+
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenAccess);
+
+        var payload = JsonConvert.SerializeObject(request);
+
+        var response = await _httpClient.PostAsync(url, new StringContent(payload, Encoding.UTF8, "application/json"), cancellationToken);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new ValidationException();
+        }
+    }
+
 }

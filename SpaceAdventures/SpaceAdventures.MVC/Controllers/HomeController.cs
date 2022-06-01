@@ -21,7 +21,6 @@ public class HomeController : Controller
     {
         if (User.Identity is {IsAuthenticated: true})
         {
-
             var accessToken = await HttpContext.GetTokenAsync("access_token");
             var accessTokenExpiresAt = DateTime.Parse(
                 await HttpContext.GetTokenAsync("expires_at") ?? string.Empty,
