@@ -10,11 +10,11 @@ namespace SpaceAdventures.Application.Common.Commands.Users
 {
     public record DeleteUserCommand(int Id) : IRequest;
 
-    public class DeleteClientCommandHandler : IRequestHandler<DeleteUserCommand>
+    public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand>
     {
         private readonly IUsersManagementApiService _usersManagementApiService;
 
-        public DeleteClientCommandHandler(IUsersManagementApiService usersManagementApiService)
+        public DeleteUserCommandHandler(IUsersManagementApiService usersManagementApiService)
         {
              _usersManagementApiService=usersManagementApiService;
         }

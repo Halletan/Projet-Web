@@ -10,14 +10,12 @@ namespace SpaceAdventures.MVC.Controllers
 {
     public class UserManagementController : Controller
     {
-
         private readonly IUserManagementMvcService _userManagementMvcService;
 
         public UserManagementController(IUserManagementMvcService userManagementMvcService)
         {
             _userManagementMvcService = userManagementMvcService;
         }
-
         #region Get List Users
 
         public async Task<IActionResult> GetAllUsers()
@@ -71,7 +69,7 @@ namespace SpaceAdventures.MVC.Controllers
             {
                 User userCreated = await _userManagementMvcService.CreateUser(accessToken, userInput);
                 TempData["Message"] = "Success : Account has been successfully created";
-                return RedirectToAction("Login", "Account"); // Sera une RedirectToAction vers GetUserDetails(user)
+                return RedirectToAction("Login", "Account"); 
             }
 
             return View(userInput);
@@ -87,7 +85,7 @@ namespace SpaceAdventures.MVC.Controllers
             {
                 User userCreated = await _userManagementMvcService.CreateUser(accessToken, userInput);
                 TempData["Message"] = "Success : User has been successfully created";
-                return RedirectToAction("GetAllUsers"); // Sera une RedirectToAction vers GetUserDetails(user)
+                return RedirectToAction("GetAllUsers"); 
             }
 
             return View(userInput);
@@ -138,14 +136,21 @@ namespace SpaceAdventures.MVC.Controllers
             return View(user);
         }
 
-        [HttpPost, ActionName("DeleteUser")]
-        public async Task<IActionResult> DelUser(UserDto user)
+        [HttpPost]
+        [ActionName(nameof(DeleteUser))]
+        public async Task<IActionResult> DelUser(int id)
         {
-             await _userManagementMvcService.DeleteUser(await HttpContext.GetTokenAsync("access_token"), user.IdUser);
+             await _userManagementMvcService.DeleteUser(await HttpContext.GetTokenAsync("access_token"), id);
+
+            //ErrorMessage if Delete NOK.
+
             TempData["Message"] = "Success : User has been successfully created";
             return RedirectToAction("GetAllUsers");
         }
 
         #endregion
+
+
+
     }
 }

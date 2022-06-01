@@ -82,8 +82,10 @@ public class UsersController : ControllerBase
     [Route("DeleteUser/{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> DeleteUser(DeleteUserCommand command)
+    public async Task<ActionResult> DeleteUser(int id)
     {
+        DeleteUserCommand command = new DeleteUserCommand(id);
+
         await _mediator.Send(command);
         return NoContent();
     }
