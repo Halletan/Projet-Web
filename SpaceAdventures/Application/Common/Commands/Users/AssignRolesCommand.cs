@@ -23,7 +23,7 @@ namespace SpaceAdventures.Application.Common.Commands.Users
 
         public async Task<Unit> Handle(AssignRolesCommand request, CancellationToken cancellationToken)
         {
-            await _usersManagementApiService.AssignRole(request.Id, request.Roles, cancellationToken);
+            await _usersManagementApiService.AssignRoles(request.Id, request.Roles, cancellationToken);
             return Unit.Value;
         }
     }

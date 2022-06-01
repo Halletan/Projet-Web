@@ -7,18 +7,29 @@ namespace SpaceAdventures.Application.Common.Services.Interfaces;
 
 public interface IUsersManagementApiService
 {
-    Task<List<UserRole>> GetUserRoles(string userId, CancellationToken cancellation = default);
-    Task<List<UserRole>> GetAllRoles(CancellationToken cancellation = default);
+    #region User
+
+    
     Task<UsersVm> GetAllUsers(CancellationToken cancellation = default);
-    Task<TokenData> GetToken(); // APi Management Auth0
-    Task<UserDto> CreateUser(UserInput userInput,CancellationToken cancellationToken = default);
-    Task<User> CreateUserAuth0(UserInput userInput,CancellationToken cancellationToken = default);
+    Task<UserDto> CreateUser(UserInput userInput, CancellationToken cancellationToken = default);
+    Task<User> CreateUserAuth0(UserInput userInput, CancellationToken cancellationToken = default);
     Task<UserDto> CreateUserInDb(User user, CancellationToken cancellationToken = default);
-    Task<bool> AssignRole(User user,CancellationToken cancellationToken = default);
-
-    Task AssignRole(string id, AssignRolesRequest request, CancellationToken cancellationToken = default);  
     Task<bool> UserExists(string email);
+    Task<UserDto> GetUserByEmail(string email,CancellationToken cancellation = default);
+    Task DeleteUser(int id, CancellationToken cancellation= default);
+    #endregion
 
-    Task<Role> GetRoleInDb(User user ,CancellationToken cancellationToken = default);
+    #region Role
+    Task<List<UserRole>> GetAllRoles(CancellationToken cancellation = default);
+    Task<List<UserRole>> GetUserRoles(string userId, CancellationToken cancellation = default);
+    Task<TokenData> GetToken(); // APi Management Auth0
+    Task<bool> AssignRole(User user, CancellationToken cancellationToken = default);
+    Task AssignRoles(string id, AssignRolesRequest request, CancellationToken cancellationToken = default); // pas utilisé ?
+    Task<RolesVm> GetAllRoleInDb(CancellationToken cancellationToken = default);
+    Task<Role> GetRoleInDb(User user, CancellationToken cancellationToken = default);
     Task<RoleDto> GetRoleInDbByIdRole(int id, CancellationToken cancellationToken = default);
+
+
+    #endregion
+
 }

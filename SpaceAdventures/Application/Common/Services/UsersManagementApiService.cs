@@ -146,14 +146,15 @@ public class UsersManagementApiService : IUsersManagementApiService
             {
                 {"email", userInput.Email},
                 {"email_verified", "false"},
-                {"connection", "Username-Password-Authentication"},
+                {"connection", _configuration["UserPassword:Connection"]},
                 {"verify_email","true"},
-                {"given_name", "John"},
-                {"family_name", "Doe"},
-                {"name", "John Doe"},
-                {"nickname", "Johnny"},
-                {"password", "Test1234**/"},
+                {"given_name", userInput.Firstname},
+                {"family_name", userInput.Lastname},
+                {"name", userInput.Firstname + " " + userInput.Lastname},
+                {"nickname", userInput.Username},
+                {"password", _configuration["UserPassword:Default"]},
             }), cancellationToken);
+
 
         if (!response.IsSuccessStatusCode)
         {
@@ -180,10 +181,8 @@ public class UsersManagementApiService : IUsersManagementApiService
     #endregion
 
     #region Assign Role to a user
-    public async Task<bool> AssignRole(User user,CancellationToken cancellation) // ou directement UserId
+    public async Task<bool> AssignRole(User user,CancellationToken cancellation)
     {
-
-        // AccessToken AuthManagement API
         var token = await GetToken();
         var accessToken = token.access_token;
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
@@ -193,35 +192,18 @@ public class UsersManagementApiService : IUsersManagementApiService
 
         var result = lst.Find(c => c.name == role.Name);
 
-        string[] tab = new string[1];
-        tab[0] = user.IdUserAuth0;
-        string testUserAuth = user.IdUserAuth0;
-        string JsonToPost = "users\":[\""+testUserAuth+"\"]";
-        //var value = new List<KeyValuePair<string,string[]>>();
-        //value.Add(new KeyValuePair<string, string[]>("users",tab));
-        //var content = new FormUrlEncodedContent(value);
-        //var test = new FormUrlEncodedContent(new Dictionary<string, string>
-        //{
-        //    { "users", JsonToPost }
-        //});
+        string[] tab = {result.id};
+        AssignRolesRequest rolesRequest = new AssignRolesRequest(tab);
+    
 
-        //var json = JsonConvert.SerializeObject(tab);
+        var json = JsonConvert.SerializeObject(rolesRequest);
 
-        UserTempData users = new UserTempData();
-        users.users = tab;
-        var json = JsonConvert.SerializeObject(users);
+        var response = await _httpClient.PostAsync(_configuration["Auth0ManagementApi:Audience"] + "users/" + user.IdUserAuth0 + "/roles", new StringContent(json, Encoding.UTF8, "application/json"), cancellation);
 
-        //var response = await _httpClient.PostAsync(_configuration["Auth0ManagementApi:Audience"] + result.id + "/users",
-            
-        //    new StringContent(json, Encoding.UTF8, "application/json"));
-
-        var response = await _httpClient.PostAsJsonAsync(_configuration["Auth0ManagementApi:Audience"] + result.id + "/users",
-
-            users);
-
-        // var response = await _httpClient.PostAsync()
-
-        // Endpoint /api/v2/roles/{id}/users
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new ValidationException();
+        }
 
         return true;
     }
@@ -237,7 +219,7 @@ public class UsersManagementApiService : IUsersManagementApiService
 
     }
     #endregion
-
+    
     #region GetRole from DB
     public async Task<Role> GetRoleInDb(User user, CancellationToken cancellation)
     {
@@ -253,8 +235,16 @@ public class UsersManagementApiService : IUsersManagementApiService
     }
     #endregion
 
-
-    public async Task AssignRole(string id, AssignRolesRequest request, CancellationToken cancellationToken = default)  
+    public async Task<RolesVm> GetAllRoleInDb(CancellationToken cancellation)
+    {
+        return new RolesVm
+        {
+            rolesList = await _context.Roles
+                .ProjectTo<RoleDto>(_mapper.ConfigurationProvider)
+                .ToListAsync(cancellation)
+        };
+    }
+    public async Task AssignRoles(string id, AssignRolesRequest request, CancellationToken cancellationToken = default)  
     {
         var tokenResponse = await GetToken();
         var tokenAccess = tokenResponse.access_token;
@@ -271,6 +261,20 @@ public class UsersManagementApiService : IUsersManagementApiService
         {
             throw new ValidationException();
         }
+    }
+
+    public async Task<UserDto> GetUserByEmail(string email, CancellationToken cancellationToken = default)
+    {
+        return _context.Users
+            .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
+            .SingleOrDefault(n => n.Email == email);
+
+    }
+
+    public async Task DeleteUser(int id, CancellationToken cancellationToken = default)
+    {
+        User user = _context.Users.SingleOrDefault(u => u.IdUser == id);
+        _context.Users.Remove(user);
     }
 
 }

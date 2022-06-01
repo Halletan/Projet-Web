@@ -1,4 +1,6 @@
-﻿namespace SpaceAdventures.MVC.Models
+﻿using System.ComponentModel;
+
+namespace SpaceAdventures.MVC.Models
 {
     [Serializable]
     public class User
@@ -37,11 +39,26 @@
     public class UserInput
     {
         public string Username { get; set; }
+        public string Lastname { get; set; }
+        public string Firstname { get; set; }
         public string Email { get; set; }
         public string Connection { get; set; }
-        public string Password { get; set; } 
+        public string Password { get; set; }
         public int IdRole { get; set; }
     }
 
+    [Serializable]
+    public class UserDto
+    {
+        public int IdUser { get; set; }
+        public string Username { get; set; }
+        public string Email { get; set; }
+        public bool VerifiedEmail { get; set; }
+        [DisplayName("Role")]
+        public int IdRole { get; set; }
 
+        public string? RoleName { get; set; }
+
+
+    }
 }

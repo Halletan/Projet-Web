@@ -13,7 +13,7 @@ namespace SpaceAdventures.Application.Common.Queries.Users.Queries
 {
     public class UserDto : IMapFrom<User>
     {
-        public string IdUser { get; set; }
+        public int IdUser { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
         public bool VerifiedEmail { get; set; }

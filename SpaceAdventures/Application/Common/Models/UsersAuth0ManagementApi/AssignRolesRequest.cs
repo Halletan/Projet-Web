@@ -15,7 +15,11 @@ namespace SpaceAdventures.Application.Common.Models.UsersAuth0ManagementApi
         /// <summary>
         /// Role IDs to assign to the user.
         /// </summary>
-        [JsonProperty("roles")]
-        public string[] Roles { get; set; }
+        [JsonProperty("roles")] public string[] Roles;
+
+        public AssignRolesRequest(string[] tab)
+        {
+            Roles = tab;
+        }
     }
 }

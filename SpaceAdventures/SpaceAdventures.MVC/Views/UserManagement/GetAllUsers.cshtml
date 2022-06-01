@@ -40,10 +40,10 @@
                 @Html.DisplayFor(modelItem => item.Role)
             </td>
             <td>
-                 <a class="btn btn-success btn-sm" asp-action="" asp-route-id="@item.Username">
+                 <a class="btn btn-success btn-sm" asp-action="" asp-route-Email="@item.Email">
                     <i class="fa-solid fa-pen m-2"></i>
                 </a> |
-                <a class="btn btn-danger btn-sm" asp-action="" asp-route-id="@item.Username">
+                <a class="btn btn-danger btn-sm" asp-action="DeleteUser" asp-route-email ="@item.Email">
                     <i class="fa-solid fa-trash m-2"></i>
                 </a>
                 
@@ -59,6 +59,8 @@
     <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
     <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/js/datatable.js"></script>
-
+    
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
 }

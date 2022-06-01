@@ -19,41 +19,62 @@ namespace SpaceAdventures.MVC.Controllers
         }
 
         #region Get List Users
+
         public async Task<IActionResult> GetAllUsers()
         {
             Users result = await _userManagementMvcService.GetAllUsers(await HttpContext.GetTokenAsync("access_token"));
             List<UserVm> lst = new List<UserVm>();
 
-            foreach( User user in result.UsersList)
+            foreach (User user in result.UsersList)
             {
                 UserVm vm = new UserVm();
-                vm.Email=user.Email;
-                vm.Username=user.Username;
-                UserRole userRole = await _userManagementMvcService.GetRoleByIdRole(user.idRole, await HttpContext.GetTokenAsync("access_token"));
-                vm.Role = userRole.name;
+                vm.Email = user.Email;
+                vm.Username = user.Username;
+                UserRole userRole = await _userManagementMvcService.GetRoleByIdRole(user.idRole,
+                    await HttpContext.GetTokenAsync("access_token"));
+                vm.Role = userRole.Name;
                 lst.Add(vm);
             }
-            
+
 
             return View(lst);
         }
+
         #endregion
 
         #region CreateUser
-        public IActionResult CreateUser()
-        {
-            IEnumerable<SelectListItem> listRole = new List<SelectListItem>()
-            {
-                new SelectListItem(){Value="1", Text="Admin"},
-                new SelectListItem(){Value="2", Text="Admina"},
-                new SelectListItem(){Value="3", Text="Owner"},
-                new SelectListItem(){Value="4", Text="User"}
-            };
-            ViewBag.listRole = listRole;
 
+        public async Task<IActionResult> CreateUser()
+        {
+            var lst = await _userManagementMvcService.GetAllRole(await HttpContext.GetTokenAsync("access_token"));
+
+            SelectList listRole = new SelectList(lst.rolesList, "IdRole", "Name");
+            ViewBag.listRole = listRole;
 
             UserInput user = new();
             return View(user);
+        }
+
+        public async Task<IActionResult> UserSignUp()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        [ActionName(nameof(UserSignUp))]
+        public async Task<IActionResult> PostUserSignUp(UserInput userInput)
+        {
+            string accessToken = await HttpContext.GetTokenAsync("access_token");
+
+            if (ModelState.IsValid)
+            {
+                User userCreated = await _userManagementMvcService.CreateUser(accessToken, userInput);
+                TempData["Message"] = "Success : Account has been successfully created";
+                return RedirectToAction("Login", "Account"); // Sera une RedirectToAction vers GetUserDetails(user)
+            }
+
+            return View(userInput);
         }
 
         [HttpPost]
@@ -63,16 +84,19 @@ namespace SpaceAdventures.MVC.Controllers
             string accessToken = await HttpContext.GetTokenAsync("access_token");
 
             if (ModelState.IsValid)
-            {               
-                User userCreated=  await _userManagementMvcService.CreateUser(accessToken, userInput);
-
-                return View(userCreated); // Sera une RedirectToAction vers GetUserDetails(user)
+            {
+                User userCreated = await _userManagementMvcService.CreateUser(accessToken, userInput);
+                TempData["Message"] = "Success : User has been successfully created";
+                return RedirectToAction("GetAllUsers"); // Sera une RedirectToAction vers GetUserDetails(user)
             }
+
             return View(userInput);
         }
+
         #endregion
 
         #region UpdateUser
+
         //public IActionResult UpdateUser()
         //{
         //    User user = new();
@@ -100,7 +124,28 @@ namespace SpaceAdventures.MVC.Controllers
         //    }
         //    return BadRequest();
         //}
+
         #endregion
 
+        #region DeleteUser
+
+        public async Task<IActionResult> DeleteUser(string? email)
+        {
+            var user = await _userManagementMvcService.GetUserByEmail(email,
+                await HttpContext.GetTokenAsync("access_token"));
+            var role = await _userManagementMvcService.GetRoleByIdRole(user.IdRole, await HttpContext.GetTokenAsync("access_token"));
+            user.RoleName=role.Name;
+            return View(user);
+        }
+
+        [HttpPost, ActionName("DeleteUser")]
+        public async Task<IActionResult> DelUser(UserDto user)
+        {
+             await _userManagementMvcService.DeleteUser(await HttpContext.GetTokenAsync("access_token"), user.IdUser);
+            TempData["Message"] = "Success : User has been successfully created";
+            return RedirectToAction("GetAllUsers");
+        }
+
+        #endregion
     }
 }

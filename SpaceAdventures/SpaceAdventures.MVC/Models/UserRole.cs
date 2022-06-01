@@ -1,15 +1,19 @@
-﻿namespace SpaceAdventures.MVC.Models;
+﻿using System.ComponentModel;
+
+namespace SpaceAdventures.MVC.Models;
 
 [Serializable]
 public class UserRole
 {
-    public string id { get; set; }
-    public string name { get; set; }
-    public string description { get; set; }
+    [DisplayName("Role")]
+    public string IdRole { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
 }
 
 [Serializable]
 public class Roles
 {
-    public List<UserRole> roles { get; set; }
+    public IList<UserRole> rolesList { get; set; }
+
 }

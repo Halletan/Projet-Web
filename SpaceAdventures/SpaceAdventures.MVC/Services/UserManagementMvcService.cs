@@ -49,6 +49,27 @@ namespace SpaceAdventures.MVC.Services
 
         }
 
+        public async Task<UserDto> GetUserByEmail(string email, string? accessToken)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            var response = await _httpClient.GetAsync("https://localhost:7195/api/v1.0/Users/GetUserByEmail/"+email);
+
+            if (!response.IsSuccessStatusCode)
+                throw new Exception("Cannot retrieve data");
+
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<UserDto>(content);
+        }
+
+        public async Task<bool> DeleteUser(string? accessToken,int userId)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            var response = await _httpClient.DeleteAsync("https://localhost:7195/api/v1.0/Users/DeleteUser/" + userId);
+            if (!response.IsSuccessStatusCode)
+                throw new Exception("Cannot delete data");
+            return true;
+        }
+
         public async Task<UserRole> GetRoleByIdRole(int id, string? accessToken)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
@@ -60,6 +81,19 @@ namespace SpaceAdventures.MVC.Services
             var content = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<UserRole>(content);
 
+        }
+
+        public async Task<Roles> GetAllRole(string? accessToken)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            var response = await _httpClient.GetAsync("https://localhost:7195/api/v1.0/Users/GetAllRole");
+            if (!response.IsSuccessStatusCode)
+                throw new Exception("Cannot retrieve data");
+
+            var content = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<Roles>(content);
+
+            return result;
         }
 
     }
