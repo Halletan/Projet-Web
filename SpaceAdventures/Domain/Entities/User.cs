@@ -12,5 +12,5 @@ public class User
     public string IdUserAuth0 { get; set; }
 
     public virtual Role IdRoleNavigation { get; set; }
-    public virtual ICollection<Client> Clients { get; set; }
+    public virtual ICollection<Client> Clients { get; set; } // a checker et à enlver éventuellement
 }

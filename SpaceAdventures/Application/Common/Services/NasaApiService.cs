@@ -27,4 +27,15 @@ public class NasaApiService : INasaApiService
         var tasks = JsonConvert.DeserializeObject<NasaCollection>(content);
         return tasks;
     }
+
+    public async Task<List<string>> GetNasaVideo(string path, CancellationToken cancellation = default)
+    {
+        var response = await _httpClient.GetAsync(path);
+        if (!response.IsSuccessStatusCode) throw new Exception(response.StatusCode.ToString());
+
+        var content = await response.Content.ReadAsStringAsync();
+        var tasks = JsonConvert.DeserializeObject<List<string>>(content);
+        var result = tasks.FindAll(c => c.Contains("small.mp4"));
+        return result;
+    }
 }

@@ -10,14 +10,12 @@ namespace SpaceAdventures.MVC.Controllers
 {
     public class UserManagementController : Controller
     {
-
         private readonly IUserManagementMvcService _userManagementMvcService;
 
         public UserManagementController(IUserManagementMvcService userManagementMvcService)
         {
             _userManagementMvcService = userManagementMvcService;
         }
-
         #region Get List Users
 
         public async Task<IActionResult> GetAllUsers()
@@ -69,7 +67,7 @@ namespace SpaceAdventures.MVC.Controllers
             {
                 User userCreated = await _userManagementMvcService.CreateUser(accessToken, userInput);
                 TempData["Message"] = "Success : Account has been successfully created";
-                return RedirectToAction("Login", "Account"); // Sera une RedirectToAction vers GetUserDetails(user)
+                return RedirectToAction("Login", "Account"); 
             }
 
             return View(userInput);
@@ -85,43 +83,11 @@ namespace SpaceAdventures.MVC.Controllers
             {
                 User userCreated = await _userManagementMvcService.CreateUser(accessToken, userInput);
                 TempData["Message"] = "Success : User has been successfully created";
-                return RedirectToAction("GetAllUsers"); // Sera une RedirectToAction vers GetUserDetails(user)
+                return RedirectToAction("GetAllUsers"); 
             }
 
             return View(userInput);
         }
-
-        #endregion
-
-        #region UpdateUser
-
-        //public IActionResult UpdateUser()
-        //{
-        //    User user = new();
-        //   // return View(user);
-        //   return Ok();//To delete
-        //}
-
-        //[HttpPut]
-        //[ActionName(nameof(UpdateUser))]
-        //public IActionResult PutUser(User user)
-        //{
-        //    // if success
-        //        // if user exist in DB
-        //            //Update Role in DB
-        //            //Update Role in Auth0 (Call API Auth0)
-        //        //Else  (User does no exist
-        //    //Else Access denied
-
-
-        //    string accessToken = "test";
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        return Ok(_userManagementMvcService.CreateUser( user));
-        //    }
-        //    return BadRequest();
-        //}
 
         #endregion
 
@@ -136,14 +102,46 @@ namespace SpaceAdventures.MVC.Controllers
             return View(user);
         }
 
-        [HttpPost, ActionName("DeleteUser")]
-        public async Task<IActionResult> DelUser(UserDto user)
+        [HttpPost]
+        [ActionName(nameof(DeleteUser))]
+        public async Task<IActionResult> DelUser(int id)
         {
-             await _userManagementMvcService.DeleteUser(await HttpContext.GetTokenAsync("access_token"), user.IdUser);
+             await _userManagementMvcService.DeleteUser(await HttpContext.GetTokenAsync("access_token"), id);
+
+            //ErrorMessage if Delete NOK.
+
             TempData["Message"] = "Success : User has been successfully created";
             return RedirectToAction("GetAllUsers");
         }
 
         #endregion
+
+        #region UpdateUser
+
+        public async Task<IActionResult> UpdateUser(string? email)
+        {
+            var user = await _userManagementMvcService.GetUserByEmail(email,
+                await HttpContext.GetTokenAsync("access_token"));
+            var role = await _userManagementMvcService.GetRoleByIdRole(user.IdRole, await HttpContext.GetTokenAsync("access_token"));
+            user.RoleName = role.Name;
+            return View(user);
+
+        }
+
+        [HttpPost]
+        [ActionName(nameof(UpdateUser))]
+        public async Task<IActionResult> UpdtUser(UserInput userInput)
+        {
+            await _userManagementMvcService.UpdateUser(await HttpContext.GetTokenAsync("access_token"), userInput);
+
+            //ErrorMessage if Delete NOK.
+
+            TempData["Message"] = "Success : User has been successfully Updated";
+            return RedirectToAction(nameof(GetAllUsers));
+        }
+
+        #endregion
+
+
     }
 }

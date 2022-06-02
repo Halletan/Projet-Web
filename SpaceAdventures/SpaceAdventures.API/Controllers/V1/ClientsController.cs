@@ -59,8 +59,9 @@ public class ClientsController : ControllerBase
     [Authorize(Policy = "write:messages")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<ClientDto>> CreateClient([FromBody] CreateClientCommand command)
+    public async Task<ActionResult<ClientDto>> CreateClient([FromBody] ClientInput clientInput)
     {
+        CreateClientCommand command = new CreateClientCommand(clientInput);
         return Ok(await _mediator.Send(command));
     }
 

@@ -180,6 +180,67 @@ public class UsersManagementApiService : IUsersManagementApiService
     }
     #endregion
 
+    #region UpdateUser
+    public async Task<UserDto> UpdateUser(UserInput userInput, CancellationToken cancellationToken = default)
+    {
+        User user = _context.Users.SingleOrDefault(u => u.Email == userInput.Email);
+        user.IdRole = userInput.IdRole;
+
+
+        user = await UpdateUserInAuth0(user);
+
+        return await UpdateUserInDb(user);
+
+
+
+    }
+
+    public async Task<UserDto> UpdateUserInDb(User user, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return _mapper.Map<UserDto>(user);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public async Task<User> UpdateUserInAuth0(User user, CancellationToken cancellationToken = default)
+    {
+        // Get AccessToken
+        var token = await GetToken();
+        var accessToken = token.access_token;
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+        var payload = JsonConvert.SerializeObject(user);
+
+        var response = await _httpClient.PatchAsync(_configuration["Auth0ManagementApi:Audience"] + "users/" + user.IdUserAuth0, 
+            new StringContent(payload, Encoding.UTF8, "application/json"));
+
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new ValidationException();
+        }
+
+        var content = await response.Content.ReadAsStringAsync(cancellationToken);
+
+        var userAuth = JsonConvert.DeserializeObject<UserAuth0>(content);
+
+        var userDb = _mapper.Map<User>(userAuth);
+        userDb.IdRole = user.IdRole;
+        userDb.Username = user.Username;
+
+        return userDb;
+    }
+
+    #endregion
+
     #region Assign Role to a user
     public async Task<bool> AssignRole(User user,CancellationToken cancellation)
     {
@@ -271,10 +332,45 @@ public class UsersManagementApiService : IUsersManagementApiService
 
     }
 
+    #region Delete User
     public async Task DeleteUser(int id, CancellationToken cancellationToken = default)
     {
         User user = _context.Users.SingleOrDefault(u => u.IdUser == id);
-        _context.Users.Remove(user);
+        await DeleteUserInAuth0(user);
+        
+        await DeleteUserInDb(user);
+
+       
     }
 
+    public async Task<bool> DeleteUserInDb(User user, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            _context.Users.Remove(user);
+           await _context.SaveChangesAsync(cancellationToken);
+
+            return true;
+        }
+        catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    public async Task<bool> DeleteUserInAuth0(User user, CancellationToken cancellationToken = default)
+    {
+        // Get AccessToken
+        var token = await GetToken();
+        var accessToken = token.access_token;
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+    
+        var response = await _httpClient.DeleteAsync(_configuration["Auth0ManagementApi:Audience"] + "users/" + user.IdUserAuth0);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new ValidationException();
+        }
+        return true;
+    }
+    #endregion
 }

@@ -8,15 +8,24 @@ namespace SpaceAdventures.Application.Common.Services.Interfaces;
 public interface IUsersManagementApiService
 {
     #region User
-
-    
+   
     Task<UsersVm> GetAllUsers(CancellationToken cancellation = default);
+    Task<bool> UserExists(string email);
+    Task<UserDto> GetUserByEmail(string email, CancellationToken cancellation = default);
+
+
     Task<UserDto> CreateUser(UserInput userInput, CancellationToken cancellationToken = default);
     Task<User> CreateUserAuth0(UserInput userInput, CancellationToken cancellationToken = default);
     Task<UserDto> CreateUserInDb(User user, CancellationToken cancellationToken = default);
-    Task<bool> UserExists(string email);
-    Task<UserDto> GetUserByEmail(string email,CancellationToken cancellation = default);
+
+    Task<UserDto> UpdateUser(UserInput userInput, CancellationToken cancellationToken = default);
+    Task<UserDto> UpdateUserInDb(User user, CancellationToken cancellationToken = default);
+    Task<User> UpdateUserInAuth0(User user, CancellationToken cancellationToken = default);
+
     Task DeleteUser(int id, CancellationToken cancellation= default);
+    Task<bool> DeleteUserInAuth0(User user, CancellationToken cancellationToken = default);
+    Task<bool> DeleteUserInDb(User user, CancellationToken cancellationToken = default);
+
     #endregion
 
     #region Role

@@ -1,0 +1,12 @@
+﻿@model SpaceAdventures.MVC.Models.NASA.NasaCollection
+
+<div m-25>
+    <IMG src="@Model.collection.items[0].links[0].href"/>
+</div>
+
+<div m-25>
+    <video  controls autoplay name="media">
+        <source src="@ViewBag.video" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>

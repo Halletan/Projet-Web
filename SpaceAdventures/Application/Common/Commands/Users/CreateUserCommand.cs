@@ -9,14 +9,8 @@ using SpaceAdventures.Application.Common.Services.Interfaces;
 
 namespace SpaceAdventures.Application.Common.Commands.Users
 {
-    public record CreateUserCommand (UserInput UserInput): IRequest<UserDto>
-    {
-        /*public CreateUserCommand(UserInput userInput)
-        {
-            _userInput=userInput;
-        }*/
-
-    }
+    public record CreateUserCommand (UserInput UserInput): IRequest<UserDto>;
+    
 
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, UserDto>
     {

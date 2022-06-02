@@ -8,7 +8,6 @@ public class ClientInput : IMapFrom<Client>
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }
-    public string Phone { get; set; }
     public string Email { get; set; }
     public int? IdMemberShipType { get; set; }
     public int? IdUser { get; set; }

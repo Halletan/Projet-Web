@@ -2,7 +2,7 @@
 using SpaceAdventures.Application.Common.Models.APIConsume;
 using SpaceAdventures.Application.Common.Services.Interfaces;
 
-namespace SpaceAdventures.Application.Common.Queries.ISSCL;
+namespace SpaceAdventures.Application.Common.Queries.NASA;
 
 public record NasaQuery(string search) : IRequest<NasaCollection>;
 

@@ -24,6 +24,8 @@ namespace SpaceAdventures.MVC.Services
            
         }
 
+
+        
         public async Task<Users> GetAllUsers(string? accessToken)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
@@ -34,6 +36,18 @@ namespace SpaceAdventures.MVC.Services
 
             var content = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<Users>(content);
+        }
+        
+        public async Task<UserDto> GetUserByEmail(string email, string? accessToken)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            var response = await _httpClient.GetAsync("https://localhost:7195/api/v1.0/Users/GetUserByEmail/" + email);
+
+            if (!response.IsSuccessStatusCode)
+                throw new Exception("Cannot retrieve data");
+
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<UserDto>(content);
         }
 
         public async Task<User> CreateUser(string? accessToken, UserInput user)
@@ -47,19 +61,7 @@ namespace SpaceAdventures.MVC.Services
             var content = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<User>(content);
 
-        }
-
-        public async Task<UserDto> GetUserByEmail(string email, string? accessToken)
-        {
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            var response = await _httpClient.GetAsync("https://localhost:7195/api/v1.0/Users/GetUserByEmail/"+email);
-
-            if (!response.IsSuccessStatusCode)
-                throw new Exception("Cannot retrieve data");
-
-            var content = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<UserDto>(content);
-        }
+        }        
 
         public async Task<bool> DeleteUser(string? accessToken,int userId)
         {
@@ -68,6 +70,21 @@ namespace SpaceAdventures.MVC.Services
             if (!response.IsSuccessStatusCode)
                 throw new Exception("Cannot delete data");
             return true;
+        }
+
+        public async Task<User> UpdateUser(string? accessToken, UserInput user)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+            var postBody = JsonConvert.SerializeObject(user);
+
+            var response = await _httpClient.PatchAsync("https://localhost:7195/api/v1.0/Users/UpdateUser", new StringContent(postBody, Encoding.UTF8, "application/json"));
+
+            if (!response.IsSuccessStatusCode)
+                throw new Exception("Cannot Update data");
+
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<User>(content);
         }
 
         public async Task<UserRole> GetRoleByIdRole(int id, string? accessToken)

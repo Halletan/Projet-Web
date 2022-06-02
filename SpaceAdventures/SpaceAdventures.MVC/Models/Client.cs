@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Newtonsoft.Json;
 
 namespace SpaceAdventures.MVC.Models;
 
@@ -14,11 +15,12 @@ public class Client
     [DisplayName("Lastname")]
     public string LastName { get; set; }
 
-    public string Phone { get; set; }
     public string Email { get; set; }
 
     [DisplayName("Membership")]
     public int? IdMemberShipType { get; set; }
+
+    public int? IdUser { get; set; }
 }
 
 [Serializable]
