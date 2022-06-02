@@ -34,19 +34,25 @@ namespace SpaceAdventures.MVC.Controllers
             return View();
         }
 
-        [HttpPost,ActionName("CreateBooking")]
+        [HttpPost, ActionName("CreateBooking")]
         public async Task<IActionResult> PostBooking(BookingVm booking)
         {
             var token = await HttpContext.GetTokenAsync("access_token");
+
+            
+            
             Client client = new Client()
             {
                 LastName = booking.Lastname,
                 FirstName = booking.FirstName,
                 Email = booking.Email,
-               
-            };
 
-             bool created = await _clientService.CreateClient(client, token);
+            };
+            bool ClientExist = await _clientService.ClientExist(client, token);
+            if (!ClientExist)
+                {
+                    bool created = await _clientService.CreateClient(client, token);
+                }
 
             return View();
         }

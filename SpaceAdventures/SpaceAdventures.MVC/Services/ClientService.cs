@@ -52,4 +52,22 @@ public class ClientService : IClientService
 
         return true;
     }
+
+    public async Task<bool> ClientExist(Client client,string? accessToken)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+        var response = await _httpClient.GetAsync("https://localhost:7195/api/v1.0/Clients");
+
+        if (!response.IsSuccessStatusCode) throw new Exception("Cannot retrieve data");
+
+        var content = await response.Content.ReadAsStringAsync();
+        var data = JsonConvert.DeserializeObject<Clients>(content);
+        if ( data.ClientsList.Find(c=>c.Email==client.Email).IdClient != null )
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 }
