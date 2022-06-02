@@ -35,8 +35,6 @@ namespace SpaceAdventures.MVC.Controllers
                 vm.Role = userRole.Name;
                 lst.Add(vm);
             }
-
-
             return View(lst);
         }
 
