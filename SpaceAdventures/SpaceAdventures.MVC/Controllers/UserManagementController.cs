@@ -93,38 +93,6 @@ namespace SpaceAdventures.MVC.Controllers
 
         #endregion
 
-        #region UpdateUser
-
-        //public IActionResult UpdateUser()
-        //{
-        //    User user = new();
-        //   // return View(user);
-        //   return Ok();//To delete
-        //}
-
-        //[HttpPut]
-        //[ActionName(nameof(UpdateUser))]
-        //public IActionResult PutUser(User user)
-        //{
-        //    // if success
-        //        // if user exist in DB
-        //            //Update Role in DB
-        //            //Update Role in Auth0 (Call API Auth0)
-        //        //Else  (User does no exist
-        //    //Else Access denied
-
-
-        //    string accessToken = "test";
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        return Ok(_userManagementMvcService.CreateUser( user));
-        //    }
-        //    return BadRequest();
-        //}
-
-        #endregion
-
         #region DeleteUser
 
         public async Task<IActionResult> DeleteUser(string? email)
@@ -150,6 +118,31 @@ namespace SpaceAdventures.MVC.Controllers
 
         #endregion
 
+        #region UpdateUser
+
+        public async Task<IActionResult> UpdateUser(string? email)
+        {
+            var user = await _userManagementMvcService.GetUserByEmail(email,
+                await HttpContext.GetTokenAsync("access_token"));
+            var role = await _userManagementMvcService.GetRoleByIdRole(user.IdRole, await HttpContext.GetTokenAsync("access_token"));
+            user.RoleName = role.Name;
+            return View(user);
+
+        }
+
+        [HttpPost]
+        [ActionName(nameof(UpdateUser))]
+        public async Task<IActionResult> UpdtUser(UserInput userInput)
+        {
+            await _userManagementMvcService.UpdateUser(await HttpContext.GetTokenAsync("access_token"), userInput);
+
+            //ErrorMessage if Delete NOK.
+
+            TempData["Message"] = "Success : User has been successfully Updated";
+            return RedirectToAction(nameof(GetAllUsers));
+        }
+
+        #endregion
 
 
     }

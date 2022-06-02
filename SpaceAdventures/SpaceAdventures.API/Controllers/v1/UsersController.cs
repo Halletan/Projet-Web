@@ -43,6 +43,21 @@ public class UsersController : ControllerBase
     }
 
     /// <summary>
+    ///     Update a user
+    /// </summary>
+    /// <param name="command"></param>
+    [HttpPatch]
+    //[Authorize(Policy = "write:users")]
+    [Route("UpdateUser")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<UserDto>> UpdateUser([FromBody] UserInput input)
+    {
+        CreateUserCommand command = new CreateUserCommand(input);
+        return Ok(await _mediator.Send(command));
+    }
+
+    /// <summary>
     ///     Get Lis of users from DB
     /// </summary>
     /// <returns>List of users</returns>

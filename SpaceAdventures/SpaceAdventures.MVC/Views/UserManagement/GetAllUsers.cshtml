@@ -40,7 +40,7 @@
                 @Html.DisplayFor(modelItem => item.Role)
             </td>
             <td>
-                 <a class="btn btn-success btn-sm" asp-action="" asp-route-Email="@item.Email">
+                 <a class="btn btn-success btn-sm" asp-action="UpdateUser" asp-route-Email="@item.Email">
                     <i class="fa-solid fa-pen m-2"></i>
                 </a> |
                 <a class="btn btn-danger btn-sm" asp-action="DeleteUser" asp-route-email ="@item.Email">
