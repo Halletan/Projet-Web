@@ -4,7 +4,7 @@ using SpaceAdventures.MVC.Models.NASA;
 
 namespace SpaceAdventures.MVC.Controllers;
 
-public class TestNasaApi : Controller
+public class NASAController : Controller
 {
     [HttpGet]
     public async Task<IActionResult> Index()
@@ -17,9 +17,15 @@ public class TestNasaApi : Controller
         var content = await response.Content.ReadAsStringAsync();
         var data = JsonConvert.DeserializeObject<NasaCollection>(content);
 
-        var UrlImageLst = new List<string>();
+        var item = data.collection.items;
 
+        var responseNasa = await _httpClient.GetAsync(item[0].href);
+        if (!responseNasa.IsSuccessStatusCode) throw new Exception("Cannot retrieve data");
 
+        var contentNasa = await responseNasa.Content.ReadAsStringAsync();
+        var dataNasa = JsonConvert.DeserializeObject<List<string>>(contentNasa);
+        var video = dataNasa[2];
+        ViewBag.video = video;
         return View(data);
     }
 }

@@ -1,0 +1,10 @@
+.flex-container {
+    display: flex;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    padding: 5px;
+ 
+}

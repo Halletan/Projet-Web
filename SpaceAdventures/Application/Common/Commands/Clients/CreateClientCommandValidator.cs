@@ -17,10 +17,6 @@ public class CreateClientCommandValidator : AbstractValidator<CreateClientComman
             .NotNull().WithMessage("Lastname is required")
             .NotEmpty().WithMessage("Lastname cannot be empty");
         
-        RuleFor(c => c.ClientInput.Phone)
-            .MaximumLength(50).WithMessage("Max 50 characters")
-            .NotNull().WithMessage("Phone is required")
-            .NotEmpty().WithMessage("Phone cannot be empty");
 
         RuleFor(c => c.ClientInput.Email)
             .MaximumLength(50).WithMessage("Max 50 characters")

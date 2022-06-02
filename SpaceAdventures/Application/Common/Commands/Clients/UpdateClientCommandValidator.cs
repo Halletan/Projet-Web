@@ -13,9 +13,7 @@ public class UpdateClientCommandValidator : AbstractValidator<UpdateClientComman
         RuleFor(c => c.clientInput.LastName)
             .MaximumLength(50).WithMessage("Max 50 characters")
             .NotNull().WithMessage("Firstname is required");
-        RuleFor(c => c.clientInput.Phone)
-            .MaximumLength(50).WithMessage("Max 50 characters")
-            .NotNull().WithMessage("Phone is required");
+
         RuleFor(c => c.clientInput.Email)
             .MaximumLength(50).WithMessage("Max 50 characters")
             .EmailAddress().WithMessage("Invalid email address")

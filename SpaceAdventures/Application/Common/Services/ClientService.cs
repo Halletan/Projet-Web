@@ -10,6 +10,7 @@ using SpaceAdventures.Application.Common.Mappings;
 using SpaceAdventures.Application.Common.Models;
 using SpaceAdventures.Application.Common.Queries.Clients;
 using SpaceAdventures.Application.Common.Queries.Clients.GetClientsWithPagination;
+using SpaceAdventures.Application.Common.Services.Interfaces;
 
 namespace SpaceAdventures.Application.Common.Services;
 
@@ -17,11 +18,13 @@ public class ClientService : IClientService
 {
     private readonly ISpaceAdventureDbContext _context;
     private readonly IMapper _mapper;
+    private readonly IUsersManagementApiService _usersManagementApiService;
 
-    public ClientService(ISpaceAdventureDbContext context, IMapper mapper)
+    public ClientService(ISpaceAdventureDbContext context, IMapper mapper, IUsersManagementApiService usersManagementApiService)
     {
         _context = context;
         _mapper = mapper;
+        _usersManagementApiService = usersManagementApiService;
     }
 
     public async Task<ClientsVm> GetAllClients(CancellationToken cancellationToken = default)
@@ -53,6 +56,9 @@ public class ClientService : IClientService
 
     public async Task<ClientDto> CreateClient(ClientInput clientInput, CancellationToken cancellation = default)
     {
+        var user = await _usersManagementApiService.GetAllUsers(cancellation);
+        clientInput.IdUser=user.UsersList.FirstOrDefault(c=>c.Email==clientInput.Email).IdUser;
+
         var client = _mapper.Map<Client>(clientInput);
         try
         {
@@ -79,7 +85,6 @@ public class ClientService : IClientService
             client.LastName = clientInput.LastName;
             client.Email = clientInput.Email;
             client.IdMemberShipType = clientInput.IdMemberShipType;
-            client.IdUser = clientInput.IdUser;
 
             _context.Clients.Update(client);
             await _context.SaveChangesAsync(cancellation);
