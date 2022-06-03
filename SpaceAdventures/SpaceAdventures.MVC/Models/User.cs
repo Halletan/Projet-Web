@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace SpaceAdventures.MVC.Models
 {
@@ -37,11 +38,24 @@ namespace SpaceAdventures.MVC.Models
     [Serializable]
     public class UserInput
     {
+        [Required]
+        [MaxLength(10)]
+        [MinLength(5)]
         public string Username { get; set; }
+        [Required]
+        [MaxLength(15)]
         public string Lastname { get; set; }
+        [Required]
+        [MaxLength(15)]
         public string Firstname { get; set; }
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
         public string Connection { get; set; }
+
+        [PasswordPropertyText]
+        [Required]
+        [MinLength(6)]
         public string Password { get; set; }
         public int IdRole { get; set; }
     }

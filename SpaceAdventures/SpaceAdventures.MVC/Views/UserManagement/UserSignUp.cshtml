@@ -4,59 +4,106 @@
     ViewData["Title"] = "UserSignUp";
 }
 
-<h1>UserSignUp</h1>
 
-<h4>UserInput</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="UserSignUp">
-           <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group mb-2">
-                <label asp-for="Lastname" class="control-label text-white"></label>
-                <input asp-for="Lastname" class="form-control" />
-                <span asp-validation-for="Lastname" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-2">
-                <label asp-for="Firstname" class="control-label text-white"></label>
-                <input asp-for="Firstname" class="form-control" />
-                <span asp-validation-for="Firstname" class="text-danger"></span>
-            </div>
+<br/><br/><br/><br/><br/><br/>
 
-            <div class="form-group mb-2">
-                <label asp-for="Username" class="control-label text-white"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-2">
-                <label asp-for="Email" class="control-label text-white"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group" hidden="hidden">
-                <label asp-for="Connection" class="control-label text-white"></label>
-                <input asp-for="Connection"  value="test" class="form-control" readonly="readonly"/>
-                <span asp-validation-for="Connection" class="text-danger"></span>
-            </div>
-             <div class="form-group" hidden="hidden">
-                <label asp-for="Password" class="control-labelvtext-white"></label>
-                <input asp-for="Password"  value="test" class="form-control" readonly="readonly" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-             <div class="form-group mb-2 d-none">
-                <label asp-for="IdRole" class="control-label text-white"></label>
-                 <input asp-for="IdRole"  value="4" class="form-control" readonly="readonly" />
-                <span asp-validation-for="IdRole" class="text-danger"></span>
-            </div>
-            
-            <div class="form-group m-2">
-                <input type="submit" value="Create" class="btn btn-success" /> | <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Back to Home page</a>
-            </div>
-        </form>
-    </div>
+<div id="myHeader" class="text-center mt-5 pt-5 text-white">
+    <h1 class="display-4">Space Adventures</h1>
+    <h2>Sign up with us and gain access to the space</h2>
 </div>
+
+
+<hr />
+<form  id="form" asp-action="UserSignUp">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+    <div class="row mt-5">
+        <div class="form-group col">
+            <label asp-for="Lastname" class="control-label text-white"></label>
+            <input asp-for="Lastname" class="form-control" />
+            <span asp-validation-for="Lastname" class="text-danger"></span>
+        </div>
+        <div class="form-group col">
+            <label asp-for="Firstname" class="control-label text-white"></label>
+            <input asp-for="Firstname" class="form-control" />
+            <span asp-validation-for="Firstname" class="text-danger"></span>
+        </div>
+    </div>
+            
+    <div class="row mt-3">
+        <div class="form-group col">
+            <label asp-for="Username" class="control-label text-white"></label>
+            <input type="text" asp-for="Username" class="form-control" />
+            <span asp-validation-for="Username" class="text-danger"></span>
+        </div>
+        <div class="form-group col">
+            <label asp-for="Email" class="control-label text-white"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+    
+    <div class="row mt-3">
+        <div class="form-group col">
+            <label asp-for="Password" class="control-label text-white"></label>
+            <input id="passOne" type="password" asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group col">
+            <label asp-for="Password" class="control-label text-white">Re-enter password</label>
+            <input id="passTwo" type="password" asp-for="Password" class="form-control"/>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+    </div>
+            
+
+    <div class="form-group d-none">
+        <label asp-for="Connection" class="control-label text-white"></label>
+        <input asp-for="Connection"  value="test" class="form-control" readonly="readonly"/>
+        <span asp-validation-for="Connection" class="text-danger"></span>
+    </div>
+    <div class="form-group d-none">
+        <label asp-for="Password" class="control-labelvtext-white"></label>
+        <input asp-for="Password"  value="test" class="form-control" readonly="readonly" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-2 d-none">
+        <label asp-for="IdRole" class="control-label text-white"></label>
+        <input  asp-for="IdRole"  value="4" class="form-control" readonly="readonly" />
+        <span asp-validation-for="IdRole" class="text-danger"></span>
+    </div>
+            
+    <div class="form-group m-2 text-center mt-5">
+        <input id="sign-up" type="submit" value="Sign Up" class="btn btn-info" /> | <a class="btn btn-  " asp-controller="Home" asp-action="Index">Home page</a>
+    </div>
+</form>
 
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+
+        <script>
+        $(document).ready(function() {
+
+            $("#passTwo").change(function() {
+            var password = $("#passOne").val();
+            var confirmPassword = $("#passTwo").val();
+
+            console.log(password);
+            console.log(confirmPassword);
+
+                if (password != confirmPassword) {
+                    toastr.warning("Passwords do not match");
+                    $("#passOne").val('');
+                    $("#passTwo").val('');
+                }
+            });
+        });
+    </script>
 }
+
+
+
+
+

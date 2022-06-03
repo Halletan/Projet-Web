@@ -32,15 +32,7 @@ public class HomeController : Controller
                 CultureInfo.InvariantCulture,
                 DateTimeStyles.RoundtripKind);
 
-            var idUser = _accessor.HttpContext.User.Claims.First(i => i.Type == ClaimTypes.NameIdentifier).Value;
-            var userEmail = User.FindFirstValue(ClaimTypes.Email);
-
-            var roles =
-                await _userManagementMvcService.GetUserRole(idUser, await HttpContext.GetTokenAsync("access_token"));
-            var roleName = roles[0].Name;
-
-
-
+            TempData["Role"] = await GetRole();
             TempData["Message"] = "Logged as : " + User.Identity.Name;
         }
 
@@ -53,18 +45,27 @@ public class HomeController : Controller
         return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
     }
 
-    public IActionResult About()
+    public async Task<IActionResult> About()
+    {
+        return View();  
+    }
+
+    public async Task<IActionResult> Dashboard()
+    {
+        TempData["Role"] = await GetRole();
+        return View();
+    }
+
+    public async Task<IActionResult> SolarSystem()
     {
         return View();
     }
 
-    public IActionResult Dashboard()
-    {
-        return View();
-    }
 
-    public IActionResult SolarSystem()
+    private async Task<string> GetRole()
     {
-        return View();
+        var idUser = _accessor.HttpContext.User.Claims.First(i => i.Type == ClaimTypes.NameIdentifier).Value;
+        var roles = await _userManagementMvcService.GetUserRole(idUser, await HttpContext.GetTokenAsync("access_token"));
+        return await Task.FromResult(roles[0].Name);
     }
 }
