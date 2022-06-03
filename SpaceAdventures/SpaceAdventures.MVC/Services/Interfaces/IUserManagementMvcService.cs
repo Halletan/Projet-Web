@@ -8,10 +8,10 @@ namespace SpaceAdventures.MVC.Services.Interfaces
         Task<Users> GetAllUsers(string? accessToken);
         Task<UserDto> GetUserByEmail(string email,string? accessToken);
         Task<bool> DeleteUser(string? accessToken,int userId);
-
         Task<User> UpdateUser(string? accessToken, UserInput user);
-
         Task<UserRole> GetRoleByIdRole(int id, string? accessToken);
         Task<Roles> GetAllRole(string? accessToken);
+        Task<List<UserRole>> GetUserRole(string id, string? accessToken);   
     }
 }
+    

@@ -32,7 +32,7 @@ public class UsersController : ControllerBase
     /// </summary>
     /// <param name="command"></param>
     [HttpPost]
-    //[Authorize(Policy = "write:users")]
+    [Authorize(Policy = "write:users")]
     [Route("CreateUser")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -47,7 +47,7 @@ public class UsersController : ControllerBase
     /// </summary>
     /// <param name="command"></param>
     [HttpPatch]
-    //[Authorize(Policy = "write:users")]
+    [Authorize(Policy = "write:users")]
     [Route("UpdateUser")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -93,7 +93,7 @@ public class UsersController : ControllerBase
     /// </summary>
     /// <returns> </returns>
     [HttpDelete]
-    [Authorize(Policy = "write:messages")]
+    [Authorize(Policy = "write:users")]
     [Route("DeleteUser/{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -111,17 +111,17 @@ public class UsersController : ControllerBase
     /// <summary>
     ///     Get a user's roles
     /// </summary>
-    /// <param name="userId"></param>
+    /// <param name="id"></param>
     /// <returns>List of user's roles</returns>
     [HttpGet]
-    // [Authorize(Policy = "read:users")]
-    [Route("UserRoles")]
+    [Authorize(Policy = "read:messages")]
+    [Route("UserRoles/{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<List<UserRole>>> GetUserRoles(string userId)
+    //[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    //[ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<List<UserRole>>> GetUserRoles(string id)
     {
-        return await _mediator.Send(new GetUserRolesQuery(userId));
+        return await _mediator.Send(new GetUserRolesQuery(id));
     }
 
 
@@ -153,7 +153,6 @@ public class UsersController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<RoleDto>> GetRoleByIdRole(int id)
     {
-
         return Ok(await _mediator.Send(new GetRoleByIdRoleQuery(id)));
     }
 
@@ -162,7 +161,7 @@ public class UsersController : ControllerBase
     /// </summary>
     /// <param name="command"></param>
     [HttpPost]
-    //[Authorize(Policy = "write:users")]
+    [Authorize(Policy = "write:users")]
     [Route("AssignRoles")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]

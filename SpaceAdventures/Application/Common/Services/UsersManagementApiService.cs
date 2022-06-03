@@ -50,7 +50,7 @@ public class UsersManagementApiService : IUsersManagementApiService
     }
     #endregion
 
-    #region Get User's Roles
+    #region Get User's Roles => Using Auth0 User's ID by Hammadi
 
     public async Task<List<UserRole>> GetUserRoles(string userId, CancellationToken cancellation)
     {
@@ -72,25 +72,28 @@ public class UsersManagementApiService : IUsersManagementApiService
 
     #endregion
 
-    #region Get All Auth0 Roles
-    public async Task<List<UserRole>> GetAllRoles(CancellationToken cancellationToken)
+    #region AssignRoles => Using Auth0 User's ID ID by Hammadi
+    public async Task AssignRoles(string id, AssignRolesRequest request, CancellationToken cancellationToken = default)
     {
         var tokenResponse = await GetToken();
         var tokenAccess = tokenResponse.access_token;
-        var url = _configuration["Auth0ManagementApi:Audience"] + "roles";
+
+        var url = _configuration["Auth0ManagementApi:Audience"] + "users/auth0|" + id + "/roles";
 
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenAccess);
-        var httpResponse = await _httpClient.GetAsync(url, cancellationToken);
-        if (!httpResponse.IsSuccessStatusCode) throw new NotFoundException();
 
-        var content = await httpResponse.Content.ReadAsStringAsync(cancellationToken);
-        var roles = JsonConvert.DeserializeObject<List<UserRole>>(content);
-        return roles;
+        var payload = JsonConvert.SerializeObject(request);
 
+        var response = await _httpClient.PostAsync(url, new StringContent(payload, Encoding.UTF8, "application/json"), cancellationToken);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new ValidationException();
+        }
     }
     #endregion
 
-    #region Collecting Access Token
+    #region APi Managemet Access Token by Hammadi
 
     public async Task<TokenData> GetToken()
     {
@@ -109,6 +112,27 @@ public class UsersManagementApiService : IUsersManagementApiService
         var content = await response.Content.ReadAsStringAsync();
         var tokenData = JsonConvert.DeserializeObject<TokenData>(content);
         return tokenData;
+    }
+    #endregion
+
+
+
+
+    #region Get All Auth0 Roles
+    public async Task<List<UserRole>> GetAllRoles(CancellationToken cancellationToken)
+    {
+        var tokenResponse = await GetToken();
+        var tokenAccess = tokenResponse.access_token;
+        var url = _configuration["Auth0ManagementApi:Audience"] + "roles";
+
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenAccess);
+        var httpResponse = await _httpClient.GetAsync(url, cancellationToken);
+        if (!httpResponse.IsSuccessStatusCode) throw new NotFoundException();
+
+        var content = await httpResponse.Content.ReadAsStringAsync(cancellationToken);
+        var roles = JsonConvert.DeserializeObject<List<UserRole>>(content);
+        return roles;
+
     }
     #endregion
 
@@ -153,6 +177,7 @@ public class UsersManagementApiService : IUsersManagementApiService
                 {"name", userInput.Firstname + " " + userInput.Lastname},
                 {"nickname", userInput.Username},
                 {"password", _configuration["UserPassword:Default"]},
+                {"username", userInput.Username},
             }), cancellationToken);
 
 
@@ -289,14 +314,14 @@ public class UsersManagementApiService : IUsersManagementApiService
             var userRole = _context.Roles.SingleOrDefault(c => c.IdRole == user.IdRole);
             return userRole;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            throw ex;
+            throw new NotFoundException(nameof(Role), user.IdRole);
         }
     }
     #endregion
 
-    public async Task<RolesVm> GetAllRoleInDb(CancellationToken cancellation)
+    public async Task<RolesVm> GetAllRoleInDb(CancellationToken cancellation)   
     {
         return new RolesVm
         {
@@ -305,25 +330,6 @@ public class UsersManagementApiService : IUsersManagementApiService
                 .ToListAsync(cancellation)
         };
     }
-    public async Task AssignRoles(string id, AssignRolesRequest request, CancellationToken cancellationToken = default)  
-    {
-        var tokenResponse = await GetToken();
-        var tokenAccess = tokenResponse.access_token;
-
-        var url = _configuration["Auth0ManagementApi:Audience"] + "users/auth0|" + id + "/roles";
-
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenAccess);
-
-        var payload = JsonConvert.SerializeObject(request);
-
-        var response = await _httpClient.PostAsync(url, new StringContent(payload, Encoding.UTF8, "application/json"), cancellationToken);
-
-        if (!response.IsSuccessStatusCode)
-        {
-            throw new ValidationException();
-        }
-    }
-
     public async Task<UserDto> GetUserByEmail(string email, CancellationToken cancellationToken = default)
     {
         return _context.Users
@@ -337,10 +343,7 @@ public class UsersManagementApiService : IUsersManagementApiService
     {
         User user = _context.Users.SingleOrDefault(u => u.IdUser == id);
         await DeleteUserInAuth0(user);
-        
         await DeleteUserInDb(user);
-
-       
     }
 
     public async Task<bool> DeleteUserInDb(User user, CancellationToken cancellationToken = default)

@@ -38,7 +38,6 @@ public interface IUsersManagementApiService
     Task<Role> GetRoleInDb(User user, CancellationToken cancellationToken = default);
     Task<RoleDto> GetRoleInDbByIdRole(int id, CancellationToken cancellationToken = default);
 
-
     #endregion
 
 }

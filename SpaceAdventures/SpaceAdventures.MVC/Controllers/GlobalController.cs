@@ -24,4 +24,10 @@ public class GlobalController : Controller
     {
         return await _globalService.GetBookingsCount(await HttpContext.GetTokenAsync("access_token"));
     }
+
+    [HttpGet]
+    public async Task<int> GetUsersCount()
+    {
+        return await _globalService.GetUsersCount(await HttpContext.GetTokenAsync("access_token"));
+    }
 }

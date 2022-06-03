@@ -1,11 +1,7 @@
 ﻿using Application.Common.Interfaces;
 using AutoMapper;
 using SpaceAdventures.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace SpaceAdventures.Application.Common.Queries.Users.Queries
 {

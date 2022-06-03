@@ -16,6 +16,8 @@ namespace SpaceAdventures.MVC.Controllers
         {
             _userManagementMvcService = userManagementMvcService;
         }
+
+
         #region Get List Users
 
         public async Task<IActionResult> GetAllUsers()
@@ -44,7 +46,7 @@ namespace SpaceAdventures.MVC.Controllers
         {
             var lst = await _userManagementMvcService.GetAllRole(await HttpContext.GetTokenAsync("access_token"));
 
-            SelectList listRole = new SelectList(lst.rolesList, "IdRole", "Name");
+            SelectList listRole = new SelectList(lst.RolesList, "IdRole", "Name");
             ViewBag.listRole = listRole;
 
             UserInput user = new();
@@ -110,7 +112,7 @@ namespace SpaceAdventures.MVC.Controllers
 
             //ErrorMessage if Delete NOK.
 
-            TempData["Message"] = "Success : User has been successfully created";
+            TempData["Message"] = "Success : User removed successfully";
             return RedirectToAction("GetAllUsers");
         }
 
@@ -141,7 +143,6 @@ namespace SpaceAdventures.MVC.Controllers
         }
 
         #endregion
-
 
     }
 }

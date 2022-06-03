@@ -1,20 +1,25 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol;
+using NuGet.Versioning;
 using SpaceAdventures.MVC.Models;
+using SpaceAdventures.MVC.Services.Interfaces;
 
 namespace SpaceAdventures.MVC.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly HttpClient _httpClient;
-    private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger, HttpClient httpClient)
+    private readonly IHttpContextAccessor _accessor;
+    private readonly IUserManagementMvcService _userManagementMvcService;
+
+    public HomeController(IHttpContextAccessor accessor, IUserManagementMvcService userManagementMvcService)
     {
-        _logger = logger;
-        _httpClient = httpClient;
+        _accessor = accessor;
+        _userManagementMvcService = userManagementMvcService;
     }
 
     public async Task<IActionResult> Index()
@@ -27,8 +32,14 @@ public class HomeController : Controller
                 CultureInfo.InvariantCulture,
                 DateTimeStyles.RoundtripKind);
 
-            var idToken = await HttpContext.GetTokenAsync("id_token");
-            var isOwner = User.IsInRole("Owner");
+            var idUser = _accessor.HttpContext.User.Claims.First(i => i.Type == ClaimTypes.NameIdentifier).Value;
+            var userEmail = User.FindFirstValue(ClaimTypes.Email);
+
+            var roles =
+                await _userManagementMvcService.GetUserRole(idUser, await HttpContext.GetTokenAsync("access_token"));
+            var roleName = roles[0].Name;
+
+
 
             TempData["Message"] = "Logged as : " + User.Identity.Name;
         }

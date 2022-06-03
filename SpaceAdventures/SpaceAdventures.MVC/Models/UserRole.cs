@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Newtonsoft.Json;
 
 namespace SpaceAdventures.MVC.Models;
 
@@ -6,6 +7,7 @@ namespace SpaceAdventures.MVC.Models;
 public class UserRole
 {
     [DisplayName("Role")]
+    [JsonProperty("id")]
     public string IdRole { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
@@ -14,6 +16,5 @@ public class UserRole
 [Serializable]
 public class Roles
 {
-    public IList<UserRole> rolesList { get; set; }
-
+    public IList<UserRole> RolesList { get; set; }
 }

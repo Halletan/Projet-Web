@@ -10,12 +10,10 @@ namespace SpaceAdventures.MVC.Services;
 public class ClientService : IClientService
 {
     private readonly HttpClient _httpClient;
-    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public ClientService(HttpClient httpClient, IHttpContextAccessor httpContextAccessor)
+    public ClientService(HttpClient httpClient)
     {
         _httpClient = httpClient;
-        _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task<Clients> GetAllClients(string? accessToken)
@@ -62,7 +60,7 @@ public class ClientService : IClientService
 
         var content = await response.Content.ReadAsStringAsync();
         var data = JsonConvert.DeserializeObject<Clients>(content);
-        if ( data.ClientsList.Find(c=>c.Email==client.Email).IdClient != null )
+        if (data.ClientsList.Find(c=> c.Email == client.Email).IdClient != null)
         {
             return true;
         }

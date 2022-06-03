@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using SpaceAdventures.MVC.Models;
 using SpaceAdventures.MVC.Models.NASA;
@@ -29,7 +30,7 @@ namespace SpaceAdventures.MVC.Controllers
         {
             var token = await HttpContext.GetTokenAsync("access_token");
             var NasaData =await _nasaService.GetNasaData(planetName,token);
-            var video=await _nasaService.GetNasaVideo(NasaData, token);
+            var video = await _nasaService.GetNasaVideo(NasaData, token);
             ViewBag.video = video;
             return View();
         }
@@ -39,20 +40,19 @@ namespace SpaceAdventures.MVC.Controllers
         {
             var token = await HttpContext.GetTokenAsync("access_token");
 
-            
-            
             Client client = new Client()
             {
                 LastName = booking.Lastname,
                 FirstName = booking.FirstName,
-                Email = booking.Email,
+                Email = User.FindFirstValue(ClaimTypes.Email)
 
             };
+
             bool ClientExist = await _clientService.ClientExist(client, token);
             if (!ClientExist)
-                {
-                    bool created = await _clientService.CreateClient(client, token);
-                }
+            {
+                bool created = await _clientService.CreateClient(client, token);
+            }
 
             return View();
         }

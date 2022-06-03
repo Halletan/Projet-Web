@@ -33,7 +33,7 @@
     $.ajax({
         type: "GET",
         dataType: "json",
-        url: "",
+        url: "/Global/GetUsersCount",
         success: function(data) {
             $("#users").append(data);
         },

@@ -38,10 +38,15 @@ public class GlobalService : IGlobalService
         return bookings.BookingsList.Count;
     }
 
-
-    // TODO To Be implemented once the table remains available
     public async Task<int> GetUsersCount(string? accessToken)
     {
-        throw new NotImplementedException();
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+        var response = await _httpClient.GetAsync("https://localhost:7195/api/v1.0/Users/GetAllUsers");
+
+        if (!response.IsSuccessStatusCode) throw new Exception("Cannot retrieve data");
+
+        var content = await response.Content.ReadAsStringAsync();
+        var users = JsonConvert.DeserializeObject<Users>(content);
+        return users.UsersList.Count;
     }
 }
