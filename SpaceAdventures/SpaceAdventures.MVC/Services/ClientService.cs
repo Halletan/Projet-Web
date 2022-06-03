@@ -60,12 +60,8 @@ public class ClientService : IClientService
 
         var content = await response.Content.ReadAsStringAsync();
         var data = JsonConvert.DeserializeObject<Clients>(content);
-        if (data.ClientsList.Find(c=> c.Email == client.Email).IdClient != null)
-        {
-            return true;
-        }
 
-        return false;
+        return data.ClientsList.Any(c => c.Email.ToLower().Equals(client.Email.ToLower()));
     }
 
 }
