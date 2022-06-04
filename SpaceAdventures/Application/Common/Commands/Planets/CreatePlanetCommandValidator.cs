@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using SpaceAdventures.Application.Common.Commands.Planets;
-using SpaceAdventures.Application.Common.Services.Interfaces;
+using SpaceAdventures.Application.Common.Interfaces;
 
 namespace SpaceAdventures.Application.Common.Planets;
 

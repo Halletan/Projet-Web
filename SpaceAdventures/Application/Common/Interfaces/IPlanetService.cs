@@ -1,7 +1,7 @@
 ﻿using SpaceAdventures.Application.Common.Commands.Planets;
 using SpaceAdventures.Application.Common.Queries.Planets;
 
-namespace SpaceAdventures.Application.Common.Services.Interfaces;
+namespace SpaceAdventures.Application.Common.Interfaces;
 
 public interface IPlanetService
 {

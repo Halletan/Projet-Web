@@ -1,5 +1,4 @@
-﻿using Application.Common.Services.Interfaces;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using SpaceAdventures.Application.Common.Interfaces;

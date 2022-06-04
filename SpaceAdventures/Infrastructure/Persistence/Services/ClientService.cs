@@ -1,5 +1,4 @@
-﻿using Application.Common.Services.Interfaces;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -10,9 +9,8 @@ using SpaceAdventures.Application.Common.Mappings;
 using SpaceAdventures.Application.Common.Models;
 using SpaceAdventures.Application.Common.Queries.Clients;
 using SpaceAdventures.Application.Common.Queries.Clients.GetClientsWithPagination;
-using SpaceAdventures.Application.Common.Services.Interfaces;
 
-namespace SpaceAdventures.Application.Common.Services;
+namespace SpaceAdventures.Infrastructure.Persistence.Services;
 
 public class ClientService : IClientService
 {

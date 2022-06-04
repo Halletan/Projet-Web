@@ -11,12 +11,11 @@ using SpaceAdventures.Application.Common.Exceptions;
 using SpaceAdventures.Application.Common.Interfaces;
 using SpaceAdventures.Application.Common.Models.UsersAuth0ManagementApi;
 using SpaceAdventures.Application.Common.Queries.Users.Queries;
-using SpaceAdventures.Application.Common.Services.Interfaces;
 using SpaceAdventures.Domain.Entities;
 
 
 
-namespace SpaceAdventures.Application.Common.Services;
+namespace SpaceAdventures.Infrastructure.Persistence.Services;
 
 public class UsersManagementApiService : IUsersManagementApiService
 {

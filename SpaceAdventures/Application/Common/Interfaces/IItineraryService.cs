@@ -1,7 +1,7 @@
 ﻿using SpaceAdventures.Application.Common.Commands.Itineraries;
 using SpaceAdventures.Application.Common.Queries.Itineraries;
 
-namespace SpaceAdventures.Application.Common.Services.Interfaces;
+namespace SpaceAdventures.Application.Common.Interfaces;
 
 public interface IItineraryService
 {

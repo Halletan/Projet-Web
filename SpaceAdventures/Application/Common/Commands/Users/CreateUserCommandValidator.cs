@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
+using SpaceAdventures.Application.Common.Interfaces;
 using SpaceAdventures.Application.Common.Queries.Users.Queries;
-using SpaceAdventures.Application.Common.Services.Interfaces;
 
 namespace SpaceAdventures.Application.Common.Commands.Users
 {

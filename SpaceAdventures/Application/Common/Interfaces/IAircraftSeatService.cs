@@ -1,7 +1,7 @@
 ﻿using SpaceAdventures.Application.Common.Commands.AircraftSeats;
 using SpaceAdventures.Application.Common.Queries.AircraftSeats;
 
-namespace SpaceAdventures.Application.Common.Services.Interfaces;
+namespace SpaceAdventures.Application.Common.Interfaces;
 
 public interface IAircraftSeatService
 {

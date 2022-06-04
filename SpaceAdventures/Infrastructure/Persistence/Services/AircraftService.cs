@@ -6,9 +6,8 @@ using SpaceAdventures.Application.Common.Commands.Aircrafts;
 using SpaceAdventures.Application.Common.Exceptions;
 using SpaceAdventures.Application.Common.Interfaces;
 using SpaceAdventures.Application.Common.Queries.Aircrafts;
-using SpaceAdventures.Application.Common.Services.Interfaces;
 
-namespace SpaceAdventures.Application.Common.Services;
+namespace SpaceAdventures.Infrastructure.Persistence.Services;
 
 public class AircraftService : IAircraftService
 {

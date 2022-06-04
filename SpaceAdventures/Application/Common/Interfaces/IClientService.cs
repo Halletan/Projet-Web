@@ -3,12 +3,12 @@ using SpaceAdventures.Application.Common.Models;
 using SpaceAdventures.Application.Common.Queries.Clients;
 using SpaceAdventures.Application.Common.Queries.Clients.GetClientsWithPagination;
 
-namespace Application.Common.Services.Interfaces;
+namespace SpaceAdventures.Application.Common.Interfaces;
 
 public interface IClientService
 {
     Task<ClientsVm> GetAllClients(CancellationToken cancellation = default);
-    Task<PaginatedList<ClientsBriefDto>> GetAllClientsWithPagination(int pageNumber, int pageSize, CancellationToken cancellation = default);            
+    Task<PaginatedList<ClientsBriefDto>> GetAllClientsWithPagination(int pageNumber, int pageSize, CancellationToken cancellation = default);
     Task<ClientDto> GetClientById(int clientId, CancellationToken cancellation = default);
     Task<ClientDto> CreateClient(ClientInput clientInput, CancellationToken cancellation = default);
     Task<ClientDto> UpdateClient(int clientId, ClientInput clientInput, CancellationToken cancellation = default);

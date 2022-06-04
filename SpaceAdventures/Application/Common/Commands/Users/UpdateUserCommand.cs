@@ -1,6 +1,6 @@
 ﻿using MediatR;
+using SpaceAdventures.Application.Common.Interfaces;
 using SpaceAdventures.Application.Common.Queries.Users.Queries;
-using SpaceAdventures.Application.Common.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

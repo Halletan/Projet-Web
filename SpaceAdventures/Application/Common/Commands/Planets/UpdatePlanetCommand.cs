@@ -1,6 +1,6 @@
 ﻿using MediatR;
+using SpaceAdventures.Application.Common.Interfaces;
 using SpaceAdventures.Application.Common.Queries.Planets;
-using SpaceAdventures.Application.Common.Services.Interfaces;
 
 namespace SpaceAdventures.Application.Common.Commands.Planets;
 

@@ -1,5 +1,5 @@
-﻿using Application.Common.Services.Interfaces;
-using FluentValidation;
+﻿using FluentValidation;
+using SpaceAdventures.Application.Common.Interfaces;
 
 namespace SpaceAdventures.Application.Common.Commands.Clients;
 

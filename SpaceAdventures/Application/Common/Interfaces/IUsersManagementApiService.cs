@@ -3,12 +3,12 @@ using SpaceAdventures.Application.Common.Models.UsersAuth0ManagementApi;
 using SpaceAdventures.Application.Common.Queries.Users.Queries;
 using SpaceAdventures.Domain.Entities;
 
-namespace SpaceAdventures.Application.Common.Services.Interfaces;
+namespace SpaceAdventures.Application.Common.Interfaces;
 
 public interface IUsersManagementApiService
 {
     #region User
-   
+
     Task<UsersVm> GetAllUsers(CancellationToken cancellation = default);
     Task<bool> UserExists(string email);
     Task<UserDto> GetUserByEmail(string email, CancellationToken cancellation = default);
@@ -22,7 +22,7 @@ public interface IUsersManagementApiService
     Task<UserDto> UpdateUserInDb(User user, CancellationToken cancellationToken = default);
     Task<User> UpdateUserInAuth0(User user, CancellationToken cancellationToken = default);
 
-    Task DeleteUser(int id, CancellationToken cancellation= default);
+    Task DeleteUser(int id, CancellationToken cancellation = default);
     Task<bool> DeleteUserInAuth0(User user, CancellationToken cancellationToken = default);
     Task<bool> DeleteUserInDb(User user, CancellationToken cancellationToken = default);
 

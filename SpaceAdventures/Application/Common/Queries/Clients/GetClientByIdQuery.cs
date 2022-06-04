@@ -1,5 +1,5 @@
-﻿using Application.Common.Services.Interfaces;
-using MediatR;
+﻿using MediatR;
+using SpaceAdventures.Application.Common.Interfaces;
 
 namespace SpaceAdventures.Application.Common.Queries.Clients;
 

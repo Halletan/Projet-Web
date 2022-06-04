@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using SpaceAdventures.Application.Common.Services.Interfaces;
+using SpaceAdventures.Application.Common.Interfaces;
 
 namespace SpaceAdventures.Application.Common.Queries.Itineraries;
 

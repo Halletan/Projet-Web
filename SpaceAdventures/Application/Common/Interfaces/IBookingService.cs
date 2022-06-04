@@ -1,7 +1,7 @@
 ﻿using SpaceAdventures.Application.Common.Commands.Bookings;
 using SpaceAdventures.Application.Common.Queries.Bookings;
 
-namespace SpaceAdventures.Application.Common.Services.Interfaces;
+namespace SpaceAdventures.Application.Common.Interfaces;
 
 public interface IBookingService
 {

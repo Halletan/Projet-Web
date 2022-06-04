@@ -1,7 +1,7 @@
 ﻿using SpaceAdventures.Application.Common.Commands.Membership;
 using SpaceAdventures.Application.Common.Queries.Membership;
 
-namespace SpaceAdventures.Application.Common.Services.Interfaces;
+namespace SpaceAdventures.Application.Common.Interfaces;
 
 public interface IMembershipService
 {

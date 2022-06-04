@@ -65,7 +65,7 @@ app.UseSerilogRequestLogging();
 
 
 //Our Log Request Middleware
-//app.UseLogRequestMiddleware();
+app.UseLogRequestMiddleware();
 
 
 // Configure the HTTP request pipeline.

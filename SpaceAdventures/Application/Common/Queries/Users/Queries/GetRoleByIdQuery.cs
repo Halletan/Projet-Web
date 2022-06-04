@@ -1,6 +1,6 @@
 ﻿
 using MediatR;
-using SpaceAdventures.Application.Common.Services.Interfaces;
+using SpaceAdventures.Application.Common.Interfaces;
 using SpaceAdventures.Domain.Entities;
 
 namespace SpaceAdventures.Application.Common.Queries.Users.Queries

@@ -1,7 +1,7 @@
 using SpaceAdventures.Application.Common.Commands.Aircrafts;
 using SpaceAdventures.Application.Common.Queries.Aircrafts;
 
-namespace SpaceAdventures.Application.Common.Services.Interfaces;
+namespace SpaceAdventures.Application.Common.Interfaces;
 
 public interface IAircraftService
 {

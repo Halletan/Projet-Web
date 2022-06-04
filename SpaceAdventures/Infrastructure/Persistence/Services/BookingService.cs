@@ -6,9 +6,8 @@ using SpaceAdventures.Application.Common.Commands.Bookings;
 using SpaceAdventures.Application.Common.Exceptions;
 using SpaceAdventures.Application.Common.Interfaces;
 using SpaceAdventures.Application.Common.Queries.Bookings;
-using SpaceAdventures.Application.Common.Services.Interfaces;
 
-namespace SpaceAdventures.Application.Common.Services;
+namespace SpaceAdventures.Infrastructure.Persistence.Services;
 
 public class BookingService : IBookingService
 {

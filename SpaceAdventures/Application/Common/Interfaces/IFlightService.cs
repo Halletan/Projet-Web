@@ -1,7 +1,7 @@
 ﻿using SpaceAdventures.Application.Common.Commands.Flights;
 using SpaceAdventures.Application.Common.Queries.Flights;
 
-namespace SpaceAdventures.Application.Common.Services.Interfaces;
+namespace SpaceAdventures.Application.Common.Interfaces;
 
 public interface IFlightService
 {

@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using SpaceAdventures.Application.Common.Interfaces;
 using SpaceAdventures.Application.Common.Models.APIConsume;
-using SpaceAdventures.Application.Common.Services.Interfaces;
 
-namespace SpaceAdventures.Application.Common.Services;
+namespace SpaceAdventures.Infrastructure.Persistence.Services;
 
 public class ISSCLService : IISSCLService
 {

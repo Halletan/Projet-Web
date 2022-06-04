@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using SpaceAdventures.Application.Common.Commands.Membership;
-using SpaceAdventures.Application.Common.Services.Interfaces;
+using SpaceAdventures.Application.Common.Interfaces;
 
 namespace SpaceAdventures.Application.Common.Membership;
 
