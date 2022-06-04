@@ -18,7 +18,6 @@ public class ClientsController : Controller
     [HttpGet]
     public async Task<ActionResult> GetClients()
     {
-        TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
         return View(await _clientService.GetAllClients(await HttpContext.GetTokenAsync("access_token")));
     }
 
@@ -31,7 +30,6 @@ public class ClientsController : Controller
     [HttpGet]
     public async Task<IActionResult> Create()
     {
-        TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
         return View();
     }
 }

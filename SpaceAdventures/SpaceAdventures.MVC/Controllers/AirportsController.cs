@@ -19,7 +19,6 @@ public class AirportsController : Controller
     [HttpGet]
     public async Task<ActionResult> GetAirports()
     {
-        TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
         return View(await _airportService.GetAllAirports(await HttpContext.GetTokenAsync("access_token")));
     }
 }

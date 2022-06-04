@@ -35,7 +35,7 @@
             </div>
             <div class="form-group col-lg-4">
                 <label asp-for="Password" class="control-label text-white"></label>
-                <input asp-for="Password" readonly="readonly"  value="Default Password is applicable here" class="form-control" readonly="readonly" />
+                <input asp-for="Password" value="Default Password is applicable here" class="form-control readonly" readonly="readonly" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             </div>
@@ -47,7 +47,9 @@
                 </div>
                 <div class="form-group col-lg-4">
                     <label asp-for="IdRole" class="control-label text-white">Assign a role</label>
-                    <select class="form-control" asp-items="@(new SelectList(ViewBag.ListRole, "Value", "Text"))"></select>
+                    <select id="selectList" class="form-control" asp-items="@(new SelectList(ViewBag.ListRole, "Value", "Text"))">
+                        <option selected>------------------Select a role-------------------</option>
+                    </select>
 @*                    @Html.DropDownListFor(x => Model.IdRole, new SelectList(ViewBag.ListRole, "Value", "Text"));*@
                     <span asp-validation-for="IdRole" class="text-danger"></span>
                 </div>
@@ -67,4 +69,35 @@
         </form>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        <script src="~/lib/toastr.js/toastr.min.js"></script>
+        <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+
+<script>
+
+    $(document).ready(function() {
+        $("#selectList").change(function() {
+
+            var value = $('#selectList option:selected').text()
+            
+            switch (value) {
+                case "Admin" : 
+                    toastr.info("Can R/W Messages & Read Users", "Access");
+                break;
+                case "Agent" : 
+                    toastr.info("Can only Read Messages", "Access");
+                break;
+                case "Owner" : 
+                    toastr.info("Can R/W Users & Messages", "Access");
+                break;
+                case "User" : 
+                    toastr.info("Can R/W Messages","Access");
+                break;
+            }
+        });
+    });
+
+
+</script>
+
+    
 }

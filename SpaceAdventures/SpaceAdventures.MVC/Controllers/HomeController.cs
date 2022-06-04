@@ -32,6 +32,8 @@ public class HomeController : Controller
                 CultureInfo.InvariantCulture,
                 DateTimeStyles.RoundtripKind);
 
+            HttpContext.Session.SetString("Role", await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token")));
+
             TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
             TempData["Message"] = "Logged as : " + User.Identity.Name;
         }
@@ -52,7 +54,6 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Dashboard()
     {
-        TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
         return View();
     }
 

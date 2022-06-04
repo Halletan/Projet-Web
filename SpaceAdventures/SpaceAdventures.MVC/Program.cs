@@ -7,6 +7,9 @@ var configuration = builder.Configuration;
 
 // Add services to the container.
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+
 // Authentication Service
 builder.Services.AddAuthenticationServiceCollection(configuration);
 
@@ -30,6 +33,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseSession();
 
 app.UseHttpsRedirection();
 app.UseCookiePolicy();
