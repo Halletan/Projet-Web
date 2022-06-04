@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Domain.Entities;
+using SpaceAdventures.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using SpaceAdventures.Application.Common.Commands.Itineraries;
 using SpaceAdventures.Application.Common.Exceptions;
@@ -64,7 +64,7 @@ public class ItineraryService : IItineraryService
 
         try
         {
-            itinerary.Rate = itineraryInput.Rate;
+            
             itinerary.IdAirport1 = itineraryInput.IdAirport1;
             itinerary.IdAirport2 = itineraryInput.IdAirport2;
 

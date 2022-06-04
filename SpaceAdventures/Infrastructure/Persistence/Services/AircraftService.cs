@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Domain.Entities;
+using SpaceAdventures.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using SpaceAdventures.Application.Common.Commands.Aircrafts;
 using SpaceAdventures.Application.Common.Exceptions;

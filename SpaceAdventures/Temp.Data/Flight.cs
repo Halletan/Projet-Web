@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SpaceAdventures.Domain.Entities
+namespace Temp.Data
 {
     public partial class Flight
     {

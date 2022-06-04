@@ -1,8 +1,8 @@
-﻿using Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SpaceAdventures.Application.Common.Interfaces;
+using SpaceAdventures.Infrastructure.Persistence;
 using SpaceAdventures.Infrastructure.Persistence.Services;
 
 namespace Infrastructure;
@@ -21,11 +21,11 @@ public static class DependencyInjection
         services.AddScoped<IPlanetService, PlanetService>();
         services.AddScoped<IAirportService, AirportService>();
         services.AddScoped<IItineraryService, ItineraryService>();
-        services.AddScoped<IMembershipService, MembershipService>();
+        
         services.AddScoped<IAircraftService, AircraftService>();
         services.AddScoped<IFlightService, FlightService>();
         services.AddScoped<IBookingService, BookingService>();
-        services.AddScoped<IAircraftSeatService, AircraftSeatService>();
+        
         services.AddHttpClient<IUsersManagementApiService, UsersManagementApiService>();
 
         // Policy Service

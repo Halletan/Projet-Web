@@ -1,5 +1,5 @@
 ﻿using Application.Common.Interfaces;
-using Domain.Entities;
+using SpaceAdventures.Domain.Entities;
 
 namespace SpaceAdventures.Application.Common.Queries.Planets;
 

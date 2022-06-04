@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Domain.Entities;
+using SpaceAdventures.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using SpaceAdventures.Application.Common.Commands.Bookings;
 using SpaceAdventures.Application.Common.Exceptions;
@@ -66,7 +66,7 @@ public class BookingService : IBookingService
             booking.IdBooking = bookingInput.IdBooking;
             booking.IdFlight = bookingInput.IdFlight;
             booking.IdClient = bookingInput.IdClient;
-            booking.BookingAmount = bookingInput.BookingAmount;
+            booking.NbSeats = bookingInput.NbSeats;
 
 
             _context.Bookings.Update(booking);

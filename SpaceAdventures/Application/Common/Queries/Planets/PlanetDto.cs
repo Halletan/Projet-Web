@@ -1,6 +1,6 @@
 ﻿using Application.Common.Interfaces;
 using AutoMapper;
-using Domain.Entities;
+using SpaceAdventures.Domain.Entities;
 using SpaceAdventures.Application.Common.Queries.Airports;
 
 namespace SpaceAdventures.Application.Common.Queries.Planets;

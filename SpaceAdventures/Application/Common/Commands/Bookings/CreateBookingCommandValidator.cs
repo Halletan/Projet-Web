@@ -7,8 +7,7 @@ public class CreateBookingCommandValidator : AbstractValidator<CreateBookingComm
 {
     public CreateBookingCommandValidator(IBookingService bookingService)
     {
-        RuleFor(b => b.bookingInput.BookingAmount).NotEmpty().WithMessage("Booking amount is mandatory")
-            .InclusiveBetween(1, 1000000).WithMessage("Booking amount should be between 1 and 1000000");
+        
 
         // Control existing IdFlight
         RuleFor(b => b.bookingInput.IdFlight)
@@ -25,5 +24,10 @@ public class CreateBookingCommandValidator : AbstractValidator<CreateBookingComm
                 var exists = bookingService.ClientExists(idclient);
                 return !exists;
             }).WithMessage("This client doesn't exist !");
+
+        // TO DO . Rule for NbSeats
+
+
+
     }
 }

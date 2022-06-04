@@ -1,6 +1,6 @@
 ﻿using Application.Common.Interfaces;
 using AutoMapper;
-using Domain.Entities;
+using SpaceAdventures.Domain.Entities;
 
 namespace SpaceAdventures.Application.Common.Queries.Clients.GetClientsWithPagination;
 
