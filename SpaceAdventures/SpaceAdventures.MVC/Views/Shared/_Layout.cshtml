@@ -39,6 +39,9 @@
                 @{
                     Debug.Assert(User.Identity != null, "User.Identity != null");
                 }
+
+
+
                 @if (User.Identity.IsAuthenticated && @TempData["Role"]!.ToString() != RolesType.User.ToString())
                 {
                     <li class="nav-item">
@@ -46,7 +49,6 @@
                     </li>
 
                     /***  Users DropdownList ***/
-
 
                     @if (@TempData["Role"]!.ToString() != RolesType.Agent.ToString() && @TempData["Role"]!.ToString() != RolesType.User.ToString())
                     {
@@ -58,7 +60,7 @@
                                 <li>
                                     <a class="dropdown-item" asp-controller="UserManagement" asp-action="GetAllUsers"> <i class="fa-solid fa-list m-2"></i> All</a>
                                 </li>
-                            
+
                                 @if (TempData["Role"].ToString() != RolesType.Agent.ToString() && TempData["Role"].ToString() != RolesType.Admin.ToString())
                                 {
                                     <li>
@@ -127,7 +129,7 @@
                         </ul>
                     </li>
                 }
-                
+
                 @*/***  Bookings DropdownList ***/*@
 
                 @if (!User.Identity.IsAuthenticated)
@@ -139,7 +141,7 @@
                         <a class="nav-link mx-1" asp-controller="Home" asp-action="SolarSystem"> <i class="fa-solid fa-rocket - m-1"></i> Solar System</a>
                     </li>
                 }
-                
+
                 @*/*** END ***/*@
 
 

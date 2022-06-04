@@ -17,24 +17,26 @@ namespace SpaceAdventures.MVC.Controllers
             _userManagementMvcService = userManagementMvcService;
         }
 
-
         #region Get List Users
 
         public async Task<IActionResult> GetAllUsers()
         {
-            Users result = await _userManagementMvcService.GetAllUsers(await HttpContext.GetTokenAsync("access_token"));
-            List<UserVm> lst = new List<UserVm>();
+            var result = await _userManagementMvcService.GetAllUsers(await HttpContext.GetTokenAsync("access_token"));
+            var lst = new List<UserVm>();
 
             foreach (User user in result.UsersList)
             {
-                UserVm vm = new UserVm();
-                vm.Email = user.Email;
-                vm.Username = user.Username;
-                UserRole userRole = await _userManagementMvcService.GetRoleByIdRole(user.idRole,
+                var vm = new UserVm
+                {
+                    Email = user.Email,
+                    Username = user.Username
+                };
+                var userRole = await _userManagementMvcService.GetRoleByIdRole(user.idRole,
                     await HttpContext.GetTokenAsync("access_token"));
                 vm.Role = userRole.Name;
                 lst.Add(vm);
             }
+            TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
             return View(lst);
         }
 
@@ -44,18 +46,15 @@ namespace SpaceAdventures.MVC.Controllers
 
         public async Task<IActionResult> CreateUser()
         {
-            var lst = await _userManagementMvcService.GetAllRole(await HttpContext.GetTokenAsync("access_token"));
-
-            SelectList listRole = new SelectList(lst.RolesList, "IdRole", "Name");
-            ViewBag.listRole = listRole;
-
-            UserInput user = new();
-            return View(user);
+            var rolesList = await _userManagementMvcService.GetAllRole(await HttpContext.GetTokenAsync("access_token"));
+            var rolesDropDownList = new SelectList(rolesList.RolesList, "IdRole", "Name");
+            ViewBag.listRole = rolesDropDownList;
+            TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
+            return View(new UserInput());
         }
 
         public async Task<IActionResult> UserSignUp()
         {
-
             return View();
         }
 
@@ -63,15 +62,15 @@ namespace SpaceAdventures.MVC.Controllers
         [ActionName(nameof(UserSignUp))]
         public async Task<IActionResult> PostUserSignUp(UserInput userInput)
         {
-            string accessToken = await HttpContext.GetTokenAsync("access_token");
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
 
             if (ModelState.IsValid)
             {
-                User userCreated = await _userManagementMvcService.CreateUser(accessToken, userInput);
+                _ = await _userManagementMvcService.CreateUser(accessToken, userInput);
                 TempData["Message"] = "Success : Account has been successfully created";
                 return RedirectToAction("Login", "Account"); 
             }
-
+            TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
             return View(userInput);
         }
 
@@ -79,15 +78,15 @@ namespace SpaceAdventures.MVC.Controllers
         [ActionName(nameof(CreateUser))]
         public async Task<IActionResult> PostUser(UserInput userInput)
         {
-            string accessToken = await HttpContext.GetTokenAsync("access_token");
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
 
             if (ModelState.IsValid)
             {
-                User userCreated = await _userManagementMvcService.CreateUser(accessToken, userInput);
-                TempData["Message"] = "Success : User has been successfully created";
-                return RedirectToAction("GetAllUsers"); 
+                _ = await _userManagementMvcService.CreateUser(accessToken, userInput);
+                TempData["Message"] = "Success : User has been created successfully";
+                return RedirectToAction("GetAllUsers");
             }
-
+            TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
             return View(userInput);
         }
 
@@ -101,6 +100,7 @@ namespace SpaceAdventures.MVC.Controllers
                 await HttpContext.GetTokenAsync("access_token"));
             var role = await _userManagementMvcService.GetRoleByIdRole(user.IdRole, await HttpContext.GetTokenAsync("access_token"));
             user.RoleName=role.Name;
+            TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
             return View(user);
         }
 
@@ -111,7 +111,7 @@ namespace SpaceAdventures.MVC.Controllers
              await _userManagementMvcService.DeleteUser(await HttpContext.GetTokenAsync("access_token"), id);
 
             //ErrorMessage if Delete NOK.
-
+            TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
             TempData["Message"] = "Success : User removed successfully";
             return RedirectToAction("GetAllUsers");
         }
@@ -126,6 +126,7 @@ namespace SpaceAdventures.MVC.Controllers
                 await HttpContext.GetTokenAsync("access_token"));
             var role = await _userManagementMvcService.GetRoleByIdRole(user.IdRole, await HttpContext.GetTokenAsync("access_token"));
             user.RoleName = role.Name;
+            TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
             return View(user);
 
         }
@@ -139,6 +140,7 @@ namespace SpaceAdventures.MVC.Controllers
             //ErrorMessage if Delete NOK.
 
             TempData["Message"] = "Success : User has been successfully Updated";
+            TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
             return RedirectToAction(nameof(GetAllUsers));
         }
 

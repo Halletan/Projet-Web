@@ -7,15 +7,18 @@ namespace SpaceAdventures.MVC.Controllers;
 public class ClientsController : Controller
 {
     private readonly IClientService _clientService;
+    private readonly IUserManagementMvcService _userManagementMvcService;
 
-    public ClientsController(IClientService clientService)
+    public ClientsController(IClientService clientService, IUserManagementMvcService userManagementMvcService)
     {
         _clientService = clientService;
+        _userManagementMvcService = userManagementMvcService;
     }
 
     [HttpGet]
     public async Task<ActionResult> GetClients()
     {
+        TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
         return View(await _clientService.GetAllClients(await HttpContext.GetTokenAsync("access_token")));
     }
 
@@ -26,8 +29,9 @@ public class ClientsController : Controller
     }
 
     [HttpGet]
-    public IActionResult Create()
+    public async Task<IActionResult> Create()
     {
+        TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
         return View();
     }
 }

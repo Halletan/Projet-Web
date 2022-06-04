@@ -11,7 +11,8 @@ namespace SpaceAdventures.MVC.Services.Interfaces
         Task<User> UpdateUser(string? accessToken, UserInput user);
         Task<UserRole> GetRoleByIdRole(int id, string? accessToken);
         Task<Roles> GetAllRole(string? accessToken);
-        Task<List<UserRole>> GetUserRole(string id, string? accessToken);   
+        Task<List<UserRole>> GetUserRole(string id, string? accessToken);
+        Task<string> GetRole(string? accessToken);
     }
 }
     

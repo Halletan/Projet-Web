@@ -2,6 +2,7 @@
 using SpaceAdventures.MVC.Models;
 using SpaceAdventures.MVC.Services.Interfaces;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Text;
 
 
@@ -11,10 +12,12 @@ namespace SpaceAdventures.MVC.Services
     public class UserManagementMvcService : IUserManagementMvcService
     {
         private readonly HttpClient _httpClient;
+        private readonly IHttpContextAccessor _accessor;
 
-        public UserManagementMvcService(HttpClient httpClient)
+        public UserManagementMvcService(HttpClient httpClient, IHttpContextAccessor accessor)
         {
             _httpClient = httpClient;
+            _accessor = accessor;
         }
 
         public async Task<Users> GetAllUsers(string? accessToken)
@@ -96,8 +99,6 @@ namespace SpaceAdventures.MVC.Services
 
             return result;
         }
-
-
         public async Task<List<UserRole>> GetUserRole(string id, string? accessToken)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
@@ -119,6 +120,11 @@ namespace SpaceAdventures.MVC.Services
                 throw;
             }
         }
-
+        public async Task<string> GetRole(string? accessToken)
+        {
+            var idUser = _accessor.HttpContext.User.Claims.First(i => i.Type == ClaimTypes.NameIdentifier).Value;
+            var roles = await GetUserRole(idUser, accessToken);
+            return await Task.FromResult(roles[0].Name);
+        }
     }   
 }

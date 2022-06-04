@@ -8,15 +8,18 @@ namespace SpaceAdventures.MVC.Controllers;
 public class AirportsController : Controller
 {
     private readonly IAirportService _airportService;
+    private readonly IUserManagementMvcService _userManagementMvcService;
 
-    public AirportsController(IAirportService airportService)
+    public AirportsController(IAirportService airportService, IUserManagementMvcService userManagementMvcService)
     {
         _airportService = airportService;
+        _userManagementMvcService = userManagementMvcService;
     }
 
     [HttpGet]
     public async Task<ActionResult> GetAirports()
     {
+        TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
         return View(await _airportService.GetAllAirports(await HttpContext.GetTokenAsync("access_token")));
     }
 }

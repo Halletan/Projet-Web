@@ -12,16 +12,19 @@ namespace SpaceAdventures.MVC.Controllers
         private readonly IBookingService _bookingService;
         private readonly INASAService _nasaService;
         private readonly IClientService _clientService;
+        private readonly IUserManagementMvcService _userManagement;
 
-        public BookingController(IBookingService bookingService,INASAService nasaService,IClientService clientService)
+        public BookingController(IBookingService bookingService,INASAService nasaService, IClientService clientService, IUserManagementMvcService userManagement)
         {
-            _bookingService = bookingService ;
-            _nasaService = nasaService ;
+            _bookingService = bookingService;
+            _nasaService = nasaService;
             _clientService = clientService;
+            _userManagement = userManagement;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            TempData["Role"] = await _userManagement.GetRole(await HttpContext.GetTokenAsync("access_token"));
             return View();
         }
 
@@ -32,6 +35,7 @@ namespace SpaceAdventures.MVC.Controllers
             var NasaData =await _nasaService.GetNasaData(planetName,token);
             var video = await _nasaService.GetNasaVideo(NasaData, token);
             ViewBag.video = video;
+            TempData["Role"] = await _userManagement.GetRole(await HttpContext.GetTokenAsync("access_token"));
             return View();
         }
 
@@ -45,7 +49,6 @@ namespace SpaceAdventures.MVC.Controllers
                 LastName = booking.Lastname,
                 FirstName = booking.FirstName,
                 Email = User.FindFirstValue(ClaimTypes.Email)
-
             };
 
             bool ClientExist = await _clientService.ClientExist(client, token);
@@ -53,7 +56,7 @@ namespace SpaceAdventures.MVC.Controllers
             {
                 bool created = await _clientService.CreateClient(client, token);
             }
-
+            TempData["Role"] = await _userManagement.GetRole(await HttpContext.GetTokenAsync("access_token"));
             return View();
         }
 
