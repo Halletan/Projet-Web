@@ -38,4 +38,15 @@ public class FlightService : IFlightService
         return JsonConvert.DeserializeObject<Flights>(content);
     }
 
+    public async Task<Flight> GetFlightById(int idFlight, string? accessToken)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+        var response = await _httpClient.GetAsync("https://localhost:7195/api/v1.0/Flights/GetFlightById/" + idFlight);
+
+        if (!response.IsSuccessStatusCode) throw new Exception("Cannot retrieve data");
+
+        var content = await response.Content.ReadAsStringAsync();
+        return JsonConvert.DeserializeObject<Flight>(content);
+    }
+
 }

@@ -45,7 +45,7 @@ public class FlightsController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet]
-    [Route("GetById")]
+    [Route("GetFlightById/{id}")]
     [Authorize(Policy = "read:messages")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

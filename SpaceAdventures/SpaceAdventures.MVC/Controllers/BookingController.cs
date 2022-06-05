@@ -65,7 +65,7 @@ namespace SpaceAdventures.MVC.Controllers
             }
 
             ViewBag.itinerariesSelectList = itinerariesSelectList;
-
+            ViewBag.FlightSelectList= new List<SelectListItem>();
 
 
             //var rolesDropDownList = new SelectList(rolesList.RolesList, "IdRole", "Name");

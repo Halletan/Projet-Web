@@ -48,24 +48,10 @@ public class ItineraryService : IItineraryService
         return _mapper.Map<ItineraryDto>(itinerary);
     }
 
-    public async Task<ItineraryVm> GetItinerariesByAirportsOfPlanet(/* List<Airport>*/ AirportVm lstAirport, CancellationToken cancellationToken = default)
+    public async Task<ItineraryVm> GetItinerariesByAirportsOfPlanet(AirportVm lstAirport, CancellationToken cancellationToken = default)
     {
 
         List<int> airportsId = lstAirport.AirportsList.Select(a => a.IdAirport).ToList();
-        List<int> allDestinationAirports = _context.Itineraries.Select(i => i.IdAirport2).ToList();
-
-        var test = _context.Itineraries.Where(i => airportsId.Contains(i.IdAirport2)).ToList();
-
-        //IEnumerable<Itinerary> itinerariesListByAirpot = _context.Itineraries.Where(i => i.IdAirport2 == airport.IdAirport).ToList();
-
-        //itinerariesLst.AddRange(itinerariesListByAirpot);
-
-        //var itinerariesLst = _context.Itineraries.Join(airportsId, i => i.IdAirport2, a => a, (i, a) => new Itinerary
-        //{
-        //    IdItinerary = i.IdItinerary,
-        //    IdAirport1 = i.IdAirport1,
-        //    IdAirport2 = i.IdAirport2
-        //});
 
         return new ItineraryVm
         {
@@ -74,56 +60,10 @@ public class ItineraryService : IItineraryService
                 .ToListAsync(cancellationToken)
         };
 
-        //ItineraryVm vm = new ItineraryVm();
-        //if (itinerariesLst != null)
-        //{
-        //    foreach (Itinerary itinerary in itinerariesLst)
-        //    {
-        //        vm.ItinerariesList.Add(_mapper.Map<ItineraryDto>(itinerary));
-        //    }
-
-
-        //}
-
-        //return vm;
-
-
     }
 
 
-    //public async Task<ItineraryVm> GetItinerariesByDestinationPlanet(, CancellationToken cancellationToken = default)
-    //{
-
-    //    List<Itinerary> itinerariesTempList = null;
-
-
-    //    // List of Itineraries where Airport(s) of destination is on this planet.
-    //    if (airportsList != null)
-    //    {
-    //        foreach (Airport airport in airportsList)
-    //        {
-    //            IEnumerable<Itinerary> itinerariesListByAirpot = _context.Itineraries.Where(i => i.IdAirport2 == airport.IdAirport).ToList();
-
-    //            itinerariesTempList.AddRange(itinerariesListByAirpot);
-    //        }
-    //    }
-
-    //    // List ItineraryVm => List of ItinerariesDTO.
-    //    ItineraryVm vm = new ItineraryVm();
-    //    if (itinerariesTempList != null)
-    //    {
-
-    //        foreach (Itinerary itinerary in itinerariesTempList)
-    //        {
-    //            vm.ItinerariesList.Add(_mapper.Map<ItineraryDto>(itinerary));
-    //        }
-
-    //        return vm;
-    //    }
-
-    //    return null;
-
-    //}
+    
 
     #region Not used
     public async Task<ItineraryDto> CreateItinerary(ItineraryInput itineraryInput,

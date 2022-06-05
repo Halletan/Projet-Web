@@ -8,7 +8,8 @@ public class Booking
     public int IdBooking { get; set; }
     public int IdFlight { get; set; }
     public int IdClient { get; set; }
-    public double BookingAmount { get; set; }
+    public int NbSeats { get; set; }
+
 }
 
 [Serializable]
@@ -24,6 +25,9 @@ public class BookingVm
 
     [DisplayName("Available flights")]
     public int IdFlight { get; set; }
+
+    [DisplayName("How many seats do you want to book ? ")]
+    public int NbSeats { get; set; }
 }
 
 [Serializable]
