@@ -64,4 +64,16 @@ public class ClientService : IClientService
         return data.ClientsList.Any(c => c.Email.ToLower().Equals(client.Email.ToLower()));
     }
 
+    public async Task<Client> GetClientByEmail(string Email, string? accessToken)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+        var response = await _httpClient.GetAsync("https://localhost:7195/api/v1.0/Clients/GetClientByEmail/" + Email );
+
+        if (!response.IsSuccessStatusCode) throw new Exception("Cannot retrieve data");
+
+        var content = await response.Content.ReadAsStringAsync();
+        var data = JsonConvert.DeserializeObject<Client>(content);
+        return data;
+    }
+
 }

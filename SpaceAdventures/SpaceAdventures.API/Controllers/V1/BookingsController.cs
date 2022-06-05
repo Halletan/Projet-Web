@@ -61,12 +61,13 @@ public class BookingsController : ControllerBase
     /// </summary>
     /// <param name="command"></param>
     [HttpPost]
-    [Route("Create")]
+    [Route("CreateBooking")]
     [Authorize(Policy = "write:messages")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<BookingDto>> CreateBooking([FromBody] CreateBookingCommand command)
+    public async Task<ActionResult<BookingDto>> CreateBooking([FromBody] BookingInput bookingInput)
     {
+        var command = new CreateBookingCommand(bookingInput);
         return Ok(await _mediator.Send(command));
     }
 

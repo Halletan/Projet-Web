@@ -14,7 +14,7 @@ public class CreateBookingCommandValidator : AbstractValidator<CreateBookingComm
             .Must(idflight =>
             {
                 var exists = bookingService.FlightExists(idflight);
-                return !exists;
+                return exists;
             }).WithMessage("This flight doesn't exist !");
 
         // Control existing IdClient
@@ -22,7 +22,7 @@ public class CreateBookingCommandValidator : AbstractValidator<CreateBookingComm
             .Must(idclient =>
             {
                 var exists = bookingService.ClientExists(idclient);
-                return !exists;
+                return exists;
             }).WithMessage("This client doesn't exist !");
 
         // TO DO . Rule for NbSeats

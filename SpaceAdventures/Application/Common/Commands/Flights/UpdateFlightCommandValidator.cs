@@ -23,7 +23,7 @@ public class UpdateFlightCommandValidator : AbstractValidator<UpdateFlightComman
             .Must(idaircraft =>
             {
                 var exists = flightService.AircraftExists(idaircraft);
-                return !exists;
+                return exists;
             }).WithMessage("This aircraft doesn't exist !");
 
         // Control existing IdItinerary
@@ -31,7 +31,7 @@ public class UpdateFlightCommandValidator : AbstractValidator<UpdateFlightComman
             .Must(iditinerary =>
             {
                 var exists = flightService.ItineraryExists(iditinerary);
-                return !exists;
+                return exists;
             }).WithMessage("This itinerary doesn't exist !");
 
         // FlightStatus validation ?

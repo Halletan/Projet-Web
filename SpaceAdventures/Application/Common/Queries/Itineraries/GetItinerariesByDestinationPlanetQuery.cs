@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SpaceAdventures.Application.Common.Queries.Itineraries
 {
-    public record GetItinerariesByDestinationPlanetQuery(string name) : IRequest<ItineraryVm>;
+    public record GetItinerariesByDestinationPlanetQuery(string Name) : IRequest<ItineraryVm>;
      
 
     public class GetItinerariesByDestinationPlanetQueryHandler : IRequestHandler<GetItinerariesByDestinationPlanetQuery, ItineraryVm>
@@ -26,7 +26,7 @@ namespace SpaceAdventures.Application.Common.Queries.Itineraries
 
         public async Task<ItineraryVm> Handle(GetItinerariesByDestinationPlanetQuery request, CancellationToken cancellationToken)
         {
-            var planet = await _planetService.GetPlanetByName(request.name, cancellationToken);
+            var planet = await _planetService.GetPlanetByName(request.Name, cancellationToken);
             var airportsList = await _airportService.GetAirportsByDestination(planet.IdPlanet, cancellationToken);
             
 

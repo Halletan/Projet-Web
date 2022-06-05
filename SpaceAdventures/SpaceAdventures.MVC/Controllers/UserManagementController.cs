@@ -51,7 +51,6 @@ namespace SpaceAdventures.MVC.Controllers
             var rolesList = await _userManagementMvcService.GetAllRole(await HttpContext.GetTokenAsync("access_token"));
             var rolesDropDownList = new SelectList(rolesList.RolesList, "IdRole", "Name");
             ViewBag.listRole = rolesDropDownList;
-            TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
             return View(new UserInput());
         }
 
@@ -72,7 +71,7 @@ namespace SpaceAdventures.MVC.Controllers
                 TempData["Message"] = "Success : Account has been successfully created";
                 return RedirectToAction("Login", "Account"); 
             }
-            TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
+           
             return View(userInput);
         }
 
@@ -88,7 +87,7 @@ namespace SpaceAdventures.MVC.Controllers
                 TempData["Message"] = "Success : User has been created successfully";
                 return RedirectToAction("GetAllUsers");
             }
-            TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
+        
             return View(userInput);
         }
 

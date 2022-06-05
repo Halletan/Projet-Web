@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Newtonsoft.Json;
 
 namespace SpaceAdventures.MVC.Models;
 
@@ -15,9 +16,11 @@ public class Booking
 [Serializable]
 public class BookingVm
 {
+    [JsonIgnore]
     public string Lastname { get; set; }
+    [JsonIgnore]
     public string FirstName { get; set; }
-
+    [JsonIgnore]
     public string Email { get; set; }
 
     [DisplayName("Itinerary")]
@@ -28,6 +31,7 @@ public class BookingVm
 
     [DisplayName("How many seats do you want to book ? ")]
     public int NbSeats { get; set; }
+
 }
 
 [Serializable]

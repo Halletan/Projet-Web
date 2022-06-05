@@ -82,6 +82,10 @@ public class FlightService : IFlightService
             flight.IdAircraft = flightInput.IdAircraft;
             flight.Price = flightInput.Price;
             flight.IdItinerary = flightInput.IdItinerary;
+            flight.RemainingSeats= flightInput.RemainingSeats;
+            flight.ArrivalTime=flightInput.ArrivalTime;
+            flight.DepartureTime=flightInput.DepartureTime;
+            
 
             _context.Flights.Update(flight);
             await _context.SaveChangesAsync(cancellation);

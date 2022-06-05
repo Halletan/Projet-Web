@@ -52,6 +52,14 @@ public class ClientService : IClientService
         return _mapper.Map<ClientDto>(client);
     }
 
+    public async Task<ClientDto> GetClientByEmail(string Email, CancellationToken cancellation = default)
+    {
+        var client = await _context.Clients.FirstOrDefaultAsync(c=>c.Email.Equals(Email));
+        if (client == null) throw new NotFoundException(nameof(Client), Email);
+
+        return _mapper.Map<ClientDto>(client);
+    }
+
     public async Task<ClientDto> CreateClient(ClientInput clientInput, CancellationToken cancellation = default)
     {
         var user = await _usersManagementApiService.GetAllUsers(cancellation);

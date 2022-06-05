@@ -51,6 +51,23 @@ public class ClientsController : ControllerBase
     }
 
     /// <summary>
+    ///     Get client by Email
+    /// </summary>
+    /// <param name="Email"></param>
+    /// <returns></returns>
+    [HttpGet]
+    [Route("GetClientByEmail/{Email}")]
+    [Authorize(Policy = "read:messages")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ClientDto>> GetClientByEmail(string Email)
+    {
+        return Ok(await _mediator.Send(new GetClientByEmailQuery(Email)));
+    }
+
+    
+
+    /// <summary>
     ///     Create a new client
     /// </summary>
     /// <param name="command"></param>

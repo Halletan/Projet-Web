@@ -8,4 +8,5 @@ public interface IClientService
     Task<int> GetClientsCount(string? accessToken);
     Task<bool> ClientExist(Client client,string? accessToken);
     Task<bool> CreateClient(Client client, string? accessToken);
+    Task<Client> GetClientByEmail(string Email, string? accessToken);
 }

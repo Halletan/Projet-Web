@@ -94,10 +94,27 @@ namespace SpaceAdventures.MVC.Controllers
             bool ClientExist = await _clientService.ClientExist(client, token);
             if (!ClientExist)
             {
-                bool created = await _clientService.CreateClient(client, token);
+                bool createdClient = await _clientService.CreateClient(client, token);
             }
-            TempData["Role"] = await _userManagement.GetRole(await HttpContext.GetTokenAsync("access_token"));
-            return View();
+
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var clientTemp  = await _clientService.GetClientByEmail(email, token);
+
+            Booking BookingToPost = new Booking()
+            {
+                IdFlight = booking.IdFlight,
+                NbSeats = booking.NbSeats,
+                IdClient = clientTemp.IdClient
+            };
+
+           
+                var bookingToShow = await _bookingService.CreateBooking(BookingToPost, token);
+                TempData["Message"] = "Success : Your booking has been created successfully";
+                return RedirectToAction("Index" /*"GetAllReservationByIdClient"*/);
+            
+
+           // return View(booking);
+
         }
 
     }
