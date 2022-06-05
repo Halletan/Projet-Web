@@ -38,12 +38,24 @@ namespace SpaceAdventures.MVC.Controllers
         public async Task<IActionResult> CreateBooking(string planetName)
         {
             var token = await HttpContext.GetTokenAsync("access_token");
-            var NasaData =await _nasaService.GetNasaData(planetName,token);
+            var NasaData = await _nasaService.GetNasaData(planetName,token);
+
+            if (NasaData is null)
+            {
+                TempData["Message"] = "Info: this trip is currently unavailable, we are sorry for this inconvenience";
+                return RedirectToAction("Index");
+            }
+
             var video = await _nasaService.GetNasaVideo(NasaData, token);
+
+            if (video is null)
+            {
+                TempData["Message"] = "Info: this trip is currently unavailable, we are sorry for this inconvenience";
+                return RedirectToAction("Index");
+            }
+
             ViewBag.video = video;
 
-
-            // TO DO Viewbag.destination = selectListItem
             List<SelectListItem> itinerariesSelectList = new List<SelectListItem>(); 
             itinerariesSelectList.Add(new SelectListItem("itinerary", "Select your itinerary"));
             var itinerariesLst = await _itineraryService.GetItinerariesByDestinationPlanet(planetName, token);
@@ -63,19 +75,8 @@ namespace SpaceAdventures.MVC.Controllers
             }
 
             ViewBag.itinerariesSelectList = itinerariesSelectList;
-            ViewBag.FlightSelectList= new List<SelectListItem>();
 
-
-            //var rolesDropDownList = new SelectList(rolesList.RolesList, "IdRole", "Name");
-            //ViewBag.listRole = rolesDropDownList;
-
-
-            TempData["Role"] = await _userManagement.GetRole(await HttpContext.GetTokenAsync("access_token"));
             return View();
-        }
-
-            TempData["Message"] = "Info: this trip is currently unavailable, we are sorry for this inconvenience";
-            return RedirectToAction("Index");
         }
 
         [HttpPost, ActionName("CreateBooking")]

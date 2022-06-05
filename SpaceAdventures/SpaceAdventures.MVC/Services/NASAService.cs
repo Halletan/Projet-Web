@@ -41,8 +41,10 @@ namespace SpaceAdventures.MVC.Services
                 list.AddRange(data);
             }
 
+            if (!list.Any()) return null;
             var video = list[rnd.Next(0, list.Count)];
             return video;
+
         }
     }
 }
