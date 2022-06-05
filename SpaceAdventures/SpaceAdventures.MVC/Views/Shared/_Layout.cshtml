@@ -43,17 +43,19 @@
                     Debug.Assert(User.Identity != null, "User.Identity != null");
                 }
 
-
-
-                @if (User.Identity.IsAuthenticated && @ViewContext.HttpContext.Session.GetString("Role") != RolesType.User.ToString())
+                @if (User.Identity.IsAuthenticated)
                 {
-                    <li class="nav-item">
-                        <a class="nav-link mx-2" asp-controller="Home" asp-action="Dashboard"><i class="fas fa-tachometer-alt m-1"></i>Dashboard</a>
-                    </li>
+
+                    @if (@ViewContext.HttpContext.Session.GetString("Role") != RolesType.User.ToString())
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" asp-controller="Home" asp-action="Dashboard"><i class="fas fa-tachometer-alt m-1"></i>Dashboard</a>
+                        </li>
+                    }
 
                     /***  Users DropdownList ***/
 
-                    @if (@ViewContext.HttpContext.Session.GetString("Role") != RolesType.Agent.ToString() && @ViewContext.HttpContext.Session.GetString("Role") != RolesType.User.ToString())
+                    @if (@ViewContext.HttpContext.Session.GetString("Role") == RolesType.Owner.ToString() || @ViewContext.HttpContext.Session.GetString("Role") == RolesType.Admin.ToString())
                     {
                         <li class="nav-item dropdown">
                             <a class="nav-link mx-2 dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -76,8 +78,6 @@
                             </ul>
                         </li>
                     }
-
-
                     /*** END ***/
 
 
@@ -98,12 +98,6 @@
                                 <li>
                                     <a class="dropdown-item" asp-controller="Booking" asp-action="Index"> <i class="fa-solid fa-plus m-2"></i>New</a>
                                 </li>
-                                <li>
-                                    <a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-pen m-2"></i> Update</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-trash m-2"></i> Delete</a>
-                                </li>
                             }
                         </ul>
                     </li>
@@ -111,26 +105,31 @@
                     /*** END ***/
 
 
-                    <li class="nav-item dropdown">
 
-                        <a class="nav-link mx-2 dropdown-toggle" asp-controller="" asp-action="" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa-solid fa-gears m-2"></i>Settings
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li>
-                                <a class="dropdown-item" asp-controller="Aircrafts" asp-action="GetAircrafts"> <i class="fa-solid fa-jet-fighter m-2"></i>Aircrafts </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" asp-controller="Airports" asp-action="GetAirports"> <i class="fa-solid fa-plane-departure m-2"></i>Airports</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" asp-controller="Itineraries" asp-action="GetItineraries"> <i class="fa-solid fa-rocket m-2"></i>Itineraries</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" asp-controller="Clients" asp-action="GetClients"> <i class="fa-solid fa-user-group m-2"></i>Customers</a>
-                            </li>
-                        </ul>
-                    </li>
+                    @if (@ViewContext.HttpContext.Session.GetString("Role") != RolesType.User.ToString())
+                    {
+
+                        <li class="nav-item dropdown">
+
+                            <a class="nav-link mx-2 dropdown-toggle" asp-controller="" asp-action="" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-gears m-2"></i>Settings
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Aircrafts" asp-action="GetAircrafts"> <i class="fa-solid fa-jet-fighter m-2"></i>Aircrafts </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Airports" asp-action="GetAirports"> <i class="fa-solid fa-plane-departure m-2"></i>Airports</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Itineraries" asp-action="GetItineraries"> <i class="fa-solid fa-rocket m-2"></i>Itineraries</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Clients" asp-action="GetClients"> <i class="fa-solid fa-user-group m-2"></i>Customers</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
                 }
 
                 @*/***  Bookings DropdownList ***/*@

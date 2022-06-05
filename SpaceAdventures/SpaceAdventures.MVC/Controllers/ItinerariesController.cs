@@ -24,14 +24,8 @@ public class ItinerariesController : Controller
         return View(await _itineraryService.GetAllItineraries(await HttpContext.GetTokenAsync("access_token")));
     }
 
-
-
-    [HttpGet]
     public async Task<Itineraries> GetItinerariesByDestinationPlanet(string planetName)
     {
        return await _itineraryService.GetItinerariesByDestinationPlanet(planetName, await HttpContext.GetTokenAsync("access_token"));
-
-
-
     }
 }
