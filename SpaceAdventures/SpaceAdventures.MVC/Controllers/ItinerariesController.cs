@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using SpaceAdventures.MVC.Models;
 using SpaceAdventures.MVC.Services.Interfaces;
 
 namespace SpaceAdventures.MVC.Controllers;
@@ -21,5 +22,16 @@ public class ItinerariesController : Controller
     {
         TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
         return View(await _itineraryService.GetAllItineraries(await HttpContext.GetTokenAsync("access_token")));
+    }
+
+
+
+    [HttpGet]
+    public async Task<Itineraries> GetItinerariesByDestinationPlanet(string planetName)
+    {
+       return await _itineraryService.GetItinerariesByDestinationPlanet(planetName, await HttpContext.GetTokenAsync("access_token"));
+
+
+
     }
 }

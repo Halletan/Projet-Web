@@ -13,4 +13,5 @@ public interface IAirportService
     Task<bool> AirportExists(string name, int idplanet);
     bool AirportExists(int? id, AirportInput airportInput);
     bool PlanetExists(int id);
+    Task<AirportVm> GetAirportsByDestination(int planetId, CancellationToken cancellationToken = default);
 }

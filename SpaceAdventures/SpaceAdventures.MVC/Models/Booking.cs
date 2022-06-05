@@ -1,4 +1,6 @@
-﻿namespace SpaceAdventures.MVC.Models;
+﻿using System.ComponentModel;
+
+namespace SpaceAdventures.MVC.Models;
 
 [Serializable]
 public class Booking
@@ -17,8 +19,10 @@ public class BookingVm
 
     public string Email { get; set; }
 
+    [DisplayName("Itinerary")]
     public int IdItinerary { get; set; }
 
+    [DisplayName("Available flights")]
     public int IdFlight { get; set; }
 }
 

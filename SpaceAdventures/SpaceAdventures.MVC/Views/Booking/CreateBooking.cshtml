@@ -4,9 +4,13 @@
     ViewData["Title"] = "CreateBooking";
 }
 
-<link rel="stylesheet" href="~/css/Booking.css" asp-append-version="true"/>
+<link rel="stylesheet" href="~/css/Booking.css" asp-append-version="true" />
 
 <h1 class="text-white">Create a Booking</h1>
+
+@{
+    var flightList = new SelectList("","");
+}
 
 <hr />
 <div class="row flex-container column">
@@ -23,19 +27,17 @@
                 <input asp-for="FirstName" class="form-control BiggerBox" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label text-white"></label>
-                <input asp-for="Email" class="form-control BiggerBox" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <label asp-for="IdItinerary" class="control-label text-white"></label>
-                <input asp-for="IdItinerary" class="form-control BiggerBox" />
+
+                @Html.DropDownListFor(x => Model.IdItinerary, new SelectList(@ViewBag.itinerariesSelectList, "Text", "Value"), htmlAttributes: new { @class = "form-control BiggerBox", id="IdItinerary"})
+
                 <span asp-validation-for="IdItinerary" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="IdFlight" class="control-label text-white"></label>
-                <input asp-for="IdFlight" class="form-control BiggerBox" />
+                @Html.DropDownListFor(x => Model.IdItinerary, new SelectList(flightList, "Text", "Value"), htmlAttributes: new { @class = "form-control BiggerBox", id="IdFlight"})
                 <span asp-validation-for="IdFlight" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -46,7 +48,7 @@
 </div>
 
 <div class="flex-container column">
-    <video  controls autoplay name="media">
+    <video controls autoplay name="media">
         <source src="@ViewBag.video" type="video/mp4">
         Your browser does not support the video tag.
     </video>
@@ -57,5 +59,42 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+
+
+<script type="text/javascript">
+    $("#IdItinerary").change(function () {
+    var selectedItinerary = $("#IdItineray").val();
+    //var depotDepartSelect = $("#IDDepotDepart");
+    //var depotRetourSelect = $("#IDDepotRetour");
+    //depotDepartSelect.empty();
+    //depotRetourSelect.empty();
+    flightList = $("#IdFlights");
+    flightList.empty(); if (selectedItinerary != null && selectedItinerary != '') {
+    $.getJSON('@Url.Action("GetFlightsByItinerary","Flight")', { idItinerary: selectedItinerary }, function(flights) {
+        if (flights != null)
+            {
+                flightList.append($('<option/>', {
+                value: null,
+                text: "--- Select Flight ---"
+                }));
+                $.each(flight, function (index,flight) {
+                flightList.append($('<option/>', {
+                value: flight.IdFlight,
+                text: "Departure time : "+flight.DepartureTime+" -- Arrival Time : "+flight.ArrivalTime + " (Remaining seats : " + flight.RemainingSeats + ") -- Price : "+flight.Price
+                }));
+                });
+            }
+            }
+            );
+            }
+            });
+
+
+    
+</script>
+
+
 }
