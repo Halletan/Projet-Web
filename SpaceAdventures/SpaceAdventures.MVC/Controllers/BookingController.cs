@@ -24,7 +24,6 @@ namespace SpaceAdventures.MVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            TempData["Role"] = await _userManagement.GetRole(await HttpContext.GetTokenAsync("access_token"));
             return View();
         }
 
@@ -32,11 +31,17 @@ namespace SpaceAdventures.MVC.Controllers
         public async Task<IActionResult> CreateBooking(string planetName)
         {
             var token = await HttpContext.GetTokenAsync("access_token");
-            var NasaData =await _nasaService.GetNasaData(planetName,token);
-            var video = await _nasaService.GetNasaVideo(NasaData, token);
-            ViewBag.video = video;
-            TempData["Role"] = await _userManagement.GetRole(await HttpContext.GetTokenAsync("access_token"));
-            return View();
+            var nasaData =await _nasaService.GetNasaData(planetName,token);
+
+            if (nasaData is not null)
+            {
+                var video = await _nasaService.GetNasaVideo(nasaData, token);
+                ViewBag.video = video;
+                return View();
+            }
+
+            TempData["Message"] = "Info: this trip is currently unavailable, we are sorry for this inconvenience";
+            return RedirectToAction("Index");
         }
 
         [HttpPost, ActionName("CreateBooking")]

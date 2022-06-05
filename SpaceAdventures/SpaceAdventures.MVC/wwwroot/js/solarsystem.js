@@ -60,9 +60,12 @@
 
             switch (ref) {
                 case "saturn":
+
+                    console.log(response[0].basicDetails.length);
+
                     toastr.info(response[0].description
                         + "<br>" +
-                        "Mass : " + response[0].basicDetails.mass
+                        "Mass : " + response[0].imgSrc.img
                         + "<br>" + 
                         "Volume : " + response[0].basicDetails.volume,
                         response[0].name,

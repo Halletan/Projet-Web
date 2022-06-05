@@ -11,7 +11,6 @@ public class ClientDto : IMapFrom<Client>
     public string LastName { get; set; }
     public string Phone { get; set; }
     public string Email { get; set; }
-    public int? IdMemberShipType { get; set; }
     public int? IdUser { get; set; }
 
     public virtual ICollection<Booking> Bookings { get; set; }

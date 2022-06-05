@@ -82,7 +82,6 @@ public class ClientService : IClientService
             client.FirstName = clientInput.FirstName;
             client.LastName = clientInput.LastName;
             client.Email = clientInput.Email;
-            client.IdMemberShipType = clientInput.IdMemberShipType;
 
             _context.Clients.Update(client);
             await _context.SaveChangesAsync(cancellation);

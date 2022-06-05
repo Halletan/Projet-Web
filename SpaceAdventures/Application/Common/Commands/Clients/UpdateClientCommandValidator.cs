@@ -7,14 +7,14 @@ public class UpdateClientCommandValidator : AbstractValidator<UpdateClientComman
 {
     public UpdateClientCommandValidator(IClientService clientService)
     {
-        RuleFor(c => c.clientInput.FirstName)
+        RuleFor(c => c.ClientInput.FirstName)
             .MaximumLength(50).WithMessage("Max 50 characters")
             .NotNull().WithMessage("Firstname is required");
-        RuleFor(c => c.clientInput.LastName)
+        RuleFor(c => c.ClientInput.LastName)
             .MaximumLength(50).WithMessage("Max 50 characters")
             .NotNull().WithMessage("Firstname is required");
 
-        RuleFor(c => c.clientInput.Email)
+        RuleFor(c => c.ClientInput.Email)
             .MaximumLength(50).WithMessage("Max 50 characters")
             .EmailAddress().WithMessage("Invalid email address")
             .NotNull().WithMessage("Email is required");
@@ -24,11 +24,9 @@ public class UpdateClientCommandValidator : AbstractValidator<UpdateClientComman
             .GreaterThanOrEqualTo(1).WithMessage("Should be greater than or equal to 1")
             .Must((data, id) =>
             {
-                var exists = clientService.ClientExists(id, data.clientInput);
+                var exists = clientService.ClientExists(id, data.ClientInput);
                 return !exists;
             }).WithMessage("Client with this email address exists already !");
 
-        RuleFor(c => c.clientInput.IdMemberShipType)
-            .GreaterThanOrEqualTo(1).WithMessage("Should be greater than or equal to 1");
     }
 }

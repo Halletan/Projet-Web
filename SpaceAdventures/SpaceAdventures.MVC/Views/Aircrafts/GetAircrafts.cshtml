@@ -1,4 +1,5 @@
-﻿@model Aircrafts
+﻿@using SpaceAdventures.MVC.Models.Enums
+@model Aircrafts
 
 @{
     ViewData["Title"] = "GetAircrafts";
@@ -6,11 +7,19 @@
 
 <link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
 
-<h1 class="m-4 p-4 text-center text-white"></h1>
+<br/><br/>
 
-<p>
-    <a class="btn btn-primary" asp-action=""> <i class="fa-solid fa-plus"></i> Add New Aircraft</a>
-</p>
+<div id="myHeader" class="text-center mt-5 pt-5 text-white">
+    <h2>Aircrafts</h2>
+</div>
+
+@if(ViewContext.HttpContext.Session.GetString("Role") != RolesType.Agent.ToString())
+{
+    <p>
+        <a class="btn btn-outline-info btn-sm" asp-action=""> <i class="fa-solid fa-plus"></i> Add New Aircraft</a>
+    </p>
+}
+
 <table id="datatable" class="table border rounded">
     <thead class="dataTableColumn">
     <tr>
@@ -18,7 +27,6 @@
         <th>Manufacturer</th>
         <th>Model</th>
         <th>Number of seats</th>
-
         <th></th>
     </tr>
     </thead>
@@ -40,7 +48,7 @@
             </td>
 
             <td>
-                <a class="btn btn-success btn-sm" asp-action="" asp-route-id="@item.IdAircraft">
+                <a class="btn btn-dark btn-sm" asp-action="" asp-route-id="@item.IdAircraft">
                     <i class="fa-solid fa-pen m-2"></i>
                 </a> |
                 <a class="btn btn-danger btn-sm" asp-action="" asp-route-id="@item.IdAircraft">
@@ -55,10 +63,7 @@
 
 @section Scripts
 {
-
     <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
     <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/js/datatable.js"></script>
-
-
 }

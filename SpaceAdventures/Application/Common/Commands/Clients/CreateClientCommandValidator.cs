@@ -28,7 +28,5 @@ public class CreateClientCommandValidator : AbstractValidator<CreateClientComman
                 return !exists;
             }).WithMessage("Client with this email address exists already !");
 
-        RuleFor(c => c.ClientInput.IdMemberShipType)
-            .GreaterThanOrEqualTo(1).WithMessage("Should be greater than or equal to 1");
     }
 }

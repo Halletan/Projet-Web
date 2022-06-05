@@ -59,13 +59,10 @@ var app = builder.Build();
 
 
 /*********  Middleware  **********/
-
-
 app.UseSerilogRequestLogging();
 
-
 //Our Log Request Middleware
-app.UseLogRequestMiddleware();
+//app.UseLogRequestMiddleware();
 
 
 // Configure the HTTP request pipeline.

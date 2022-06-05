@@ -18,7 +18,7 @@
 
 <span id="message" class="d-none">@TempData["Message"]</span>
 
-<p>@ViewContext.HttpContext.Session.GetString("Role")</p>
+<span id="role" class="d-none">@ViewContext.HttpContext.Session.GetString("Role")</span>
 
 
 <body class="bg"style="background-image: url('/backgrounds/backround_2.jpg')">
@@ -157,7 +157,7 @@
                         <a class="nav-link btn btn-sm btn-outline-light mx-1" asp-controller="Account" asp-action="Logout"> <i class="fa-solid fa-user-astronaut m-1"></i>Logout</a>
                     </li>
                     <li>
-                        <a class="nav-link mt-1 text-sm-start"> @User.Identity.Name | @ViewContext.HttpContext.Session.GetString("Role")</a>
+                        <a class="nav-link mt-1 text-sm-start btn btn-outline-warning"> @User.Identity.Name | @ViewContext.HttpContext.Session.GetString("Role")</a>
                     </li>
                 }
                 else
@@ -166,7 +166,7 @@
                         <a class="nav-link btn btn-sm btn-outline-light mx-1" asp-controller="Account" asp-action="Login"><i class="fa-solid fa-arrow-right-to-bracket m-1"></i>Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn btn-sm btn-outline-light mx-1" asp-controller="UserManagement" asp-action="UserSignUp"><i class="fa-solid fa-user-plus m-2"></i>Sign Up</a>
+                        <a class="nav-link btn btn-sm btn-outline-warning mx-1" asp-controller="UserManagement" asp-action="UserSignUp"><i class="fa-solid fa-user-plus m-2"></i>Sign Up</a>
                     </li>
                 }
             </ul>

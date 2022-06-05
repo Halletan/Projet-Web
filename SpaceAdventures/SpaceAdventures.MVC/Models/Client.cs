@@ -17,9 +17,7 @@ public class Client
 
     public string Email { get; set; }
 
-    [DisplayName("Membership")]
-    public int? IdMemberShipType { get; set; }
-
+    [DisplayName("User ID")]
     public int? IdUser { get; set; }
 }
 
