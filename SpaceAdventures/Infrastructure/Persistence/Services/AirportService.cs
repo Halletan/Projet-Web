@@ -39,6 +39,23 @@ public class AirportService : IAirportService
         return _mapper.Map<AirportDto>(airport);
     }
 
+    public async Task<AirportVm> GetAirportsByDestination(int planetId, CancellationToken cancellationToken = default)
+    {
+        // Liste des airports de la planete de destination
+        return new AirportVm
+        {
+            AirportsList = await _context.Airports
+            .Where(a => a.IdPlanet == planetId)
+            .ProjectTo<AirportDto>(_mapper.ConfigurationProvider)
+                .OrderBy(c => c.IdPlanet)
+                .ToListAsync(cancellationToken)
+        };       
+}
+
+
+
+
+    #region Not Used
     public async Task<AirportDto> CreateAirport(AirportInput airportInput, CancellationToken cancellation = default)
     {
         var airport = _mapper.Map<Airport>(airportInput);
@@ -86,6 +103,8 @@ public class AirportService : IAirportService
         _context.Airports.Remove(airport);
         await _context.SaveChangesAsync(cancellation);
     }
+
+    #endregion
 
     public async Task<bool> AirportExists(string name, int planetId)
     {

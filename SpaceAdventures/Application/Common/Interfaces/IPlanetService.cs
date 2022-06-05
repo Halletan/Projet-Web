@@ -12,4 +12,5 @@ public interface IPlanetService
     Task DeletePlanet(int planetId, CancellationToken cancellation = default);
     Task<bool> PlanetExists(string name);
     bool PlanetExists(int id, PlanetInput planetInput);
+    Task<PlanetDto> GetPlanetByName(string planetName, CancellationToken cancellation = default);
 }

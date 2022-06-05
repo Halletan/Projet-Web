@@ -38,7 +38,25 @@ public class PlanetService : IPlanetService
 
         return _mapper.Map<PlanetDto>(planet);
     }
+    public async Task<PlanetDto> GetPlanetByName(string planetName, CancellationToken cancellation = default)
+    {
+        var planet = await _context.Planets.Where(p => p.Name == planetName).SingleOrDefaultAsync();
 
+        if (planet == null) throw new NotFoundException("planet", planetName);
+
+        return _mapper.Map<PlanetDto>(planet);
+    }
+
+
+
+
+    public bool PlanetExists(int id, PlanetInput planetInput)
+    {
+        return _context.Planets.Any(c => c.IdPlanet != id && c.Name == planetInput.Name);
+    }
+
+
+    #region Not Used
     public async Task<PlanetDto> CreatePlanet(PlanetInput planetInput, CancellationToken cancellation = default)
     {
         var planet = _mapper.Map<Planet>(planetInput);
@@ -54,7 +72,14 @@ public class PlanetService : IPlanetService
             throw new ValidationException();
         }
     }
+    public async Task DeletePlanet(int planetId, CancellationToken cancellation = default)
+    {
+        var planet = await _context.Planets.FindAsync(planetId);
 
+        if (planet == null) throw new NotFoundException("planet", planetId);
+        _context.Planets.Remove(planet);
+        await _context.SaveChangesAsync(cancellation);
+    }
     public async Task<PlanetDto> UpdatePlanet(int planetId, PlanetInput planetInput,
         CancellationToken cancellation = default)
     {
@@ -76,23 +101,12 @@ public class PlanetService : IPlanetService
             throw new ValidationException();
         }
     }
-
-    public async Task DeletePlanet(int planetId, CancellationToken cancellation = default)
-    {
-        var planet = await _context.Planets.FindAsync(planetId);
-
-        if (planet == null) throw new NotFoundException("planet", planetId);
-        _context.Planets.Remove(planet);
-        await _context.SaveChangesAsync(cancellation);
-    }
-
     public async Task<bool> PlanetExists(string name)
     {
         return await _context.Planets.AnyAsync(c => c.Name == name);
     }
+    #endregion
 
-    public bool PlanetExists(int id, PlanetInput planetInput)
-    {
-        return _context.Planets.Any(c => c.IdPlanet != id && c.Name == planetInput.Name);
-    }
+
+   
 }

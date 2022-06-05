@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using SpaceAdventures.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using SpaceAdventures.Application.Common.Commands.Itineraries;
 using SpaceAdventures.Application.Common.Exceptions;
 using SpaceAdventures.Application.Common.Interfaces;
+using SpaceAdventures.Application.Common.Queries.Airports;
 using SpaceAdventures.Application.Common.Queries.Itineraries;
+using SpaceAdventures.Domain.Entities;
 
 namespace SpaceAdventures.Infrastructure.Persistence.Services;
 
@@ -13,11 +14,20 @@ public class ItineraryService : IItineraryService
 {
     private readonly ISpaceAdventureDbContext _context;
     private readonly IMapper _mapper;
+    private readonly IPlanetService _planetService;
 
-    public ItineraryService(ISpaceAdventureDbContext context, IMapper mapper)
+    public ItineraryService(ISpaceAdventureDbContext context, IMapper mapper, IPlanetService planetService)
     {
         _context = context;
         _mapper = mapper;
+        _planetService = planetService;
+    }
+
+
+    public bool ItineraryExists(ItineraryInput itineraryInput)
+    {
+        return _context.Itineraries.Any(c =>
+            c.IdAirport1 == itineraryInput.IdAirport1 && c.IdAirport2 == itineraryInput.IdAirport2);
     }
 
     public async Task<ItineraryVm> GetAllItineraries(CancellationToken cancellationToken)
@@ -38,6 +48,24 @@ public class ItineraryService : IItineraryService
         return _mapper.Map<ItineraryDto>(itinerary);
     }
 
+    public async Task<ItineraryVm> GetItinerariesByAirportsOfPlanet(AirportVm lstAirport, CancellationToken cancellationToken = default)
+    {
+
+        List<int> airportsId = lstAirport.AirportsList.Select(a => a.IdAirport).ToList();
+
+        return new ItineraryVm
+        {
+            ItinerariesList = await _context.Itineraries.Where(i => airportsId.Contains(i.IdAirport2))
+                .ProjectTo<ItineraryDto>(_mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken)
+        };
+
+    }
+
+
+    
+
+    #region Not used
     public async Task<ItineraryDto> CreateItinerary(ItineraryInput itineraryInput,
         CancellationToken cancellation = default)
     {
@@ -64,7 +92,7 @@ public class ItineraryService : IItineraryService
 
         try
         {
-            
+
             itinerary.IdAirport1 = itineraryInput.IdAirport1;
             itinerary.IdAirport2 = itineraryInput.IdAirport2;
 
@@ -86,10 +114,6 @@ public class ItineraryService : IItineraryService
         _context.Itineraries.Remove(itinerary);
         await _context.SaveChangesAsync(cancellation);
     }
+    #endregion
 
-    public bool ItineraryExists(ItineraryInput itineraryInput)
-    {
-        return _context.Itineraries.Any(c =>
-            c.IdAirport1 == itineraryInput.IdAirport1 && c.IdAirport2 == itineraryInput.IdAirport2);
-    }
 }

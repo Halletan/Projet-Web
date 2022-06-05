@@ -26,4 +26,16 @@ public class AirportService : IAirportService
         var content = await response.Content.ReadAsStringAsync();
         return JsonConvert.DeserializeObject<Airports>(content);
     }
+
+    public async Task<Airport> GetAirportById(int id, string? accessToken)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+        var response = await _httpClient.GetAsync("https://localhost:7195/api/v1.0/Airports/GetAirportById/"+id);
+
+        if (!response.IsSuccessStatusCode) throw new Exception("Cannot retrieve data");
+
+        var content = await response.Content.ReadAsStringAsync();
+        return JsonConvert.DeserializeObject<Airport>(content);
+    }
+
 }

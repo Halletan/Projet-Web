@@ -44,7 +44,7 @@ public class ItinerariesController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet]
-    [Route("GetById")]
+    [Route("GetItineraryById/{id}")]
     [Authorize(Policy = "read:messages")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -52,6 +52,23 @@ public class ItinerariesController : ControllerBase
     {
         return Ok(await _mediator.Send(new GetItineraryByIdQuery(id)));
     }
+
+    /// <summary>
+    ///     Get all Itineraries for a specific destination planet name
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    [HttpGet]
+    [Route("GetItinerariesByDestinationPlanet/{planet}")]
+    [Authorize(Policy = "read:messages")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ItineraryVm>> GetItinerariesByDestinationPlanet(string planet)
+    {
+        return Ok(await _mediator.Send(new GetItinerariesByDestinationPlanetQuery(planet)));
+    }   
+
+    #region Not used
 
     /// <summary>
     ///     Create a new Itinerary
@@ -99,4 +116,6 @@ public class ItinerariesController : ControllerBase
         await _mediator.Send(command);
         return NoContent();
     }
+
+    #endregion
 }

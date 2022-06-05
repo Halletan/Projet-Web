@@ -8,6 +8,7 @@ public class Flight
     public int IdAircraft { get; set; }
     public double Price { get; set; }
     public int IdItinerary { get; set; }
+    public int RemainingSeats { get; set; }
     public DateTime DepartureTime { get; set; }
     public DateTime ArrivalTime { get; set; }
 }

@@ -39,6 +39,19 @@ public class FlightService : IFlightService
         return _mapper.Map<FlightDto>(flight);
     }
 
+    public async Task<FlightsVm> GetFlightsByItinerary(int itineraryId, CancellationToken cancellationToken = default)
+    {
+        return new FlightsVm
+        {
+            FlightsList = await _context.Flights
+                        .Where(f => f.IdItinerary == itineraryId && f.RemainingSeats > 0 && f.DepartureTime > DateTime.Now)
+                        .ProjectTo<FlightDto>(_mapper.ConfigurationProvider)
+                        .OrderBy(f => f.DepartureTime)
+                        .ToListAsync(cancellationToken)
+        };
+    }
+
+    #region Not used
     public async Task<FlightDto> CreateFlight(FlightInput flightInput, CancellationToken cancellation = default)
     {
         var Flight = _mapper.Map<Flight>(flightInput);
@@ -87,6 +100,7 @@ public class FlightService : IFlightService
         if (flight == null) throw new NotFoundException("Flight", flightId);
         _context.Flights.Remove(flight);
     }
+    #endregion
 
     public bool AircraftExists(int id)
     {

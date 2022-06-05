@@ -45,7 +45,7 @@ public class FlightsController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet]
-    [Route("GetById")]
+    [Route("GetFlightById/{id}")]
     [Authorize(Policy = "read:messages")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -54,6 +54,22 @@ public class FlightsController : ControllerBase
         return Ok(await _mediator.Send(new GetFlightByIdQuery(id)));
     }
 
+    /// <summary>
+    ///     Get list of available flights for a specific Itinerary
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpGet]
+    [Route("GetFlightsByItinerary/{id}")]
+    [Authorize(Policy = "read:messages")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<FlightsVm>> GetFlightsByItinerary(int id)
+    {
+        return Ok(await _mediator.Send(new GetFlightsByItineraryQuery(id)));
+    }
+
+    #region Not Used
     /// <summary>
     ///     Create a new Flight
     /// </summary>
@@ -100,4 +116,5 @@ public class FlightsController : ControllerBase
         await _mediator.Send(command);
         return NoContent();
     }
+    #endregion
 }

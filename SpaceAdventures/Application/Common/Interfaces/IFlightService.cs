@@ -15,4 +15,6 @@ public interface IFlightService
     // Task<bool> FlightExists(int flightid);
     bool AircraftExists(int id);
     bool ItineraryExists(int id);
+
+    Task<FlightsVm> GetFlightsByItinerary(int itineraryId, CancellationToken cancellationToken = default);
 }
