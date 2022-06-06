@@ -20,7 +20,8 @@ public interface IUsersManagementApiService
 
     Task<UserDto> UpdateUser(int id, UserInput userInput, CancellationToken cancellationToken = default);
     Task<UserDto> UpdateUserInDb(User user, CancellationToken cancellationToken = default);
-    Task<User> UpdateUserInAuth0(User user, CancellationToken cancellationToken = default);
+    Task<User> UpdateUserInAuth0(string idAuth0, UserInput userInput, CancellationToken cancellationToken = default);
+    //Task<User> UpdateUserInAuth0(User user, CancellationToken cancellationToken = default);
 
     Task DeleteUser(int id, CancellationToken cancellation = default);
     Task<bool> DeleteUserInAuth0(User user, CancellationToken cancellationToken = default);

@@ -49,7 +49,7 @@ public class UsersController : ControllerBase
     [HttpPatch]
     [Authorize(Policy = "write:users")]
     [Route("UpdateUser/{id}")]
-    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<UserDto>> UpdateUser(int id, [FromBody] UserInput userInput)
     {

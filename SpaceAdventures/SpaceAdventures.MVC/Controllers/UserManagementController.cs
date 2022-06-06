@@ -151,11 +151,12 @@ namespace SpaceAdventures.MVC.Controllers
 
             UserInput userInput = new UserInput
             {
-                Firstname = "John",
-                Lastname = "Doe",
+                Username = userDto.Username,
                 Email = userDto.Email,
-                Password = "test",
                 IdRole = userDto.IdRole,
+                Firstname = "John",
+                Lastname = "Doe",                
+                Password = "test",                
                 Connection = "test"
             };
 

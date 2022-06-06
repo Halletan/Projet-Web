@@ -68,7 +68,7 @@ namespace SpaceAdventures.MVC.Services
 
             var postBody = JsonConvert.SerializeObject(userInput);
 
-            var response = await _httpClient.PatchAsync("https://localhost:7195/api/v1.0/Users/UpdateUser"+userId, new StringContent(postBody, Encoding.UTF8, "application/json"));
+            var response = await _httpClient.PatchAsync("https://localhost:7195/api/v1.0/Users/UpdateUser/"+userId, new StringContent(postBody, Encoding.UTF8, "application/json"));
 
             if (!response.IsSuccessStatusCode)
                 throw new Exception("Cannot Update data");

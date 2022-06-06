@@ -113,10 +113,6 @@ public class UsersManagementApiService : IUsersManagementApiService
         return tokenData;
     }
     #endregion
-
-
-
-
     #region Get All Auth0 Roles
     public async Task<List<UserRole>> GetAllRoles(CancellationToken cancellationToken)
     {
@@ -209,20 +205,27 @@ public class UsersManagementApiService : IUsersManagementApiService
     {
         try
         {
-            User user = await _context.Users.FindAsync(userId);
+            //User user = await _context.Users.FindAsync(userId); // .AsNoTracking()
 
-            user.Username = userInput.Username;
-            user.Email = userInput.Email;
+            User user = await _context.Users.Where(u => u.IdUser == userId).AsNoTracking().FirstOrDefaultAsync();
 
             if (user.IdRole != userInput.IdRole)
             {
+                bool unassignRoleOk = await UnAssignRole(user, cancellationToken);
+
                 user.IdRole = userInput.IdRole;
-                bool ok = await AssignRole(user, cancellationToken);
+                bool assignRoleOk = await AssignRole(user, cancellationToken);
             }
 
-            user = await UpdateUserInAuth0(user);
+            if(/*user.Username != userInput.Username ||*/ user.Email != userInput.Email)
+            {              
+                user = await UpdateUserInAuth0(user.IdUserAuth0, userInput, cancellationToken);
+                user.IdUser = userId;
+            }
+            user.Username = userInput.Username;
 
-            return await UpdateUserInDb(user);
+            return await UpdateUserInDb(user, cancellationToken);
+
         }
         catch (Exception ex) {
             throw new ValidationException();
@@ -233,7 +236,7 @@ public class UsersManagementApiService : IUsersManagementApiService
     {
         try
         {
-            _context.Users.Update(user);
+             _context.Users.Update(user);
             await _context.SaveChangesAsync(cancellationToken);
 
             return _mapper.Map<UserDto>(user);
@@ -244,18 +247,21 @@ public class UsersManagementApiService : IUsersManagementApiService
         }
     }
 
-    public async Task<User> UpdateUserInAuth0(User user, CancellationToken cancellationToken = default)
+    public async Task<User> UpdateUserInAuth0(string idAuth0, UserInput userInput, CancellationToken cancellationToken = default)
     {
+        try { 
         // Get AccessToken
         var token = await GetToken();
         var accessToken = token.access_token;
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
-        var payload = JsonConvert.SerializeObject(user);
+            //var payload = JsonConvert.SerializeObject(user); //new StringContent(payload, Encoding.UTF8, "application/json"));
 
-        var response = await _httpClient.PatchAsync(_configuration["Auth0ManagementApi:Audience"] + "users/" + user.IdUserAuth0, 
-            new StringContent(payload, Encoding.UTF8, "application/json"));
-
+            var response = await _httpClient.PatchAsync(_configuration["Auth0ManagementApi:Audience"] + "users/" + idAuth0, new FormUrlEncodedContent(
+           new Dictionary<string, string>
+           {
+                {"email", userInput.Email}
+           }), cancellationToken);
 
         if (!response.IsSuccessStatusCode)
         {
@@ -266,11 +272,24 @@ public class UsersManagementApiService : IUsersManagementApiService
 
         var userAuth = JsonConvert.DeserializeObject<UserAuth0>(content);
 
-        var userDb = _mapper.Map<User>(userAuth);
-        userDb.IdRole = user.IdRole;
-        userDb.Username = user.Username;
+            //_mapper.Map<User>(userAuth);
+            var userDb = new User
+            {                              
+                Username = userInput.Username,  // from userInput bc not changed in Auth0
+                IdRole = userInput.IdRole,      // from userInput bc not present in Auth0
+
+                Email = userAuth.Email,
+                VerifiedEmail = userAuth.VerifiedEmail,
+                IdUserAuth0 = userAuth.IdUserAuth0
+            };
 
         return userDb;
+
+        }
+        catch(Exception ex)
+        {
+            throw ex;
+        }
     }
 
     #endregion
@@ -302,6 +321,48 @@ public class UsersManagementApiService : IUsersManagementApiService
 
         return true;
     }
+    #endregion
+
+    #region Remove a role from a user
+
+    public async Task<bool> UnAssignRole(User user, CancellationToken cancellation)
+    {
+        var token = await GetToken();
+        var accessToken = token.access_token;
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+        List<UserRole> lst = await GetAllRoles(cancellation);
+        Role role = await GetRoleInDb(user, cancellation);
+
+        var result = lst.Find(c => c.name == role.Name);
+
+        string[] tab = { result.id };
+        AssignRolesRequest rolesRequest = new AssignRolesRequest(tab);
+
+
+
+        var json = JsonConvert.SerializeObject(rolesRequest);
+
+        // DeleteAsync does not take a parameter in Body => Bypass this problem with this solution
+        var request = new HttpRequestMessage
+        {
+            Method = HttpMethod.Delete,
+            RequestUri = new Uri(_configuration["Auth0ManagementApi:Audience"] + "users/" + user.IdUserAuth0 + "/roles"),
+            Content = new StringContent(json, Encoding.UTF8, "application/json")
+        };
+        var response = await _httpClient.SendAsync(request);
+
+        //var response = await _httpClient.DeleteAsync(_configuration["Auth0ManagementApi:Audience"] + "users/" + user.IdUserAuth0 + "/roles", cancellation
+        ///* new StringContent(json, Encoding.UTF8, "application/json")*/);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new ValidationException();
+        }
+
+        return true;
+    }
+
     #endregion
 
     #region Get Role By IdRole
