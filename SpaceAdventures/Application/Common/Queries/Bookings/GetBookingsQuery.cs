@@ -4,7 +4,7 @@ using SpaceAdventures.Application.Common.Interfaces;
 namespace SpaceAdventures.Application.Common.Queries.Bookings;
 
 // Query
-public class GetBookingsQuery : IRequest<BookingsVm>
+public record GetBookingsQuery : IRequest<BookingsVm>
 {
 }
 

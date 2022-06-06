@@ -123,20 +123,44 @@ namespace SpaceAdventures.MVC.Controllers
 
         public async Task<IActionResult> UpdateUser(string? email)
         {
-            var user = await _userManagementMvcService.GetUserByEmail(email,
-                await HttpContext.GetTokenAsync("access_token"));
-            var role = await _userManagementMvcService.GetRoleByIdRole(user.IdRole, await HttpContext.GetTokenAsync("access_token"));
-            user.RoleName = role.Name;
+            // A retirer ?
             TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
+
+
+            var user = await _userManagementMvcService.GetUserByEmail(email,await HttpContext.GetTokenAsync("access_token"));
+            var role = await _userManagementMvcService.GetRoleByIdRole(user.IdRole, await HttpContext.GetTokenAsync("access_token"));
+            ViewBag.roleName = role.Name;
+          
+            //TempData["IdUser"] = user.IdUser;
+
+            var rolesList = await _userManagementMvcService.GetAllRole(await HttpContext.GetTokenAsync("access_token"));
+            var rolesDropDownList = new SelectList(rolesList.RolesList, "IdRole", "Name");
+            ViewBag.listRole = rolesDropDownList;
+
+
+            
             return View(user);
 
         }
 
         [HttpPost]
         [ActionName(nameof(UpdateUser))]
-        public async Task<IActionResult> UpdtUser(UserInput userInput)
+        public async Task<IActionResult> UpdtUser(UserDto userDto)
         {
-            await _userManagementMvcService.UpdateUser(await HttpContext.GetTokenAsync("access_token"), userInput);
+            //int userId = (int)TempData["IdUser"];
+
+            UserInput userInput = new UserInput
+            {
+                Firstname = "John",
+                Lastname = "Doe",
+                Email = userDto.Email,
+                Password = "test",
+                IdRole = userDto.IdRole,
+                Connection = "test"
+            };
+
+
+            await _userManagementMvcService.UpdateUser(await HttpContext.GetTokenAsync("access_token"), userDto.IdUser, userInput);
 
             //ErrorMessage if Delete NOK.
 

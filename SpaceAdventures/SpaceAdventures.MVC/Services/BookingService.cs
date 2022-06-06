@@ -28,6 +28,20 @@ public class BookingService : IBookingService
         return JsonConvert.DeserializeObject<Bookings>(content);
     }
 
+
+    public async Task<Bookings> GetBookingsByClient(int clientId, string? accessToken)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+        var response = await _httpClient.GetAsync("https://localhost:7195/api/v1.0/Bookings/GetBookingsByClient"+clientId);
+
+        if (!response.IsSuccessStatusCode) throw new Exception("Cannot retrieve data");
+
+        var content = await response.Content.ReadAsStringAsync();
+        return JsonConvert.DeserializeObject<Bookings>(content);
+    }
+
+
+
     public async Task<Booking> CreateBooking(Booking booking, string? accessToken)
     {
         var postBody = JsonConvert.SerializeObject(booking);

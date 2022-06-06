@@ -61,13 +61,14 @@ namespace SpaceAdventures.MVC.Services
                 throw new Exception("Cannot delete data");
             return true;
         }
-        public async Task<User> UpdateUser(string? accessToken, UserInput user)
+
+        public async Task<User> UpdateUser(string? accessToken,int userId, UserInput userInput)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
-            var postBody = JsonConvert.SerializeObject(user);
+            var postBody = JsonConvert.SerializeObject(userInput);
 
-            var response = await _httpClient.PatchAsync("https://localhost:7195/api/v1.0/Users/UpdateUser", new StringContent(postBody, Encoding.UTF8, "application/json"));
+            var response = await _httpClient.PatchAsync("https://localhost:7195/api/v1.0/Users/UpdateUser"+userId, new StringContent(postBody, Encoding.UTF8, "application/json"));
 
             if (!response.IsSuccessStatusCode)
                 throw new Exception("Cannot Update data");

@@ -48,12 +48,12 @@ public class UsersController : ControllerBase
     /// <param name="command"></param>
     [HttpPatch]
     [Authorize(Policy = "write:users")]
-    [Route("UpdateUser")]
+    [Route("UpdateUser/{id}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<UserDto>> UpdateUser([FromBody] UserInput input)
+    public async Task<ActionResult<UserDto>> UpdateUser(int id, [FromBody] UserInput userInput)
     {
-        CreateUserCommand command = new CreateUserCommand(input);
+        UpdateUserCommand command = new UpdateUserCommand(id, userInput);
         return Ok(await _mediator.Send(command));
     }
 

@@ -34,6 +34,16 @@ namespace SpaceAdventures.MVC.Controllers
             return View();
         }
 
+        public async Task<IActionResult> GetBookingsByClient(int clientId)
+        {
+
+            var token = await HttpContext.GetTokenAsync("access_token");
+
+            return View(await _bookingService.GetBookingsByClient(clientId, token));
+        }
+
+#region Create Booking
+
         [HttpGet]
         public async Task<IActionResult> CreateBooking(string planetName)
         {
@@ -116,6 +126,9 @@ namespace SpaceAdventures.MVC.Controllers
            // return View(booking);
 
         }
+
+
+        #endregion
 
     }
 }

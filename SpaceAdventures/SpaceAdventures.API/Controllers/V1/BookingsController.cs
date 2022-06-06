@@ -42,6 +42,21 @@ public class BookingsController : ControllerBase
     }
 
     /// <summary>
+    ///     Get a list of all Bookings for a specific client
+    /// </summary>
+    /// <param name="id"></param>
+    [HttpGet]
+    [Route("GetBookingsByClient/{clientId}")]
+    [Authorize(Policy = "read:messages")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<BookingsVm>> GetBookingsByClient(int clientId)
+    {
+        return Ok(await _mediator.Send(new GetBookingsByClientQuery(clientId)));
+    }
+    
+
+    /// <summary>
     ///     Get a sepicif Booking by id
     /// </summary>
     /// <param name="id"></param>
@@ -71,6 +86,8 @@ public class BookingsController : ControllerBase
         return Ok(await _mediator.Send(command));
     }
 
+
+    #region Not used
 
     /// <summary>
     ///     Update an existing Booking
@@ -103,4 +120,5 @@ public class BookingsController : ControllerBase
         await _mediator.Send(command);
         return NoContent();
     }
+    #endregion
 }

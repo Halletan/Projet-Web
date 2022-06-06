@@ -12,36 +12,42 @@
     <div class="col-md-4">
         <form asp-action="UpdateUser">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="form-group d-none">
                 <label asp-for="IdUser" class="control-label"></label>
                 <input asp-for="IdUser" class="form-control" />
                 <span asp-validation-for="IdUser" class="text-danger"></span>
             </div>
+           <div class="form-group d-none">
+                <label asp-for="VerifiedEmail" class="control-label"></label>
+                <input asp-for="VerifiedEmail" class="form-control" />
+                <span asp-validation-for="VerifiedEmail" class="text-danger"></span>
+            </div>
+
+
             <div class="form-group">
                 <label asp-for="Username" class="control-label"></label>
                 <input asp-for="Username" class="form-control" />
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="VerifiedEmail" /> @Html.DisplayNameFor(model => model.VerifiedEmail)
-                </label>
-            </div>
+       
             <div class="form-group">
                 <label asp-for="IdRole" class="control-label"></label>
-                <input asp-for="IdRole" class="form-control" />
+                @*<select id="selectList" class="form-control" asp-items="@(new SelectList(ViewBag.ListRole, "Value", "Text"))">
+                        <option selected>------------------Select a role-------------------</option>
+                    </select>*@
+                @Html.DropDownListFor(x => Model.IdRole, new SelectList(ViewBag.ListRole, "Value", "Text"));
                 <span asp-validation-for="IdRole" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RoleName" class="control-label"></label>
-                <input asp-for="RoleName" class="form-control" />
-                <span asp-validation-for="RoleName" class="text-danger"></span>
+                <p class="text-white" > Role actuel : @ViewBag.roleName </p>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

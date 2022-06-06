@@ -205,18 +205,28 @@ public class UsersManagementApiService : IUsersManagementApiService
     #endregion
 
     #region UpdateUser
-    public async Task<UserDto> UpdateUser(UserInput userInput, CancellationToken cancellationToken = default)
+    public async Task<UserDto> UpdateUser(int userId, UserInput userInput, CancellationToken cancellationToken = default)
     {
-        User user = _context.Users.SingleOrDefault(u => u.Email == userInput.Email);
-        user.IdRole = userInput.IdRole;
+        try
+        {
+            User user = await _context.Users.FindAsync(userId);
 
+            user.Username = userInput.Username;
+            user.Email = userInput.Email;
 
-        user = await UpdateUserInAuth0(user);
+            if (user.IdRole != userInput.IdRole)
+            {
+                user.IdRole = userInput.IdRole;
+                bool ok = await AssignRole(user, cancellationToken);
+            }
 
-        return await UpdateUserInDb(user);
+            user = await UpdateUserInAuth0(user);
 
-
-
+            return await UpdateUserInDb(user);
+        }
+        catch (Exception ex) {
+            throw new ValidationException();
+        }
     }
 
     public async Task<UserDto> UpdateUserInDb(User user, CancellationToken cancellationToken = default)

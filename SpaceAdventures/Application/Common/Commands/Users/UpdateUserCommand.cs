@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SpaceAdventures.Application.Common.Commands.Users
 {
-    public record UpdateUserCommand(UserInput UserInput) : IRequest<UserDto>;
+    public record UpdateUserCommand(int id,UserInput UserInput) : IRequest<UserDto>;
 
 
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UserDto>
@@ -24,7 +24,7 @@ namespace SpaceAdventures.Application.Common.Commands.Users
 
         public async Task<UserDto> Handle(UpdateUserCommand command, CancellationToken cancellationToken)
         {
-            return await _userService.UpdateUser(command.UserInput, cancellationToken);
+            return await _userService.UpdateUser(command.id,command.UserInput, cancellationToken);
         }
     }
 }

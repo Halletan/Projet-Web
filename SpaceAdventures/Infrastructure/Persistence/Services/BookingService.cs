@@ -30,6 +30,20 @@ public class BookingService : IBookingService
         };
     }
 
+    public async Task<BookingsVm> GetBookingsByClient(int clientId, CancellationToken cancellationToken)
+    {
+        return new BookingsVm
+        {
+            BookingsList = await _context.Bookings
+                .Where(b => b.IdClient == clientId)
+               .ProjectTo<BookingDto>(_mapper.ConfigurationProvider)
+               .ToListAsync(cancellationToken)
+        };
+
+    }
+
+
+
     public async Task<BookingDto> GetBookingById(int bookingId, CancellationToken cancellation = default)
     {
         var booking = await _context.Bookings.FindAsync(bookingId);
