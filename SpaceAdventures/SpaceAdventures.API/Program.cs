@@ -11,6 +11,7 @@ using SpaceAdventures.API.Configurations;
 using SpaceAdventures.API.Filters;
 using SpaceAdventures.API.Handlers;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
@@ -62,6 +63,7 @@ var app = builder.Build();
 
 app.UseSerilogRequestLogging();
 
+// Our Dedicated Nuget
 app.UseLogRequestMiddleware();
 
 // Configure the HTTP request pipeline.

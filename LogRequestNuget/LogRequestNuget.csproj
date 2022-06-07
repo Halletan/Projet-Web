@@ -4,9 +4,14 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>1.1.0</Version>
-    <Authors>Hallet, Deconninck, Chadli</Authors>
-    <Description>This will log all your requests in the output console</Description>
+    <Version>1.2.0</Version>
+    <Authors>Hallet A, Deconninck C, Chadli H</Authors>
+    <Description>This will log all your requests in the output console
+Eg :
+Request Content TYpe : application/json,*/* 
+Request Path : /swagger/v1/swagger.json 
+Response Type : application/json;charset=utf-8 
+Response Lenght : 85102</Description>
     <PackageIcon></PackageIcon>
     <PackageTags>logger, logs, logging</PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>

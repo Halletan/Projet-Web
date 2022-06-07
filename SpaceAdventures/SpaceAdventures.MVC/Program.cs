@@ -1,4 +1,4 @@
-using LogRequestNuget.Middleware;
+
 using SpaceAdventures.MVC.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,9 +31,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-
-// Our Dedicated Nuget
-//app.UseLogRequestMiddleware();
 
 // Session Variables - Views based on roles
 app.UseSession();

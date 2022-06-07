@@ -22,10 +22,10 @@ namespace LogRequestNuget.Middleware
             var stream = response.Body;
             response.Body = buffer;
             await _next(httpContext);
-            Debug.WriteLine($"Request Content TYpe : { httpContext.Request.Headers["Accept"]} {Environment.NewLine}" +
+            Debug.WriteLine($"Request Content Type : { httpContext.Request.Headers["Accept"]} {Environment.NewLine}" +
                             $"Request Path : {request.Path} { Environment.NewLine} " +
                             $"Response Type : {response.ContentType} {Environment.NewLine}" +
-                            $"Response Lenght : {response.ContentLength ?? buffer.Length}");
+                            $"Response Length : {response.ContentLength ?? buffer.Length}");
             buffer.Position = 0;
             await buffer.CopyToAsync(stream);
         }
