@@ -16,7 +16,6 @@ namespace SpaceAdventures.Domain.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public int? IdMemberShipType { get; set; }
         public int? IdUser { get; set; }
 
         public virtual User IdUserNavigation { get; set; }

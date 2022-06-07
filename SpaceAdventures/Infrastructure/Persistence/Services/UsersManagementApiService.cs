@@ -113,6 +113,7 @@ public class UsersManagementApiService : IUsersManagementApiService
         return tokenData;
     }
     #endregion
+
     #region Get All Auth0 Roles
     public async Task<List<UserRole>> GetAllRoles(CancellationToken cancellationToken)
     {
@@ -227,7 +228,7 @@ public class UsersManagementApiService : IUsersManagementApiService
             return await UpdateUserInDb(user, cancellationToken);
 
         }
-        catch (Exception ex) {
+        catch (Exception) {
             throw new ValidationException();
         }
     }
@@ -241,16 +242,16 @@ public class UsersManagementApiService : IUsersManagementApiService
 
             return _mapper.Map<UserDto>(user);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            throw ex;
+            throw new ValidationException();
         }
     }
 
     public async Task<User> UpdateUserInAuth0(string idAuth0, UserInput userInput, CancellationToken cancellationToken = default)
     {
         try { 
-        // Get AccessToken
+         // Get AccessToken
         var token = await GetToken();
         var accessToken = token.access_token;
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
@@ -286,9 +287,9 @@ public class UsersManagementApiService : IUsersManagementApiService
         return userDb;
 
         }
-        catch(Exception ex)
+        catch(Exception)
         {
-            throw ex;
+            throw new ValidationException();
         }
     }
 

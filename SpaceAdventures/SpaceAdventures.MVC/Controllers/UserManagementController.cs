@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using SpaceAdventures.MVC.Models;
 using SpaceAdventures.MVC.Services.Interfaces;
 
@@ -123,24 +121,14 @@ namespace SpaceAdventures.MVC.Controllers
 
         public async Task<IActionResult> UpdateUser(string? email)
         {
-            // A retirer ?
-            TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
-
-
             var user = await _userManagementMvcService.GetUserByEmail(email,await HttpContext.GetTokenAsync("access_token"));
             var role = await _userManagementMvcService.GetRoleByIdRole(user.IdRole, await HttpContext.GetTokenAsync("access_token"));
             ViewBag.roleName = role.Name;
-          
             //TempData["IdUser"] = user.IdUser;
-
             var rolesList = await _userManagementMvcService.GetAllRole(await HttpContext.GetTokenAsync("access_token"));
             var rolesDropDownList = new SelectList(rolesList.RolesList, "IdRole", "Name");
             ViewBag.listRole = rolesDropDownList;
-
-
-            
             return View(user);
-
         }
 
         [HttpPost]
@@ -148,9 +136,9 @@ namespace SpaceAdventures.MVC.Controllers
         public async Task<IActionResult> UpdtUser(UserDto userDto)
         {
             //int userId = (int)TempData["IdUser"];
-
-            UserInput userInput = new UserInput
+            var userInput = new UserInput
             {
+                // TODO need to find a better way
                 Username = userDto.Username,
                 Email = userDto.Email,
                 IdRole = userDto.IdRole,
@@ -159,14 +147,9 @@ namespace SpaceAdventures.MVC.Controllers
                 Password = "test",                
                 Connection = "test"
             };
-
-
             await _userManagementMvcService.UpdateUser(await HttpContext.GetTokenAsync("access_token"), userDto.IdUser, userInput);
-
             //ErrorMessage if Delete NOK.
-
             TempData["Message"] = "Success : User has been successfully Updated";
-            TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
             return RedirectToAction(nameof(GetAllUsers));
         }
 

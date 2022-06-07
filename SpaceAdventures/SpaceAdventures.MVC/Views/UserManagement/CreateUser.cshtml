@@ -48,7 +48,7 @@
                 <div class="form-group col-lg-4">
                     <label asp-for="IdRole" class="control-label text-white">Assign a role</label>
                     <select id="selectList" asp-for="IdRole" class="form-control" asp-items="@(new SelectList(ViewBag.ListRole, "Value", "Text"))">
-                        <option selected>------------------Select a role-------------------</option>
+                        <option selected>------------------ Select a role -------------------</option>
                     </select>
 @*                    @Html.DropDownListFor(x => Model.IdRole, new SelectList(ViewBag.ListRole, "Value", "Text"));*@
                     <span asp-validation-for="IdRole" class="text-danger"></span>
