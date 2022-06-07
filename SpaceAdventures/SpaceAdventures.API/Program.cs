@@ -1,5 +1,6 @@
 using Application;
 using Infrastructure;
+using LogRequestNuget.Middleware;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Serilog;
@@ -9,7 +10,6 @@ using Serilog.Exceptions.EntityFrameworkCore.Destructurers;
 using SpaceAdventures.API.Configurations;
 using SpaceAdventures.API.Filters;
 using SpaceAdventures.API.Handlers;
-using SpaceAdventures.API.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,11 +59,10 @@ var app = builder.Build();
 
 
 /*********  Middleware  **********/
+
 app.UseSerilogRequestLogging();
 
-//Our Log Request Middleware
-//app.UseLogRequestMiddleware();
-
+app.UseLogRequestMiddleware();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
