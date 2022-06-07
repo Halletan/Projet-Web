@@ -66,7 +66,7 @@ namespace SpaceAdventures.MVC.Controllers
             if (ModelState.IsValid)
             {
                 _ = await _userManagementMvcService.CreateUser(accessToken, userInput);
-                TempData["Message"] = "Success : Account has been successfully created";
+                TempData["Message"] = "Success: Account has been successfully created";
                 return RedirectToAction("Login", "Account"); 
             }
            
@@ -82,7 +82,7 @@ namespace SpaceAdventures.MVC.Controllers
             if (ModelState.IsValid)
             {
                 _ = await _userManagementMvcService.CreateUser(accessToken, userInput);
-                TempData["Message"] = "Success : User has been created successfully";
+                TempData["Message"] = "Success: User has been created successfully";
                 return RedirectToAction("GetAllUsers");
             }
         
@@ -111,7 +111,7 @@ namespace SpaceAdventures.MVC.Controllers
 
             //ErrorMessage if Delete NOK.
             TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
-            TempData["Message"] = "Success : User removed successfully";
+            TempData["Message"] = "Success: User removed successfully";
             return RedirectToAction("GetAllUsers");
         }
 
@@ -149,7 +149,7 @@ namespace SpaceAdventures.MVC.Controllers
             };
             await _userManagementMvcService.UpdateUser(await HttpContext.GetTokenAsync("access_token"), userDto.IdUser, userInput);
             //ErrorMessage if Delete NOK.
-            TempData["Message"] = "Success : User has been successfully Updated";
+            TempData["Message"] = "Success: User has been successfully Updated";
             return RedirectToAction(nameof(GetAllUsers));
         }
 

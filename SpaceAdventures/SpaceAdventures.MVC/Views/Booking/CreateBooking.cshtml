@@ -6,75 +6,69 @@
 
 <link rel="stylesheet" href="~/css/Booking.css" asp-append-version="true" />
 
-<h1 class="text-white">Create a Booking</h1>
+<br/><br/>
+
+<div id="myHeader" class="text-center mt-5 pt-5 text-white">
+    <h1 class="display-4">Space Adventures</h1>
+    <h2>Booking Form</h2>
+</div>
 
 @{
     var flightList = new SelectList("","");
 }
 
-<hr />
-<div class="row flex-container column">
-    <div class="col-md-4">
-        <form asp-action="CreateBooking">
-            <div asp-validation-summary="ModelOnly" class="text-danger "></div>
-            <div class="form-group">
-                <label asp-for="Lastname" class="control-label text-white"></label>
-                <input asp-for="Lastname" class="form-control BiggerBox" />
-                <span asp-validation-for="Lastname" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label text-white"></label>
-                <input asp-for="FirstName" class="form-control BiggerBox" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="IdItinerary" class="control-label text-white"></label>
-
-                @Html.DropDownListFor(x => Model.IdItinerary, new SelectList(@ViewBag.itinerariesSelectList, "Text", "Value"), htmlAttributes: new { @class = "form-control BiggerBox", id="IdItinerary"})
-
-                <span asp-validation-for="IdItinerary" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdFlight" class="control-label text-white"></label>
-                @Html.DropDownListFor(x => Model.IdFlight, new SelectList(flightList, "Text", "Value"), htmlAttributes: new { @class = "form-control BiggerBox", id="IdFlight"})
-                <span asp-validation-for="IdFlight" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NbSeats" class="control-label text-white BiggerBox"></label>
-                <input asp-for="NbSeats" class="form-control BiggerBox" id="NbSeatsChange" />
-                <span asp-validation-for="NbSeats" class="text-danger"></span>
-            </div>
-            
-            <div class="form-group">
-                <label class="control-label text-white BiggerBox"> Booking amount</label>
-                <input id="AmountCalculation"  class="form-control BiggerBox" readonly="readonly" />
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<form asp-action="CreateBooking">
+    <div asp-validation-summary="ModelOnly" class="text-danger "></div>
+    <div class="row mt-4">
+        <div class="form-group col">
+            <label asp-for="Lastname" class="control-label text-white"></label>
+            <input asp-for="Lastname" class="form-control" />
+            <span asp-validation-for="Lastname" class="text-danger"></span>
+        </div>
+        <div class="form-group col">
+            <label asp-for="FirstName" class="control-label text-white"></label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
     </div>
-</div>
+    <div class="row mt-2">
+        <div class="form-group col">
+            <label asp-for="IdItinerary" class="control-label text-white"></label>
+            @Html.DropDownListFor(x => Model.IdItinerary, new SelectList(@ViewBag.itinerariesSelectList, "Text", "Value"), htmlAttributes: new { @class = "form-control BiggerBox", id="IdItinerary"})
+            <span asp-validation-for="IdItinerary" class="text-danger"></span>
+        </div>
+        <div class="form-group col">
+            <label asp-for="IdFlight" class="control-label text-white"></label>
+            @Html.DropDownListFor(x => Model.IdFlight, new SelectList(flightList, "Text", "Value"), htmlAttributes: new { @class = "form-control BiggerBox", id="IdFlight"})
+            <span asp-validation-for="IdFlight" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="form-group col">
+            <label asp-for="NbSeats" class="control-label text-white BiggerBox"></label>
+            <input asp-for="NbSeats" class="form-control" id="NbSeatsChange" />
+            <span asp-validation-for="NbSeats" class="text-danger"></span>
+        </div>
+        <div class="form-group col">
+            <label class="control-label text-white BiggerBox"> Booking amount</label>
+            <input id="AmountCalculation"  class="form-control" readonly="readonly" />
+        </div>
+    </div>
+    <div class="form-group text-center m-3">
+        <input type="submit" value="Confirm booking" class="btn btn-dark" />
+        <a class="btn btn-info m-3" asp-action="Index">Back to planets</a>
+    </div>
+</form>
 
-<div class="flex-container column">
-    <video controls autoplay name="media">
-        <source src="@ViewBag.video" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class=" text-center">
+    <video controls autoplay name="media"><source src="@ViewBag.video" type="video/mp4">Your browser does not support the video tag.</video>
 </div>
 
 @section Scripts {
+
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
-}
-
-
+    }
     <script type="text/javascript">
 
         $("#IdItinerary").change(function () {
@@ -119,7 +113,4 @@
         });
 
     </script>
-    
-
-
 }

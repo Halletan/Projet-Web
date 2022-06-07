@@ -18,7 +18,14 @@ namespace SpaceAdventures.MVC.Controllers
         private readonly IAirportService _airportService;
         private readonly IPlanetService _planetService;
 
-        public BookingController(IBookingService bookingService, INASAService nasaService, IClientService clientService, IUserManagementMvcService userManagement, IItineraryService itineraryService, IAirportService airportService, IPlanetService planetService)
+        #region Constructor
+        public BookingController(IBookingService bookingService,
+            INASAService nasaService,
+            IClientService clientService,
+            IUserManagementMvcService userManagement,
+            IItineraryService itineraryService,
+            IAirportService airportService,
+            IPlanetService planetService)
         {
             _bookingService = bookingService;
             _nasaService = nasaService;
@@ -29,20 +36,19 @@ namespace SpaceAdventures.MVC.Controllers
             _planetService = planetService;
         }
 
+        #endregion
+
         public async Task<IActionResult> Index()
         {
             return View();
         }
-
         public async Task<IActionResult> GetBookingsByClient(int clientId)
         {
-
             var token = await HttpContext.GetTokenAsync("access_token");
-
             return View(await _bookingService.GetBookingsByClient(clientId, token));
         }
 
-#region Create Booking
+        #region Create Booking
 
         [HttpGet]
         public async Task<IActionResult> CreateBooking(string planetName)
@@ -117,14 +123,11 @@ namespace SpaceAdventures.MVC.Controllers
                 IdClient = clientTemp.IdClient
             };
 
-           
-                var bookingToShow = await _bookingService.CreateBooking(BookingToPost, token);
-                TempData["Message"] = "Success : Your booking has been created successfully";
-                return RedirectToAction("Index" /*"GetAllReservationByIdClient"*/);
+            var bookingToShow = await _bookingService.CreateBooking(BookingToPost, token);
+            TempData["Message"] = "Success : Your booking has been created successfully";
+            return RedirectToAction("Index" /*"GetAllReservationByIdClient"*/);
             
-
            // return View(booking);
-
         }
 
 

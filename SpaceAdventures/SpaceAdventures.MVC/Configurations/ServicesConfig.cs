@@ -8,6 +8,9 @@ public static class ServicesConfig
     public static IServiceCollection AddServiceCollection(this IServiceCollection services)
     {
         services.AddHttpContextAccessor();
+        services.AddDistributedMemoryCache();
+        services.AddSession();
+
         services.AddHttpClient<IGlobalService, GlobalService>();
         services.AddHttpClient<IClientService, ClientService>();
         services.AddHttpClient<IAircraftService, AircraftService>();

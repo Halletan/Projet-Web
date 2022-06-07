@@ -5,10 +5,7 @@ var configuration = builder.Configuration;
 
 
 
-// Add services to the container.
-
-builder.Services.AddDistributedMemoryCache();
-builder.Services.AddSession();
+/******  The Service's Container ******/
 
 // Authentication Service
 builder.Services.AddAuthenticationServiceCollection(configuration);
@@ -32,6 +29,8 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+// Session Variables - Views based on roles
 
 app.UseSession();
 

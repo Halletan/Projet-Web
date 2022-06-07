@@ -2,15 +2,23 @@
 
 // ToastR Script
 
-$(document).ready(function() {
+$(document).ready(function () {
     var message = $("#message").text();
-    if (message.indexOf("Warning") >= 0)
-        toastr.warning(message);
-    else if (message.indexOf("Error") >= 0)
-        toastr.error(message);
-    else if (message.indexOf("Info") >= 0)
-        toastr.info(message);
-    else if (message !== "") {
-        toastr.success(message);
+    if (message !== "") {
+        if (message.includes("Info", 0)) {
+            toastr.info(message, "Information");
+        }
+        else if (message.includes("Success", 0)) {
+            toastr.success(message, "Success");
+        }
+
+        else if (message.includes("Warning", 0)) {
+            toastr.warning(message, "Warning");
+        }
+
+        else if (message.includes("Error", 0)) {
+            toastr.error(message, "Error");
+        }
     }
+
 });
