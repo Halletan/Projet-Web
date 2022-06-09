@@ -8,6 +8,7 @@ public static class ServicesConfig
     public static IServiceCollection AddServiceCollection(this IServiceCollection services)
     {
         services.AddHttpContextAccessor();
+
         services.AddDistributedMemoryCache();
         services.AddSession();
 

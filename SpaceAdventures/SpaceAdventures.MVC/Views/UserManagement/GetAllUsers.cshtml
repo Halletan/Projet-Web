@@ -19,9 +19,11 @@
 
 @if (ViewContext.HttpContext.Session.GetString("Role") == RolesType.Owner.ToString())
 {
-    <p>
-        <a class="btn btn-outline-info btn-sm" asp-action="CreateUser"> <i class="fa-solid fa-plus"></i> Add New User</a>
-    </p>
+    <p><a class="btn btn-outline-info btn-sm" asp-action="CreateUser"> <i class="fa-solid fa-plus"></i> Add New User</a></p>
+}
+else
+{
+    <p><a class="btn btn-outline-info btn-sm disabled" asp-action="CreateUser"> <i class="fa-solid fa-plus"></i> Add New User</a></p>
 }
 
 <table id="datatable" class="table border rounded">
@@ -52,6 +54,13 @@
                 <a class="btn btn-danger btn-sm" asp-action="DeleteUser" asp-route-email ="@item.Email"><i class="fa-solid fa-trash m-2"></i></a>
             </td>
             }
+          else
+          {
+              <td>
+                  <a class="btn btn-dark btn-sm disabled" asp-action="UpdateUser" asp-route-Email="@item.Email"><i class="fa-solid fa-pen m-2"></i></a> |
+                  <a class="btn btn-danger btn-sm disabled" asp-action="DeleteUser" asp-route-email ="@item.Email"><i class="fa-solid fa-trash m-2"></i></a>
+              </td>
+          }
         </tr>
 }
     </tbody>
@@ -59,8 +68,10 @@
 
 @section Scripts
 {
-    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
-    <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
-    <script src="~/js/datatable.js"></script>
-    <script src="~/lib/toastr.js/toastr.min.js"></script>
+    <script src ="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src ="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src ="~/js/datatable.js"></script>
 }
+
+                
+<script src="~/lib/toastr.js/toastr.min.js"></script>
