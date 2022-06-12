@@ -78,7 +78,7 @@ public class UsersController : ControllerBase
     /// </summary>
     /// <returns>List of users</returns>
     [HttpGet]
-    // [Authorize(Policy = "read:messages")]
+    [Authorize(Policy = "read:messages")]
     [Route("GetAllAuth0Users")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
