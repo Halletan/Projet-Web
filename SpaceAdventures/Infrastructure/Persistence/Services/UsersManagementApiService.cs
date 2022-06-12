@@ -1,5 +1,4 @@
 ﻿using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using System.Text;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -46,6 +45,25 @@ public class UsersManagementApiService : IUsersManagementApiService
                 .OrderBy(u => u.IdUser)
                 .ToListAsync(cancellationToken)
         };
+    }
+
+    public async Task<List<UserAuth0>> GetAllAuth0Users(CancellationToken cancellation = default)
+    {
+        var token = await GetToken();
+        var accessToken = token.access_token;
+
+        var fieldsToInclude = "?fields=user_id%2Cusername%2Cemail%2Cemail_verified";
+        var endPoint = _configuration["Auth0ManagementApi:Audience"] + "users" + fieldsToInclude;
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+        var response = await _httpClient.GetAsync(endPoint, cancellation);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new NotFoundException("Unable to retrieve data");
+        }
+        var content = await response.Content.ReadAsStringAsync(cancellation);
+        var users = JsonConvert.DeserializeObject<List<UserAuth0>>(content);
+        return users;
     }
     #endregion
 
@@ -371,9 +389,7 @@ public class UsersManagementApiService : IUsersManagementApiService
     {
         var role = await _context.Roles.FindAsync(id);
         if (role == null) throw new NotFoundException(nameof(Role), id);
-
         return _mapper.Map<RoleDto>(role);
-
     }
     #endregion
     
@@ -390,9 +406,8 @@ public class UsersManagementApiService : IUsersManagementApiService
             throw new NotFoundException(nameof(Role), user.IdRole);
         }
     }
-    #endregion
 
-    public async Task<RolesVm> GetAllRoleInDb(CancellationToken cancellation)   
+    public async Task<RolesVm> GetAllRoleInDb(CancellationToken cancellation)
     {
         return new RolesVm
         {
@@ -401,6 +416,10 @@ public class UsersManagementApiService : IUsersManagementApiService
                 .ToListAsync(cancellation)
         };
     }
+
+    #endregion
+
+
     public async Task<UserDto> GetUserByEmail(string email, CancellationToken cancellationToken = default)
     {
         return _context.Users
@@ -408,7 +427,6 @@ public class UsersManagementApiService : IUsersManagementApiService
             .SingleOrDefault(n => n.Email == email);
 
     }
-
 
 
     #region Delete User

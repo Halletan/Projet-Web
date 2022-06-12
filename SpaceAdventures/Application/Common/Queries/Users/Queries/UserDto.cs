@@ -1,5 +1,6 @@
 ﻿using Application.Common.Interfaces;
 using AutoMapper;
+using Newtonsoft.Json;
 using SpaceAdventures.Domain.Entities;
 
 namespace SpaceAdventures.Application.Common.Queries.Users.Queries
@@ -11,7 +12,6 @@ namespace SpaceAdventures.Application.Common.Queries.Users.Queries
         public string Email { get; set; }
         public bool VerifiedEmail { get; set; }
         public int IdRole { get; set; }
-
         public void Mapping(Profile profile)
         {
             profile.CreateMap<User, UserDto>()
