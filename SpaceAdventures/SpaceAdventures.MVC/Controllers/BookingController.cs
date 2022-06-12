@@ -42,10 +42,10 @@ namespace SpaceAdventures.MVC.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> GetBookingsByClient(int clientId)
+        public async Task<IActionResult> GetBookingsByClient(int id)
         {
             var token = await HttpContext.GetTokenAsync("access_token");
-            return View(await _bookingService.GetBookingsByClient(clientId, token));
+            return View(await _bookingService.GetBookingsByClient(id, token));
         }
 
         #region Create Booking

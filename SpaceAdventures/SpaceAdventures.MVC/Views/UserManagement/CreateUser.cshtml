@@ -15,7 +15,7 @@
         <form asp-action="CreateUser">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="row mt-5">
+            <div class="row mt-3">
                 <div class="form-group col">
                     <label asp-for="Lastname" class="control-label text-white"></label>
                     <input asp-for="Lastname" class="form-control" />
@@ -27,13 +27,13 @@
                     <span asp-validation-for="Firstname" class="text-danger"></span>
                  </div>
             </div>
-            <div class="row mt-5">
+            <div class="row mt-3">
             <div class="form-group col">
                 <label asp-for="Username" class="control-label text-white"></label>
                 <input asp-for="Username" class="form-control" />
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
-            <div class="form-group col-lg-4">
+            <div class="form-group col">
                 <label asp-for="Password" class="control-label text-white"></label>
                 <input asp-for="Password" value="Default Password is applicable here" class="form-control readonly" readonly="readonly" />
                 <span asp-validation-for="Password" class="text-danger"></span>
@@ -45,7 +45,7 @@
                     <input id="email" asp-for="Email" class="form-control" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
-                <div class="form-group col-lg-4">
+                <div class="form-group col">
                     <label asp-for="IdRole" class="control-label text-white">Assign a role</label>
                     <select id="selectList" asp-for="IdRole" class="form-control" asp-items="@(new SelectList(ViewBag.ListRole, "Value", "Text"))">
                         <option selected>------------------ Select a role -------------------</option>
@@ -63,7 +63,7 @@
             </div>
             @*End of Hidden items*@
 
-            <div class="form-group mt-4 text-center">
+            <div class="form-group mt-4 text-end">
                 <input type="submit" value="Create" class="btn btn-dark" /><a class="btn btn-info m-3" asp-action="GetAllUsers">Back to List</a>
             </div>
         </form>
@@ -81,8 +81,7 @@
             $("#email").on('change',
                 function() {
                     var email = $(this).val();
-                    alert(email);
-
+                    
                     $.ajax({
                         type: "GET",
                         crossDomain: true,

@@ -18,11 +18,11 @@
 
 @if (ViewContext.HttpContext.Session.GetString("Role") == RolesType.Agent.ToString())
 {
-    <p><a class="btn btn-outline-info btn-sm disabled" asp-action=""> <i class="fa-solid fa-plus"></i> Add New Airport</a></p>
+    <p><a class="btn btn-outline-info btn-sm disabled"> <i class="fa-solid fa-plus"></i> Add New Airport</a></p>
 }
 else
 {
-    <p><a class="btn btn-outline-info btn-sm" asp-action=""> <i class="fa-solid fa-plus"></i> Add New Airport</a></p>
+    <p><a class="btn btn-outline-info btn-sm udrconst"> <i class="fa-solid fa-plus"></i> Add New Airport</a></p>
 }
 
 
@@ -52,15 +52,15 @@ else
     @if (ViewContext.HttpContext.Session.GetString("Role") == RolesType.Agent.ToString())
     {
         <td>
-            <a class="btn btn-dark btn-sm disabled" asp-route-id="@item.IdAirport"><i class="fa-solid fa-pen m-2"></i></a> |
-            <a class="btn btn-danger btn-sm disabled" asp-route-id="@item.IdAirport"><i class="fa-solid fa-trash m-2"></i></a>
+            <a class="btn btn-dark btn-sm disabled udrconst" ><i class="fa-solid fa-pen m-2"></i></a> |
+            <a class="btn btn-danger btn-sm disabled udrconst" ><i class="fa-solid fa-trash m-2"></i></a>
         </td>
     }
     else
     {
         <td>
-            <a class="btn btn-dark btn-sm" asp-route-id="@item.IdAirport"><i class="fa-solid fa-pen m-2"></i></a> |
-            <a class="btn btn-danger btn-sm" asp-route-id="@item.IdAirport"><i class="fa-solid fa-trash m-2"></i></a>
+            <a class="btn btn-dark btn-sm udrconst" ><i class="fa-solid fa-pen m-2"></i></a> |
+            <a class="btn btn-danger btn-sm udrconst" ><i class="fa-solid fa-trash m-2"></i></a>
         </td>
     }
         </tr>
@@ -74,4 +74,8 @@ else
     <script src ="~/lib/datatables/js/jquery.dataTables.min.js"></script>
     <script src ="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
     <script src ="~/js/datatable.js"></script>
+
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/toast-underconstruction.js"></script>
 }
