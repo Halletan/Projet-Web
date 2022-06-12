@@ -29,9 +29,9 @@ else
     <tr>
         <th>Customer ID</th>
         <th>First name</th>
-        <th>Last name</th>
-        <th>Phone</th>
+        <th>Last name</th>       
         <th>Email</th>
+        <th>Bookings</th>
         <th></th>
     </tr>
     </thead>
@@ -51,7 +51,9 @@ else
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
-            
+             <td> 
+                  <a asp-controller="Booking" asp-action="GetBookingsByClient" asp-route-id="@item.IdClient" > Bookings </a>
+             </td>
     @if (@ViewContext.HttpContext.Session.GetString("Role") == RolesType.Agent.ToString())
     {
         <td>
@@ -68,6 +70,8 @@ else
     }
         </tr>
     }
+
+   
     </tbody>
 </table>
 

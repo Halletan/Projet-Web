@@ -32,7 +32,7 @@ public class BookingService : IBookingService
     public async Task<Bookings> GetBookingsByClient(int clientId, string? accessToken)
     {
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-        var response = await _httpClient.GetAsync("https://localhost:7195/api/v1.0/Bookings/GetBookingsByClient"+clientId);
+        var response = await _httpClient.GetAsync("https://localhost:7195/api/v1.0/Bookings/GetBookingsByClient/"+clientId);
 
         if (!response.IsSuccessStatusCode) throw new Exception("Cannot retrieve data");
 
