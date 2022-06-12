@@ -39,7 +39,7 @@ namespace SpaceAdventures.MVC.Models
     public class UserInput
     {
         [Required]
-        [MaxLength(10)]
+        [MaxLength(20)]
         [MinLength(5)]
         public string Username { get; set; }
         [Required]

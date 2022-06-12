@@ -65,16 +65,6 @@
                                 <li>
                                     <a class="dropdown-item" asp-controller="UserManagement" asp-action="GetAllUsers"> <i class="fa-solid fa-list m-2"></i> All</a>
                                 </li>
-
-                                @if (@ViewContext.HttpContext.Session.GetString("Role") != RolesType.Agent.ToString() && @ViewContext.HttpContext.Session.GetString("Role") != RolesType.Admin.ToString())
-                                {
-                                    <li>
-                                        <a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-eye m-2"></i> Assign Role</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" asp-controller="" asp-action=""> <i class="fa-solid fa-key m-2"></i>Send Password Reset</a>
-                                    </li>
-                                }
                             </ul>
                         </li>
                     }
@@ -89,16 +79,31 @@
                             <i class="fas fa-cart-shopping m-1"></i>Bookings
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li>
-                                <a class="dropdown-item" asp-controller="" asp-action=""><i class="fa-solid fa-list m-2"></i> All</a>
-                            </li>
-
-                            @if (@ViewContext.HttpContext.Session.GetString("Role") != RolesType.Agent.ToString())
+                            
+                            @if (@ViewContext.HttpContext.Session.GetString("Role") == RolesType.User.ToString())
                             {
+                                
                                 <li>
-                                    <a class="dropdown-item" asp-controller="Booking" asp-action="Index"> <i class="fa-solid fa-plus m-2"></i>New</a>
+                                    <a class="dropdown-item" asp-controller="" asp-action=""><i class="fa-solid fa-list m-2"></i> My Bookings</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Booking" asp-action="Index"> <i class="fa-solid fa-plus m-2"></i> New Booking</a>
                                 </li>
                             }
+                            else
+                            {
+                                <li>
+                                    <a class="dropdown-item" asp-controller="" asp-action=""><i class="fa-solid fa-list m-2"></i> All</a>
+                                </li>
+
+                                @if (@ViewContext.HttpContext.Session.GetString("Role") != RolesType.Agent.ToString())
+                                {
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Booking" asp-action="Index"> <i class="fa-solid fa-plus m-2"></i>New</a>
+                                    </li>
+                                }
+                            }
+
                         </ul>
                     </li>
 

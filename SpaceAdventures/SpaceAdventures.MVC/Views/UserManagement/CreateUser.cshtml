@@ -42,7 +42,7 @@
             <div class="row mt-3">
                 <div class="form-group col">
                     <label asp-for="Email" class="control-label text-white"></label>
-                    <input asp-for="Email" class="form-control" />
+                    <input id="email" asp-for="Email" class="form-control" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="form-group col-lg-4">
@@ -71,33 +71,32 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
         <script src="~/lib/toastr.js/toastr.min.js"></script>
         <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
-
-<script>
-
-    $(document).ready(function() {
-        $("#selectList").change(function() {
-
-            var value = $('#selectList option:selected').text();
-            
-            switch (value) {
-                case "Admin" : 
-                    toastr.info("Can R/W Messages & Read Users", "Access");
-                break;
-                case "Agent" : 
-                    toastr.info("Can only Read Messages", "Access");
-                break;
-                case "Owner" : 
-                    toastr.info("Can R/W Users & Messages", "Access");
-                break;
-                case "User" : 
-                    toastr.info("Can R/W Messages","Access");
-                break;
-            }
-        });
-    });
-
-
-</script>
-
+    <script src="~/js/roles.js"></script>
     
+    
+    
+    <script>
+        $(document).ready(function() {
+
+            $("#email").on('change',
+                function() {
+                    var email = $(this).val();
+                    alert(email);
+
+                    $.ajax({
+                        type: "GET",
+                        crossDomain: true,
+                        url: "/Users/UserExists",
+                        data: { email: email },
+                        success: function(exists) {
+                            if (exists) {
+                                toastr.warning("A user with this email already exists", "Warning");
+                                $("#email").val('');
+                            }
+                        }
+                    });
+
+                }); 
+        })
+    </script>
 }

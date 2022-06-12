@@ -61,7 +61,6 @@ namespace SpaceAdventures.MVC.Services
                 throw new Exception("Cannot delete data");
             return true;
         }
-
         public async Task<User> UpdateUser(string? accessToken,int userId, UserInput userInput)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
