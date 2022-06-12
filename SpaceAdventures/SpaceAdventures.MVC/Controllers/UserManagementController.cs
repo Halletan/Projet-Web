@@ -77,7 +77,6 @@ namespace SpaceAdventures.MVC.Controllers
                 TempData["Message"] = "Success: Account has been successfully created";
                 return RedirectToAction("Login", "Account"); 
             }
-           
             return View(userInput);
         }
 

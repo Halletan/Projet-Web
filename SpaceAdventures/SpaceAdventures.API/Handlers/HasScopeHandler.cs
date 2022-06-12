@@ -20,10 +20,6 @@ public class HasScopeHandler : AuthorizationHandler<HasScopeRequirement>
         if(result.Contains(requirement.Scope))
             context.Succeed(requirement);
 
-        // If the scope array contains the required scope => access is granted
-        //if (scopes.Any(str => str == requirement.Scope))
-        //    context.Succeed(requirement);
-
         return Task.CompletedTask;
     }
 }
