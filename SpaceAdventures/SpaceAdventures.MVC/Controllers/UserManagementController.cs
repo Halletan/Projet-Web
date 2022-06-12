@@ -20,7 +20,7 @@ namespace SpaceAdventures.MVC.Controllers
         public async Task<IActionResult> GetAllUsers()
         {
             var result = await _userManagementMvcService.GetAllUsers(await HttpContext.GetTokenAsync("access_token"));
-            var lst = new List<UserVm>();
+            var list = new List<UserVm>();
 
             foreach (User user in result.UsersList)
             {
@@ -32,10 +32,18 @@ namespace SpaceAdventures.MVC.Controllers
                 var userRole = await _userManagementMvcService.GetRoleByIdRole(user.idRole,
                     await HttpContext.GetTokenAsync("access_token"));
                 vm.Role = userRole.Name;
-                lst.Add(vm);
+                list.Add(vm);
             }
             TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
-            return View(lst);
+            return View(list);
+        }
+
+        [HttpGet]
+        [Route("Users/UserExists")]
+        public async Task<bool> UserExists(string? email)
+        {
+            var users = await _userManagementMvcService.GetAllUsers(await HttpContext.GetTokenAsync("access_token"));
+            return users.UsersList.Any(u => u.Email == email);
         }
 
 

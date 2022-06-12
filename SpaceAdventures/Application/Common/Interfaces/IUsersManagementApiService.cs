@@ -16,12 +16,10 @@ public interface IUsersManagementApiService
     Task<UserDto> CreateUser(UserInput userInput, CancellationToken cancellationToken = default);
     Task<User> CreateUserAuth0(UserInput userInput, CancellationToken cancellationToken = default);
     Task<UserDto> CreateUserInDb(User user, CancellationToken cancellationToken = default);
-
     Task<UserDto> UpdateUser(int id, UserInput userInput, CancellationToken cancellationToken = default);
     Task<UserDto> UpdateUserInDb(User user, CancellationToken cancellationToken = default);
     Task<User> UpdateUserInAuth0(string idAuth0, UserInput userInput, CancellationToken cancellationToken = default);
     //Task<User> UpdateUserInAuth0(User user, CancellationToken cancellationToken = default);
-
     Task DeleteUser(int id, CancellationToken cancellation = default);
     Task<bool> DeleteUserInAuth0(User user, CancellationToken cancellationToken = default);
     Task<bool> DeleteUserInDb(User user, CancellationToken cancellationToken = default);
