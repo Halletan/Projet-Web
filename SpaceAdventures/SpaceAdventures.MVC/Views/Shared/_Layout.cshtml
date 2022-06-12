@@ -21,7 +21,7 @@
 <span id="role" class="d-none">@ViewContext.HttpContext.Session.GetString("Role")</span>
 
 
-<body class="bg"style="background-image: url('/backgrounds/backround_2.jpg')">
+<body class="bg" style="background-image: url('/backgrounds/background_2.jpg')">
 
 
 @*Navbar Start*@
@@ -70,7 +70,6 @@
                     }
                     /*** END ***/
 
-
                     /***  Bookings DropdownList ***/
 
 
@@ -79,10 +78,10 @@
                             <i class="fas fa-cart-shopping m-1"></i>Bookings
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            
+
                             @if (@ViewContext.HttpContext.Session.GetString("Role") == RolesType.User.ToString())
                             {
-                                
+
                                 <li>
                                     <a class="dropdown-item" asp-controller="" asp-action=""><i class="fa-solid fa-list m-2"></i> My Bookings</a>
                                 </li>
@@ -198,10 +197,13 @@
 </body>
 </html>
 
+
 <script src="~/lib/toastr.js/toastr.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 <script src="~/js/toast-notifications.js" asp-append-version="true"></script>
+<script src="~/js/carousel.js" ></script>
+
 
 @await RenderSectionAsync("Scripts", false)
