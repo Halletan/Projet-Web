@@ -20,6 +20,8 @@ namespace SpaceAdventures.MVC.Services
             _accessor = accessor;
         }
 
+        #region Users
+
         public async Task<Users> GetAllUsers(string? accessToken)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
@@ -53,6 +55,19 @@ namespace SpaceAdventures.MVC.Services
             var content = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<User>(content);
         }
+
+        public async Task<User> CreateUserSignUp(string? accessToken, UserInput user)
+        {
+            var postBody = JsonConvert.SerializeObject(user);
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            var response = await _httpClient.PostAsync("https://localhost:7195/api/v1.0/Users/CreateUserSignUp", new StringContent(postBody, Encoding.UTF8, "application/json"));
+
+            if (!response.IsSuccessStatusCode) throw new Exception("Cannot retrieve data");
+
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<User>(content);
+        }
+
         public async Task<bool> DeleteUser(string? accessToken,int userId)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
@@ -75,6 +90,10 @@ namespace SpaceAdventures.MVC.Services
             var content = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<User>(content);
         }
+
+        #endregion
+
+        #region Roles
         public async Task<UserRole> GetRoleByIdRole(int id, string? accessToken)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
@@ -126,5 +145,6 @@ namespace SpaceAdventures.MVC.Services
             var roles = await GetUserRole(idUser, accessToken);
             return await Task.FromResult(roles[0].Name);
         }
-    }   
+        #endregion
+    }
 }

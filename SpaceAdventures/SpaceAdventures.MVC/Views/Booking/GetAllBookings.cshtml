@@ -1,0 +1,48 @@
+﻿@model SpaceAdventures.MVC.Models.Bookings
+
+@{
+    ViewData["Title"] = "GetAllBookings";
+}
+
+<link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
+
+<br/><br/>
+
+<div id="myHeader" class="text-center mt-5 pt-5 text-white">
+    <h2>Bookings</h2>
+</div>
+
+<table id="datatable" class="table border rounded">
+    <thead class ="dataTableColumn">
+        <tr>
+            <th>Flight Id</th>
+            <th>Number of seats</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody class ="dataTableColumn" >
+@foreach (var item in Model.BookingsList) {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.IdFlight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NbSeats)
+            </td>
+
+            <td>         
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })                
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+@section Scripts
+{
+    <script src ="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src ="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src ="~/js/datatable.js"></script>
+}

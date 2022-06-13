@@ -93,7 +93,7 @@
                             else
                             {
                                 <li>
-                                    <a class="dropdown-item" asp-controller="" asp-action=""><i class="fa-solid fa-list m-2"></i> All</a>
+                                    <a class="dropdown-item" asp-controller="Booking" asp-action="GetAllBookings"><i class="fa-solid fa-list m-2"></i> All</a>
                                 </li>
 
                                 @if (@ViewContext.HttpContext.Session.GetString("Role") != RolesType.Agent.ToString())

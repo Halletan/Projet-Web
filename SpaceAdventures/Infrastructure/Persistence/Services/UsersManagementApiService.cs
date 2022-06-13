@@ -179,6 +179,16 @@ public class UsersManagementApiService : IUsersManagementApiService
 
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
+        string passwordToPost;
+        if(userInput.Password == "Default")
+        {
+            passwordToPost = _configuration["UserPassword:Default"];
+        }
+        else
+        {
+            passwordToPost = userInput.Password;
+        }
+
         var response = await _httpClient.PostAsync(_configuration["Auth0ManagementApi:Audience"] + "users",new FormUrlEncodedContent(
             new Dictionary<string, string>
             {
@@ -190,8 +200,9 @@ public class UsersManagementApiService : IUsersManagementApiService
                 {"family_name", userInput.Lastname},
                 {"name", userInput.Firstname + " " + userInput.Lastname},
                 {"nickname", userInput.Username},
-                {"password", _configuration["UserPassword:Default"]},
-                {"username", userInput.Username},
+                {"password", passwordToPost},
+                
+                //{"username", userInput.Username},                    // Antoine et Corentin, laissé commenté; Hammadi, to uncomment
             }), cancellationToken);
 
 

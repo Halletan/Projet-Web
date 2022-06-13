@@ -20,7 +20,6 @@ public class ItinerariesController : Controller
     [HttpGet]
     public async Task<ActionResult> GetItineraries()
     {
-        TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
         return View(await _itineraryService.GetAllItineraries(await HttpContext.GetTokenAsync("access_token")));
     }
 

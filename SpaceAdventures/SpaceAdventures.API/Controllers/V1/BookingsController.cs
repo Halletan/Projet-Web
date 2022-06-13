@@ -31,7 +31,7 @@ public class BookingsController : ControllerBase
     /// <summary>
     ///     Get a list of all Bookings
     /// </summary>
-    //[HttpGet]
+    
     [HttpGet]
     [Authorize(Policy = "read:messages")]
     [ProducesResponseType(StatusCodes.Status200OK)]

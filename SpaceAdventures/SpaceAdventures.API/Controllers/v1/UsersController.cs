@@ -36,11 +36,28 @@ public class UsersController : ControllerBase
     [Route("CreateUser")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<UserDto>> CreateUser([FromBody] UserInput input/*CreateUserCommand command*/)
+    public async Task<ActionResult<UserDto>> CreateUser([FromBody] UserInput input)
     {
         CreateUserCommand command = new CreateUserCommand(input);
         return Ok(await _mediator.Send(command));
     }
+
+    /// <summary>
+    ///     New user sign up
+    /// </summary>
+    /// <param name="command"></param>
+    [HttpPost]
+    //[Authorize(Policy = "write:users")]
+    [Route("CreateUserSignUp")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<UserDto>> CreateUserSignUp([FromBody] UserInput input)
+    {
+        CreateUserCommand command = new CreateUserCommand(input);
+        return Ok(await _mediator.Send(command));
+    }
+
+
 
     /// <summary>
     ///     Update a user
@@ -58,7 +75,7 @@ public class UsersController : ControllerBase
     }
 
     /// <summary>
-    ///     Get Lis of users from DB
+    ///     Get List of users from DB
     /// </summary>
     /// <returns>List of users</returns>
     [HttpGet]

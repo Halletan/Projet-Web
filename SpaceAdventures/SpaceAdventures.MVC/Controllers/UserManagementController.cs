@@ -70,10 +70,11 @@ namespace SpaceAdventures.MVC.Controllers
         public async Task<IActionResult> PostUserSignUp(UserInput userInput)
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");
+            
 
             if (ModelState.IsValid)
             {
-                _ = await _userManagementMvcService.CreateUser(accessToken, userInput);
+                _ = await _userManagementMvcService.CreateUserSignUp(accessToken, userInput);
                 TempData["Message"] = "Success: Account has been successfully created";
                 return RedirectToAction("Login", "Account"); 
             }
@@ -85,6 +86,7 @@ namespace SpaceAdventures.MVC.Controllers
         public async Task<IActionResult> PostUser(UserInput userInput)
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");
+            userInput.Password = "Default";
 
             if (ModelState.IsValid)
             {
