@@ -11,9 +11,9 @@ public class NasaApiService : INasaApiService
     private readonly IConfiguration _configuration;
 
 
-    public NasaApiService(HttpClient httpClient, IConfiguration configuration)
+    public NasaApiService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
     {
-        _httpClient = httpClient;
+        _httpClient = httpClientFactory.CreateClient("RetryPolicy");
         _configuration = configuration;
     }
 

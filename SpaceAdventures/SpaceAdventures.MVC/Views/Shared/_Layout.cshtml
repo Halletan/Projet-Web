@@ -20,15 +20,13 @@
 
 <span id="role" class="d-none">@ViewContext.HttpContext.Session.GetString("Role")</span>
 
-
-<body class="bg"style="background-image: url('/backgrounds/backround_2.jpg')">
-
+<body class="bg" style="background-image: url('/backgrounds/background_2.jpg')">
 
 @*Navbar Start*@
 
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="neubar">
     <div class="container">
-        <a><i class="fa-solid fa-shuttle-space m-2"></i> Space Adventures</a>
+        <a id="logo" ><i class="fa-solid fa-shuttle-space m-2"></i> Space Adventures</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -70,7 +68,6 @@
                     }
                     /*** END ***/
 
-
                     /***  Bookings DropdownList ***/
 
 
@@ -79,10 +76,10 @@
                             <i class="fas fa-cart-shopping m-1"></i>Bookings
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            
+
                             @if (@ViewContext.HttpContext.Session.GetString("Role") == RolesType.User.ToString())
                             {
-                                
+
                                 <li>
                                     <a class="dropdown-item" asp-controller="" asp-action=""><i class="fa-solid fa-list m-2"></i> My Bookings</a>
                                 </li>
@@ -182,6 +179,7 @@
 
 @*Start Carousel*@
 
+
 @*End Carousel*@
 
 <div class="container">
@@ -192,11 +190,12 @@
 
 <footer class="footer position-fixed text-center">
     <div class="container">
-        &copy; Projet WEB | EPHEC 2021 - 2022 | By Antoine HALLET - Corention DECONNINCK - Hammadi CHADLI <a asp-area="" asp-controller="" asp-action=""></a>
+        &copy; Projet WEB | EPHEC 2021 - 2022 | By Antoine HALLET - Corention DECONNINCK - Hammadi CHADLI
     </div>
 </footer>
 </body>
 </html>
+
 
 <script src="~/lib/toastr.js/toastr.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>

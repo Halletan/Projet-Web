@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
 #myHeader { font-family: 'Rubik Glitch', cursive; }
 
@@ -41,12 +41,11 @@ body { margin-bottom: 60px; }
 
 .footer {
     background-color: #ddc1a0;
-    bottom: 0;
     color: black;
     line-height: 60px; /* Vertically center the text there */
-    position: absolute;
-    white-space: nowrap;
+    white-space: normal;
     width: 100%;
+    font-family: 'Righteous', cursive;
 }
 
 
@@ -77,5 +76,86 @@ body { margin-bottom: 60px; }
     width: 120px;
 }
 
+/****** Big Welcome Title CSS *******/
 
-/****** Carousel CSS *******/
+
+@keyframes showTopText {
+    0% {
+        transform: translate3d(0, 100%, 0);
+    }
+
+    40%, 60% {
+        transform: translate3d(0, 50%, 0);
+    }
+
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes showBottomText {
+    0% {
+        transform: translate3d(0, -100%, 0);
+    }
+
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.animated-title {
+    color: #f7e5cc;
+    font-family: 'Rubik Glitch', cursive;
+    height: 90vmin;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 90vmin;
+}
+
+.animated-title > div {
+    height: 50%;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+}
+
+.animated-title > div div {
+    font-size: 12vmin;
+    padding: 2vmin 0;
+    position: absolute;
+}
+
+.animated-title > div div span {
+    display: block;
+}
+
+    .animated-title > div.text-top {
+        border-bottom: 1vmin solid gray;
+        top: 0;
+    }
+
+.animated-title > div.text-top div {
+    animation: showTopText 1s;
+    animation-delay: 0.8s;
+    animation-fill-mode: forwards;
+    bottom: 0;
+    transform: translate(0, 100%);
+}
+
+    .animated-title > div.text-top div span:first-child {
+        color: #F1CDB5;
+    }
+
+.animated-title > div.text-bottom {
+    bottom: 0;
+}
+
+.animated-title > div.text-bottom div {
+    animation: showBottomText 0.5s;
+    animation-delay: 1.75s;
+    animation-fill-mode: forwards;
+    top: 0;
+    transform: translate(0, -100%);
+}

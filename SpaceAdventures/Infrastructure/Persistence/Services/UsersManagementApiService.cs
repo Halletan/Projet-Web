@@ -25,12 +25,12 @@ public class UsersManagementApiService : IUsersManagementApiService
 
     #region Constructor
 
-    public UsersManagementApiService(IConfiguration configuration, HttpClient httpClient, IMapper mapper, ISpaceAdventureDbContext context)
+    public UsersManagementApiService(IConfiguration configuration, IHttpClientFactory httpClientFactory, IMapper mapper, ISpaceAdventureDbContext context)
     {
         _configuration = configuration;
         _mapper = mapper;
         _context = context;
-        _httpClient = httpClient;
+        _httpClient = httpClientFactory.CreateClient("RetryPolicy");
     }
 
     #endregion
@@ -52,7 +52,7 @@ public class UsersManagementApiService : IUsersManagementApiService
         var token = await GetToken();
         var accessToken = token.access_token;
 
-        var fieldsToInclude = "?fields=user_id%2Cusername%2Cemail%2Cemail_verified";
+        const string fieldsToInclude = "?fields=user_id%2Cusername%2Cemail%2Cemail_verified";
         var endPoint = _configuration["Auth0ManagementApi:Audience"] + "users" + fieldsToInclude;
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
         var response = await _httpClient.GetAsync(endPoint, cancellation);

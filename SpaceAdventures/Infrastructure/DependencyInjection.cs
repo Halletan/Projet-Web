@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SpaceAdventures.Application.Common.Interfaces;
+using SpaceAdventures.Application.Common.RetryPolicies;
 using SpaceAdventures.Infrastructure.Persistence;
 using SpaceAdventures.Infrastructure.Persistence.Services;
 
@@ -26,14 +27,14 @@ public static class DependencyInjection
         services.AddScoped<IFlightService, FlightService>();
         services.AddScoped<IBookingService, BookingService>();
         
-        services.AddHttpClient<IUsersManagementApiService, UsersManagementApiService>();
+        services.AddScoped<IUsersManagementApiService, UsersManagementApiService>();
 
         // Policy Service
-        /* services.AddSingleton(new ClientPolicy());
-         services.AddHttpClient("RetryPolicy").AddPolicyHandler(request => new ClientPolicy().ExponentialHttpRetry);*/
+        services.AddSingleton(new ClientPolicy());
+        services.AddHttpClient("RetryPolicy").AddPolicyHandler(request => new ClientPolicy().ExponentialHttpRetry);
 
-        services.AddHttpClient<IISSCLService, ISSCLService>();
-        services.AddHttpClient<INasaApiService, NasaApiService>();
+        services.AddScoped<IISSCLService, ISSCLService>();
+        services.AddScoped<INasaApiService, NasaApiService>();
 
 
         return services;
