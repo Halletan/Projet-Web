@@ -124,10 +124,15 @@ namespace SpaceAdventures.MVC.Controllers
             };
 
             var bookingToShow = await _bookingService.CreateBooking(BookingToPost, token);
+
+            if (bookingToShow == null)
+            {
+                TempData["Message"] = "Error : Unable to confirm this reservation !";
+                return RedirectToAction("Index");
+            }
+
             TempData["Message"] = "Success : Your booking has been created successfully";
-            return RedirectToAction("Index" /*"GetAllReservationByIdClient"*/);
-            
-           // return View(booking);
+            return RedirectToAction("Index");
         }
 
 

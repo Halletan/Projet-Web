@@ -102,23 +102,15 @@ namespace SpaceAdventures.MVC.Services
         public async Task<List<UserRole>> GetUserRole(string id, string? accessToken)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            var response = await _httpClient.GetAsync($"https://localhost:7195/api/v1.0/Users/UserRoles/{id}");
 
-            try
-            {
-                var response = await _httpClient.GetAsync($"https://localhost:7195/api/v1.0/Users/UserRoles/{id}");
-                if (!response.IsSuccessStatusCode)
-                    throw new Exception("Cannot retrieve data");
+            if (!response.IsSuccessStatusCode)
+                throw new Exception("Cannot retrieve data");
 
-                var content = await response.Content.ReadAsStringAsync();
-                var userRoles = JsonConvert.DeserializeObject<List<UserRole>>(content);
+            var content = await response.Content.ReadAsStringAsync();
+            var userRoles = JsonConvert.DeserializeObject<List<UserRole>>(content);
 
-                return userRoles;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            return userRoles;
         }
         public async Task<string> GetRole(string? accessToken)
         {
