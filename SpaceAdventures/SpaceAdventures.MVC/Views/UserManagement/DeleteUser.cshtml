@@ -4,6 +4,8 @@
     ViewData["Title"] = "DeleteUser";
 }
 
+<br/><br/><br/>
+
 <<div id="myHeader" class="text-center mt-5 pt-5 text-white">
     <h1 class="display-4">Space Adventures</h1>
     <h2>Delete a user</h2>
@@ -13,9 +15,9 @@
 
 
 
-<div class="mt-4" >
+<div class="mt-5" >
     
-    <dl class="row border rounded px-2 " style="background-color:rgba(255,255,255,0.6)">
+    <dl class="row border rounded px-2 " style="background-color:rgba(255,255,255,0.5)">
         <dt class = "col-sm-2 d-none">
             @Html.DisplayNameFor(model => model.IdUser)
         </dt>
@@ -48,8 +50,7 @@
         </dd>
     </dl>
     
-    <form asp-action="DeleteUser" asp-route-id=@Model.IdUser>
-        <input type="submit" value="Delete" class="btn btn-danger ml-2" />  <a class="btn btn-info" asp-action="GetAllUsers">Back to List</a>
-        
+    <form asp-action="DeleteUser" asp-route-id=@Model.IdUser  class="text-end">
+        <input type="submit" value="Delete" class="btn btn-outline-danger" />  <a class="btn btn-outline-info m-3" asp-action="GetAllUsers">Back to List</a>
     </form>
 </div>
