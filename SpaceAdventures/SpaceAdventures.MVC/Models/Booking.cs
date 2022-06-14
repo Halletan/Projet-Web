@@ -20,6 +20,12 @@ public class Booking
 
     [DisplayName("Itinerary")]
     public int IdItinerary { get; set; }
+
+    public string? airport1Name { get; set; }  // Test en cours Corentin
+    public string? airport2Name { get; set; } // Test en cours Corentin
+    public string? planet1Name { get; set; }  // Test en cours Corentin
+    public string? planet2Name { get; set; }  // Test en cours Corentin
+
 }
 
 [Serializable]

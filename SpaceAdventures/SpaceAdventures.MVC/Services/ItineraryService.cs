@@ -27,6 +27,17 @@ public class ItineraryService : IItineraryService
         return JsonConvert.DeserializeObject<Itineraries>(content);
     }
 
+    public async Task<Itinerary> GetItineraryById(int id, string? accessToken)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+        var response = await _httpClient.GetAsync("https://localhost:7195/api/v1.0/Itineraries/GetItineraryById/"+id);
+
+        if (!response.IsSuccessStatusCode) throw new Exception("Cannot retrieve data");
+
+        var content = await response.Content.ReadAsStringAsync();
+        return JsonConvert.DeserializeObject<Itinerary>(content);
+    }
+
     public async Task<Itineraries> GetItinerariesByDestinationPlanet(string planetName, string? accessToken)
     {
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);

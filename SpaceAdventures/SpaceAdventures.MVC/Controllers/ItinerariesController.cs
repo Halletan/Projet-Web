@@ -23,6 +23,12 @@ public class ItinerariesController : Controller
         return View(await _itineraryService.GetAllItineraries(await HttpContext.GetTokenAsync("access_token")));
     }
 
+    //En cours corentin
+    public async Task<Itinerary> GetItineraryById(int id)
+    {
+        return await _itineraryService.GetItineraryById(id, await HttpContext.GetTokenAsync("access_token"));
+    }
+
     public async Task<Itineraries> GetItinerariesByDestinationPlanet(string planetName)
     {
        return await _itineraryService.GetItinerariesByDestinationPlanet(planetName, await HttpContext.GetTokenAsync("access_token"));

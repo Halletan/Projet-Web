@@ -17,6 +17,7 @@ namespace SpaceAdventures.MVC.Controllers
         private readonly IItineraryService _itineraryService;
         private readonly IAirportService _airportService;
         private readonly IPlanetService _planetService;
+        private readonly IFlightService _flightService;
 
         #region Constructor
         public BookingController(IBookingService bookingService,
@@ -25,7 +26,8 @@ namespace SpaceAdventures.MVC.Controllers
             IUserManagementMvcService userManagement,
             IItineraryService itineraryService,
             IAirportService airportService,
-            IPlanetService planetService)
+            IPlanetService planetService,
+            IFlightService flightService)
         {
             _bookingService = bookingService;
             _nasaService = nasaService;
@@ -34,6 +36,7 @@ namespace SpaceAdventures.MVC.Controllers
             _itineraryService = itineraryService;
             _airportService = airportService;
             _planetService = planetService;
+            _flightService = flightService;
         }
 
         #endregion
@@ -48,13 +51,53 @@ namespace SpaceAdventures.MVC.Controllers
         public async Task<IActionResult> GetAllBookings()
         {
             var token = await HttpContext.GetTokenAsync("access_token");
-            return View(await _bookingService.GetAllBookings(token));
+
+            var result = await _bookingService.GetAllBookings(token);
+
+            foreach (var booking in result.BookingsList)  // Test en cours Corentin
+            {
+                Flight flight = await _flightService.GetFlightById(booking.IdFlight, token);
+
+                Itinerary itinerary = await _itineraryService.GetItineraryById(flight.IdItinerary, token);
+                booking.IdItinerary = itinerary.IdItinerary;
+                Airport airport1 = await _airportService.GetAirportById(itinerary.IdAirport1, token);
+                booking.airport1Name = airport1.Name;
+                Airport airport2 = await _airportService.GetAirportById(itinerary.IdAirport2, token);
+                booking.airport2Name = airport2.Name;
+
+                Planet planet1 = await _planetService.GetPlanetById(airport1.IdPlanet, token);
+                booking.planet1Name = planet1.Name;
+                Planet planet2 = await _planetService.GetPlanetById(airport2.IdPlanet, token);
+                booking.planet2Name = planet2.Name;
+            }
+            return View(result);
         }
 
         public async Task<IActionResult> GetBookingsByClient(int id)
         {
             var token = await HttpContext.GetTokenAsync("access_token");
-            return View(await _bookingService.GetBookingsByClient(id, token));
+
+
+            var result = await _bookingService.GetBookingsByClient(id, token);
+
+            foreach(var booking in result.BookingsList)  // Test en cours Corentin
+            {
+                Flight flight = await _flightService.GetFlightById(booking.IdFlight, token);
+                
+                Itinerary itinerary = await _itineraryService.GetItineraryById(flight.IdItinerary, token);
+                booking.IdItinerary = itinerary.IdItinerary;
+                Airport airport1 = await _airportService.GetAirportById(itinerary.IdAirport1, token);
+                booking.airport1Name = airport1.Name;
+                Airport airport2 = await _airportService.GetAirportById(itinerary.IdAirport2, token);
+                booking.airport2Name = airport2.Name;
+
+                Planet planet1 = await _planetService.GetPlanetById(airport1.IdPlanet, token);
+                booking.planet1Name = planet1.Name;
+                Planet planet2 = await _planetService.GetPlanetById(airport2.IdPlanet, token);
+                booking.planet2Name = planet2.Name;
+            }
+
+            return View(result);
         }
 
         #region Create Booking
@@ -124,13 +167,6 @@ namespace SpaceAdventures.MVC.Controllers
 
             var email = User.FindFirstValue(ClaimTypes.Email);
             var clientTemp  = await _clientService.GetClientByEmail(email, token);
-
-            //Booking BookingToPost = new Booking()
-            //{
-            //    IdFlight = booking.IdFlight,
-            //    NbSeats = booking.NbSeats,
-            //    IdClient = clientTemp.IdClient
-            //};
 
             booking.IdClient = clientTemp.IdClient;
 

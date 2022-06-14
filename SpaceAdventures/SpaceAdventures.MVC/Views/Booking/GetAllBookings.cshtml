@@ -18,6 +18,10 @@
             <th>Client Id</th>
             <th>Flight Id</th>
             <th>Number of seats</th>
+            <th> Planet of departure</th>
+            <th> Aiport of departure</th>
+            <th> Planet of arrival</th>
+            <th> Airport of arrival </th>
             <th>Action</th>
         </tr>
     </thead>
@@ -33,7 +37,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.NbSeats)
             </td>
-
+             <td>
+                @Html.DisplayFor(modelItem => item.planet1Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.airport1Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.planet2Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.airport2Name)
+            </td>
             <td>         
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })                
             </td>
