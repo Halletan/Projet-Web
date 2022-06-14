@@ -29,7 +29,6 @@ public class AircraftsController : ControllerBase
     /// <summary>
     ///     Get a list of all Aircrafts
     /// </summary>
-    //[HttpGet]
     [HttpGet]
     [Authorize(Policy = "read:messages")]
     [ProducesResponseType(StatusCodes.Status200OK)]
