@@ -48,9 +48,9 @@ public class BookingService : IBookingService
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
         var response = await _httpClient.PostAsync("https://localhost:7195/api/v1.0/Bookings/CreateBooking", new StringContent(postBody, Encoding.UTF8, "application/json"));
 
-        if (!response.IsSuccessStatusCode) throw new Exception("Cannot retrieve data");
+        if (!response.IsSuccessStatusCode) return null!;
 
         var content = await response.Content.ReadAsStringAsync();
-        return JsonConvert.DeserializeObject<Booking>(content);
+        return JsonConvert.DeserializeObject<Booking>(content)!;
     }
 }
