@@ -31,7 +31,10 @@ public class BookingsController : ControllerBase
     /// <summary>
     ///     Get a list of all Bookings
     /// </summary>
+<<<<<<< Updated upstream
     
+=======
+>>>>>>> Stashed changes
     [HttpGet]
     [Authorize(Policy = "read:messages")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -44,7 +47,7 @@ public class BookingsController : ControllerBase
     /// <summary>
     ///     Get a list of all Bookings for a specific client
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="clientId"></param>
     [HttpGet]
     [Route("GetBookingsByClient/{clientId}")]
     [Authorize(Policy = "read:messages")]
@@ -62,7 +65,7 @@ public class BookingsController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet]
-    [Route("GetById")]
+    [Route("GetById/{id}")]
     [Authorize(Policy = "read:messages")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

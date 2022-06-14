@@ -41,7 +41,7 @@ public class ClientsController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet]
-    [Route("GetById")]
+    [Route("GetById/{id}")]
     [Authorize(Policy = "read:messages")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -93,8 +93,9 @@ public class ClientsController : ControllerBase
     [Authorize(Policy = "write:messages")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ClientDto>> UpdateClient([FromBody] UpdateClientCommand command)
+    public async Task<ActionResult<ClientDto>> UpdateClient([FromBody] ClientInput clientInput)
     {
+        UpdateClientCommand command = new UpdateClientCommand(clientInput);
         return Ok(await _mediator.Send(command));
     }
 

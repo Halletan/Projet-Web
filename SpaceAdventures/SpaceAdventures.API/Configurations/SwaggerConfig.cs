@@ -31,12 +31,12 @@ public class SwaggerConfig : IConfigureOptions<SwaggerGenOptions>
             Version = description.ApiVersion.ToString(),
             Title = "Space Adventures API",
             Description = "An API managing travel and reservations to planets",
-            TermsOfService = new Uri("https://github.com/Djounna/Projet-Web/blob/main/README.md"),
+            TermsOfService = new Uri("https://github.com/hchadli/Projet-Web/blob/main/README.md"),
 
             Contact = new OpenApiContact
             {
                 Name = "Antoine HALLET | Corentin DECONNINCK | Hammadi CHADLI",
-                Url = new Uri("https://github.com/Djounna/Projet-Web")
+                Url = new Uri("https://github.com/hchadli/Projet-Web")
             },
             License = new OpenApiLicense
             {

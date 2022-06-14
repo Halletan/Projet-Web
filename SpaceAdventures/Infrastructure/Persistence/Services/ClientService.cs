@@ -78,12 +78,12 @@ public class ClientService : IClientService
         }
     }
 
-    public async Task<ClientDto> UpdateClient(int clientId, ClientInput clientInput,
+    public async Task<ClientDto> UpdateClient(ClientInput clientInput,
         CancellationToken cancellation = default)
     {
-        var client = await _context.Clients.FindAsync(clientId);
+        var client = await _context.Clients.FindAsync(clientInput.IdClient);
 
-        if (client == null) throw new NotFoundException(nameof(Client), clientId);
+        if (client == null) throw new NotFoundException(nameof(Client), clientInput.IdClient);
 
         try
         {
