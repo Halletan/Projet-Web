@@ -15,6 +15,7 @@
 <table id="datatable" class="table border rounded">
     <thead class ="dataTableColumn">
         <tr>
+            <th>Client Id</th>
             <th>Flight Id</th>
             <th>Number of seats</th>
             <th>Action</th>
@@ -23,7 +24,9 @@
     <tbody class ="dataTableColumn" >
 @foreach (var item in Model.BookingsList) {
         <tr>
-
+            <td>
+                @Html.DisplayFor(modelItem => item.IdClient)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdFlight)
             </td>
