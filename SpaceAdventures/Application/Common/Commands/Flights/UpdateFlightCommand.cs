@@ -4,7 +4,7 @@ using SpaceAdventures.Application.Common.Queries.Flights;
 
 namespace SpaceAdventures.Application.Common.Commands.Flights;
 
-public record UpdateFlightCommand(int Id, FlightInput flightInput) : IRequest<FlightDto>;
+public record UpdateFlightCommand(FlightInput flightInput) : IRequest<FlightDto>;
 
 public class UpdateFlightCommandHandler : IRequestHandler<UpdateFlightCommand, FlightDto>
 {
@@ -17,6 +17,6 @@ public class UpdateFlightCommandHandler : IRequestHandler<UpdateFlightCommand, F
 
     public async Task<FlightDto> Handle(UpdateFlightCommand request, CancellationToken cancellationToken)
     {
-        return await _flightService.UpdateFlight(request.Id, request.flightInput, cancellationToken);
+        return await _flightService.UpdateFlight(request.flightInput.IdFlight, request.flightInput, cancellationToken);
     }
 }

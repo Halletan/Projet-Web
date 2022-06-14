@@ -23,7 +23,6 @@ public class ISSCLController : ControllerBase
     /// </summary>
     /// <returns>The position of the space station</returns>
     [HttpGet]
-    // [Authorize]
     public async Task<ActionResult<ISSCLPosition>> GetPostion()
     {
         return Ok(await _mediator.Send(new ISSCLQuery()));

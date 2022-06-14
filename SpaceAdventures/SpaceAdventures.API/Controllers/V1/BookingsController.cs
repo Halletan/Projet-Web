@@ -31,10 +31,6 @@ public class BookingsController : ControllerBase
     /// <summary>
     ///     Get a list of all Bookings
     /// </summary>
-<<<<<<< Updated upstream
-    
-=======
->>>>>>> Stashed changes
     [HttpGet]
     [Authorize(Policy = "read:messages")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -102,8 +98,9 @@ public class BookingsController : ControllerBase
     [Authorize(Policy = "write:messages")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<BookingDto>> UpdateBooking([FromBody] UpdateBookingCommand command)
+    public async Task<ActionResult<BookingDto>> UpdateBooking([FromBody] BookingInput bookingInput)
     {
+        UpdateBookingCommand command = new UpdateBookingCommand(bookingInput);
         return Ok(await _mediator.Send(command));
     }
 

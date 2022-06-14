@@ -40,7 +40,7 @@ public class FlightsController : ControllerBase
     }
 
     /// <summary>
-    ///     Get a sepicif Flight by id
+    ///     Get a specific Flight by id
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -79,8 +79,9 @@ public class FlightsController : ControllerBase
     [Authorize(Policy = "write:messages")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<FlightDto>> CreateFlight([FromBody] CreateFlightCommand command)
+    public async Task<ActionResult<FlightDto>> CreateFlight([FromBody] FlightInput flightInput)
     {
+        CreateFlightCommand command = new CreateFlightCommand(flightInput);
         return Ok(await _mediator.Send(command));
     }
 
@@ -95,8 +96,9 @@ public class FlightsController : ControllerBase
     [Authorize(Policy = "write:messages")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<FlightDto>> UpdateFlight([FromBody] UpdateFlightCommand command)
+    public async Task<ActionResult<FlightDto>> UpdateFlight([FromBody] FlightInput flightInput)
     {
+        UpdateFlightCommand command = new UpdateFlightCommand(flightInput); 
         return Ok(await _mediator.Send(command));
     }
 

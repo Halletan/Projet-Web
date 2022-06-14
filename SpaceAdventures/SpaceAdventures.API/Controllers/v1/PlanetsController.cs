@@ -63,8 +63,9 @@ public class PlanetsController : ControllerBase
     [Authorize(Policy = "write:messages")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<PlanetDto>> CreatePlanet([FromBody] CreatePlanetCommand command)
+    public async Task<ActionResult<PlanetDto>> CreatePlanet([FromBody] PlanetInput planetInput)
     {
+        CreatePlanetCommand command = new CreatePlanetCommand(planetInput);
         return Ok(await _mediator.Send(command));
     }
 
@@ -79,8 +80,9 @@ public class PlanetsController : ControllerBase
     [Authorize(Policy = "write:messages")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<PlanetDto>> UpdatePlanet([FromBody] UpdatePlanetCommand command)
+    public async Task<ActionResult<PlanetDto>> UpdatePlanet([FromBody] PlanetInput planetInput)
     {
+        UpdatePlanetCommand command = new UpdatePlanetCommand(planetInput);
         return Ok(await _mediator.Send(command));
     }
 

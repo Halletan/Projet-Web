@@ -4,7 +4,7 @@ using SpaceAdventures.Application.Common.Queries.Itineraries;
 
 namespace SpaceAdventures.Application.Common.Commands.Itineraries;
 
-public record UpdateItineraryCommand(int Id, ItineraryInput itineraryInput) : IRequest<ItineraryDto>;
+public record UpdateItineraryCommand(ItineraryInput itineraryInput) : IRequest<ItineraryDto>;
 
 public class UpdateItineraryCommandHandler : IRequestHandler<UpdateItineraryCommand, ItineraryDto>
 {
@@ -17,6 +17,6 @@ public class UpdateItineraryCommandHandler : IRequestHandler<UpdateItineraryComm
 
     public async Task<ItineraryDto> Handle(UpdateItineraryCommand request, CancellationToken cancellationToken)
     {
-        return await _itineraryService.UpdateItinerary(request.Id, request.itineraryInput, cancellationToken);
+        return await _itineraryService.UpdateItinerary(request.itineraryInput.IdItinerary, request.itineraryInput, cancellationToken);
     }
 }

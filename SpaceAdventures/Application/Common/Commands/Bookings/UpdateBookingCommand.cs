@@ -4,7 +4,7 @@ using SpaceAdventures.Application.Common.Queries.Bookings;
 
 namespace SpaceAdventures.Application.Common.Commands.Bookings;
 
-public record UpdateBookingCommand(int Id, BookingInput bookingInput) : IRequest<BookingDto>;
+public record UpdateBookingCommand(BookingInput bookingInput) : IRequest<BookingDto>;
 
 public class UpdateBookingCommandHandler : IRequestHandler<UpdateBookingCommand, BookingDto>
 {
@@ -17,6 +17,6 @@ public class UpdateBookingCommandHandler : IRequestHandler<UpdateBookingCommand,
 
     public async Task<BookingDto> Handle(UpdateBookingCommand request, CancellationToken cancellationToken)
     {
-        return await _bookingService.UpdateBooking(request.Id, request.bookingInput, cancellationToken);
+        return await _bookingService.UpdateBooking(request.bookingInput.IdBooking, request.bookingInput, cancellationToken);
     }
 }

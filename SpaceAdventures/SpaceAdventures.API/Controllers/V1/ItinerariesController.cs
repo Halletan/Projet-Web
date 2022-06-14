@@ -79,8 +79,9 @@ public class ItinerariesController : ControllerBase
     [Authorize(Policy = "write:messages")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<ItineraryDto>> CreateItinerary([FromBody] CreateItineraryCommand command)
+    public async Task<ActionResult<ItineraryDto>> CreateItinerary([FromBody] ItineraryInput itineraryInput)
     {
+        CreateItineraryCommand command = new CreateItineraryCommand(itineraryInput);
         return Ok(await _mediator.Send(command));
     }
 
@@ -95,8 +96,9 @@ public class ItinerariesController : ControllerBase
     [Authorize(Policy = "write:messages")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ItineraryDto>> UpdateItinerary([FromBody] UpdateItineraryCommand command)
+    public async Task<ActionResult<ItineraryDto>> UpdateItinerary([FromBody] ItineraryInput itineraryInput)
     {
+        UpdateItineraryCommand command = new UpdateItineraryCommand(itineraryInput);
         return Ok(await _mediator.Send(command));
     }
 
