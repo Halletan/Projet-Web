@@ -15,11 +15,13 @@ public class HomeController : Controller
 
     private readonly IHttpContextAccessor _accessor;
     private readonly IUserManagementMvcService _userManagementMvcService;
+    private readonly IClientService _clientService;
 
-    public HomeController(IHttpContextAccessor accessor, IUserManagementMvcService userManagementMvcService)
+    public HomeController(IHttpContextAccessor accessor, IUserManagementMvcService userManagementMvcService, IClientService clientService)
     {
         _accessor = accessor;
         _userManagementMvcService = userManagementMvcService;
+        _clientService = clientService;
     }
 
     public async Task<IActionResult> Index()
@@ -34,8 +36,20 @@ public class HomeController : Controller
 
             HttpContext.Session.SetString("Role", await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token")));
 
+            // Fetch Client id associated with User and pass it to the Layout view through ViewBag
+            string userEmail = User.FindFirstValue(ClaimTypes.Email);
+            try
+            {
+                Client? clientUser = await _clientService.GetClientByEmail(userEmail, await HttpContext.GetTokenAsync("access_token"));
+                
+                ViewBag.ClientUserId = clientUser.IdClient;
+            }
+            catch (Exception)
+            {
+                ViewBag.ClientUserId = null;
+            }
+            
 
-           TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
             TempData["Message"] = "Logged as : " + User.Identity.Name;
         }
 
