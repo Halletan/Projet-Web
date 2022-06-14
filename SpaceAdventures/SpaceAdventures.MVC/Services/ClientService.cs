@@ -69,7 +69,7 @@ public class ClientService : IClientService
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
         var response = await _httpClient.GetAsync("https://localhost:7195/api/v1.0/Clients/GetClientByEmail/" + Email );
 
-        if (!response.IsSuccessStatusCode) throw new Exception("Cannot retrieve data");
+        if (!response.IsSuccessStatusCode) return null;
 
         var content = await response.Content.ReadAsStringAsync();
         var data = JsonConvert.DeserializeObject<Client>(content);

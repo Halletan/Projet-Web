@@ -15,13 +15,13 @@
 <table id="datatable" class="table border rounded">
     <thead class ="dataTableColumn">
         <tr>
-            <th>Flight Id</th>
+            <th>Flight number</th>
             <th>Number of seats</th>
             <th> Planet of departure</th>
             <th> Aiport of departure</th>
             <th> Planet of arrival</th>
             <th> Airport of arrival </th>
-            <th>Action</th>
+            
         </tr>
     </thead>
     <tbody class ="dataTableColumn" >
@@ -46,9 +46,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.airport2Name)
             </td>
-            <td>         
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })                
-            </td>
+            
         </tr>
 }
     </tbody>

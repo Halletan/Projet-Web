@@ -15,12 +15,11 @@ namespace SpaceAdventures.API.Controllers.V1;
 public class NASAController : ControllerBase
 {
     private readonly IMediator _mediator;
-    private readonly ILogger<NASAController> _logger;
+    
 
-    public NASAController(IMediator mediator, ILogger<NASAController> logger)
+    public NASAController(IMediator mediator)
     {
-        _mediator = mediator;
-        _logger = logger;
+        _mediator = mediator;       
     }
 
     /// <summary>

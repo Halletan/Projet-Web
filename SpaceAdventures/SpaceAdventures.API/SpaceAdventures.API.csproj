@@ -28,8 +28,4 @@
     <ProjectReference Include="..\Infrastructure\SpaceAdventures.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Middlewares\" />
-  </ItemGroup>
-
 </Project>

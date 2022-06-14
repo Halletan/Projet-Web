@@ -199,7 +199,7 @@ public class UsersManagementApiService : IUsersManagementApiService
                 {"name", userInput.Firstname + " " + userInput.Lastname},
                 {"nickname", userInput.Username},
                 {"password", passwordToPost},
-                {"username", userInput.Username},                    // Please DO NOT delete this line, Because Hammadi uses for insert its users
+                {"username", userInput.Username},  
             }), cancellationToken);
 
 
@@ -232,8 +232,7 @@ public class UsersManagementApiService : IUsersManagementApiService
     {
         try
         {
-            //User user = await _context.Users.FindAsync(userId); // .AsNoTracking()
-
+            
             User user = await _context.Users.Where(u => u.IdUser == userId).AsNoTracking().FirstOrDefaultAsync();
 
             if (user.IdRole != userInput.IdRole)
@@ -244,7 +243,7 @@ public class UsersManagementApiService : IUsersManagementApiService
                 bool assignRoleOk = await AssignRole(user, cancellationToken);
             }
 
-            if(/*user.Username != userInput.Username ||*/ user.Email != userInput.Email)
+            if(user.Username != userInput.Username || user.Email != userInput.Email)
             {              
                 user = await UpdateUserInAuth0(user.IdUserAuth0, userInput, cancellationToken);
                 user.IdUser = userId;
@@ -282,12 +281,14 @@ public class UsersManagementApiService : IUsersManagementApiService
         var accessToken = token.access_token;
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
-            //var payload = JsonConvert.SerializeObject(user); //new StringContent(payload, Encoding.UTF8, "application/json"));
-
+           
             var response = await _httpClient.PatchAsync(_configuration["Auth0ManagementApi:Audience"] + "users/" + idAuth0, new FormUrlEncodedContent(
            new Dictionary<string, string>
            {
-                {"email", userInput.Email}
+                {"email", userInput.Email},
+                {"verify_email","true"},
+                {"username", userInput.Username}
+
            }), cancellationToken);
 
         if (!response.IsSuccessStatusCode)

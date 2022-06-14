@@ -15,16 +15,15 @@ namespace SpaceAdventures.API.Controllers.v1;
 public class UsersController : ControllerBase
 {
     private readonly IMediator _mediator;
-    private readonly ILogger<UsersController> _logger;
+    
 
     /// <summary>
     ///     Users Constructor
     /// </summary>
     /// <param name="mediator"></param>
-    public UsersController(IMediator mediator, ILogger<UsersController> logger)
+    public UsersController(IMediator mediator)
     {
-        _mediator = mediator;
-        _logger = logger;
+        _mediator = mediator;       
     }
 
     #region User

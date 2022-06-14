@@ -38,18 +38,18 @@ public class HomeController : Controller
 
             // Fetch Client id associated with User and pass it to the Layout view through ViewBag
             string userEmail = User.FindFirstValue(ClaimTypes.Email);
-            try
-            {
-                Client? clientUser = await _clientService.GetClientByEmail(userEmail, await HttpContext.GetTokenAsync("access_token"));
+            
+                Client clientUser = await _clientService.GetClientByEmail(userEmail, await HttpContext.GetTokenAsync("access_token"));
                 
+            if(clientUser != null)
+            {
                 ViewBag.ClientUserId = clientUser.IdClient;
             }
-            catch (Exception)
+            else
             {
                 ViewBag.ClientUserId = null;
             }
-            
-
+                   
             TempData["Message"] = "Logged as : " + User.Identity.Name;
         }
 

@@ -12,18 +12,18 @@ namespace SpaceAdventures.API.Controllers.V1;
 [Route("api/v{version:apiVersion}/[controller]")]
 public class AirportsController : ControllerBase
 {
-    private readonly ILogger<AirportsController> _logger;
+    
     private readonly IMediator _mediator;
 
     /// <summary>
     ///     Airports Controller Constructor
     /// </summary>
     /// <param name="mediator"></param>
-    /// <param name="logger"></param>
-    public AirportsController(IMediator mediator, ILogger<AirportsController> logger)
+    
+    public AirportsController(IMediator mediator)
     {
         _mediator = mediator;
-        _logger = logger;
+       
     }
 
     /// <summary>
