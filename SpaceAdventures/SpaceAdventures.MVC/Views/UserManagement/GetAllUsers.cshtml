@@ -1,6 +1,6 @@
 ﻿@using SpaceAdventures.MVC.Models.Enums
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@model IEnumerable<UserVm>
+@model Users
 @{
     ViewData["Title"] = "GetAllUser";
 }
@@ -36,7 +36,7 @@ else
     </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.UsersList) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Username)
@@ -45,7 +45,7 @@ else
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Role)
+                @Html.DisplayFor(modelItem => item.RoleName)
             </td>
           @if (ViewContext.HttpContext.Session.GetString("Role") == RolesType.Owner.ToString())
             {

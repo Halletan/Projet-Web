@@ -35,7 +35,7 @@ public class HomeController : Controller
             HttpContext.Session.SetString("Role", await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token")));
 
 
-           // TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
+           TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
             TempData["Message"] = "Logged as : " + User.Identity.Name;
         }
 
