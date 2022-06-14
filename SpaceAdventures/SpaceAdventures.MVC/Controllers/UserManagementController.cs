@@ -20,22 +20,7 @@ namespace SpaceAdventures.MVC.Controllers
         public async Task<IActionResult> GetAllUsers()
         {
             var result = await _userManagementMvcService.GetAllUsers(await HttpContext.GetTokenAsync("access_token"));
-            //var list = new List<UserVm>();
-
-            //foreach (User user in result.UsersList)
-            //{
-            //    var vm = new UserVm
-            //    {
-            //        Email = user.Email,
-            //        Username = user.Username
-            //    };
-            //    var userRole = await _userManagementMvcService.GetRoleByIdRole(user.IdRole,
-            //        await HttpContext.GetTokenAsync("access_token"));
-            //    vm.Role = userRole.Name;
-            //    list.Add(vm);
-            //}
-            //TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
-
+            
             foreach (User user in result.UsersList)
             {
                 var userRole = await _userManagementMvcService.GetRoleByIdRole(user.IdRole,
@@ -121,7 +106,7 @@ namespace SpaceAdventures.MVC.Controllers
         {
             await _userManagementMvcService.DeleteUser(await HttpContext.GetTokenAsync("access_token"), id);
 
-            //ErrorMessage if Delete NOK.
+            
             TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
             TempData["Message"] = "Success: User removed successfully";
             return RedirectToAction("GetAllUsers");
@@ -136,7 +121,7 @@ namespace SpaceAdventures.MVC.Controllers
             var user = await _userManagementMvcService.GetUserByEmail(email, await HttpContext.GetTokenAsync("access_token"));
             var role = await _userManagementMvcService.GetRoleByIdRole(user.IdRole, await HttpContext.GetTokenAsync("access_token"));
             ViewBag.roleName = role.Name;
-            //TempData["IdUser"] = user.IdUser;
+            
             var rolesList = await _userManagementMvcService.GetAllRole(await HttpContext.GetTokenAsync("access_token"));
             var rolesDropDownList = new SelectList(rolesList.RolesList, "IdRole", "Name");
             ViewBag.listRole = rolesDropDownList;
@@ -145,22 +130,11 @@ namespace SpaceAdventures.MVC.Controllers
 
         [HttpPost]
         [ActionName(nameof(UpdateUser))]
-        public async Task<IActionResult> UpdtUser(UserDto userDto)
+        public async Task<IActionResult> UpdtUser(User user)
         {
 
-            var userInput = new UserInput
-            {
-                // TODO need to find a better way
-                Username = userDto.Username,
-                Email = userDto.Email,
-                IdRole = userDto.IdRole,
-                Firstname = "John",
-                Lastname = "Doe",
-                Password = "test",
-                Connection = "test"
-            };
-            await _userManagementMvcService.UpdateUser(await HttpContext.GetTokenAsync("access_token"), userDto.IdUser, userInput);
-            //ErrorMessage if Delete NOK.
+            await _userManagementMvcService.UpdateUser(await HttpContext.GetTokenAsync("access_token"), user);
+            
             TempData["Message"] = "Success: User has been successfully Updated";
             return RedirectToAction(nameof(GetAllUsers));
         }

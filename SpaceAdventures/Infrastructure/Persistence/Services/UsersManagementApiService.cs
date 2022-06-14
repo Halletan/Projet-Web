@@ -165,12 +165,10 @@ public class UsersManagementApiService : IUsersManagementApiService
         }
     }
 
-
     public async Task<bool> UserExists(string email)
     {
         return await _context.Users.AnyAsync(c => c.Email==email);
     }
-
 
     public async Task<User> CreateUserAuth0(UserInput userInput, CancellationToken cancellationToken)
     {
