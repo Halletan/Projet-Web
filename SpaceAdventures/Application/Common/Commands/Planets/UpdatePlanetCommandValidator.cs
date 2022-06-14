@@ -11,7 +11,7 @@ public class UpdatePlanetCommandValidator : AbstractValidator<UpdatePlanetComman
             .NotEmpty().WithMessage("Planet's name is mandatory")
             .MaximumLength(50).WithMessage("Planet's name should not exceed 50 characters");
 
-        RuleFor(n => n.Id)
+        RuleFor(n => n.planetInput.IdPlanet)
             .Must((data, id) =>
             {
                 var exists = planetService.PlanetExists(id, data.planetInput);

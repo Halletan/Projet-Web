@@ -19,7 +19,7 @@ public class UpdateClientCommandValidator : AbstractValidator<UpdateClientComman
             .EmailAddress().WithMessage("Invalid email address")
             .NotNull().WithMessage("Email is required");
 
-        RuleFor(c => c.Id)
+        RuleFor(c => c.ClientInput.IdClient)
             .NotNull().WithMessage("Client Id is required")
             .GreaterThanOrEqualTo(1).WithMessage("Should be greater than or equal to 1")
             .Must((data, id) =>
