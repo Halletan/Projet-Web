@@ -29,7 +29,7 @@ namespace SpaceAdventures.MVC.Models
 
         public string Connection { get; set; }
 
-        public string IdUserAuth0 { get; set; }
+        //public string IdUserAuth0 { get; set; }
 
         [DisplayName("Role")]                   // added, in test
         public int IdRole { get; set; }         // changed from idRole, in test
