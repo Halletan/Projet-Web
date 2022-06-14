@@ -28,6 +28,18 @@ public class ClientService : IClientService
         return JsonConvert.DeserializeObject<Clients>(content);
     }
 
+    public async Task<Client> GeClientByIdUser(int id, string? accessToken)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+        var response = await _httpClient.GetAsync("https://localhost:7195/api/v1.0/Clients/GetClientByIdUser/"+id);
+
+        if (!response.IsSuccessStatusCode)
+            throw new Exception("Cannot retrieve data");
+
+        var content = await response.Content.ReadAsStringAsync();
+        return JsonConvert.DeserializeObject<Client>(content);
+    }
+
     public async Task<int> GetClientsCount(string? accessToken)
     {
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);

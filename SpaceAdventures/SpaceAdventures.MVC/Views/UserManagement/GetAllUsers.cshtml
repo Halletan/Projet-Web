@@ -51,14 +51,14 @@ else
             {
             <td>
                 <a class="btn btn-dark btn-sm" asp-action="UpdateUser" asp-route-Email="@item.Email"><i class="fa-solid fa-pen m-2"></i></a> |
-                <a class="btn btn-danger btn-sm" asp-action="DeleteUser" asp-route-email ="@item.Email"><i class="fa-solid fa-trash m-2"></i></a>
+                <a class="btn btn-danger btn-sm" asp-action="DeleteUser" asp-route-id ="@item.IdUser"><i class="fa-solid fa-trash m-2"></i></a>
             </td>
             }
           else
           {
               <td>
                   <a class="btn btn-dark btn-sm disabled" asp-action="UpdateUser" asp-route-Email="@item.Email"><i class="fa-solid fa-pen m-2"></i></a> |
-                  <a class="btn btn-danger btn-sm disabled" asp-action="DeleteUser" asp-route-email ="@item.Email"><i class="fa-solid fa-trash m-2"></i></a>
+                  <a class="btn btn-danger btn-sm disabled" asp-action="DeleteUser" asp-route-id ="@item.IdUser"><i class="fa-solid fa-trash m-2"></i></a>
               </td>
           }
         </tr>

@@ -102,11 +102,6 @@ public class BookingService : IBookingService
         await _context.SaveChangesAsync(cancellation);
     }
 
-    //public bool BookingExists(int? id, BookingInput BookingInput)
-    //{
-    //    return _context.Bookings.Any(c => c.IdBooking != id);
-    //}
-
     public bool FlightExists(int id)
     {
         return _context.Flights.Any(f => f.IdFlight == id);

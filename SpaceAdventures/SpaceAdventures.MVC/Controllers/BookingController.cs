@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CodeActions;
 using SpaceAdventures.MVC.Models;
 using SpaceAdventures.MVC.Models.NASA;
 using SpaceAdventures.MVC.Services.Interfaces;
@@ -159,11 +160,25 @@ namespace SpaceAdventures.MVC.Controllers
                 Email = User.FindFirstValue(ClaimTypes.Email)
             };
 
-            bool ClientExist = await _clientService.ClientExist(client, token);
+            var flight = await _flightService.GetFlightById(booking.IdFlight, token);
+
+            if (booking.NbSeats > flight.RemainingSeats)
+            {
+                var itinerary = await _itineraryService.GetItineraryById(flight.IdItinerary, token);
+                var airport = await _airportService.GetAirportById(itinerary.IdAirport2, token);
+                var planet = await _planetService.GetPlanetById(airport.IdPlanet, token);
+                var planetName = planet.Name;
+
+                TempData["Message"] = "Warning : The requested number of seats exceeds the number of remaining seats";
+                return RedirectToAction( "CreateBooking", "Booking", new {planetName = planetName});
+            }
+
+            var ClientExist = await _clientService.ClientExist(client, token);
+
             if (!ClientExist)
             {
-                bool createdClient = await _clientService.CreateClient(client, token);
-            }
+                var createdClient = await _clientService.CreateClient(client, token);
+            }   
 
             var email = User.FindFirstValue(ClaimTypes.Email);
             var clientTemp  = await _clientService.GetClientByEmail(email, token);

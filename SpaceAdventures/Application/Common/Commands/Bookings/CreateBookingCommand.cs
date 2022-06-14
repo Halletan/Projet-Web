@@ -25,10 +25,10 @@ public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand,
 
     public async Task<BookingDto> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
     {
-        var flight = await _flightService.GetFlightById(request.bookingInput.IdFlight);
+        var flight = await _flightService.GetFlightById(request.bookingInput.IdFlight, cancellationToken);
         flight.RemainingSeats -= request.bookingInput.NbSeats;
-        var test = _mapper.Map<Flight>(flight);
-        _ = _flightService.UpdateFlight(request.bookingInput.IdFlight, _mapper.Map<FlightInput>(test), cancellationToken);
+        var mappedFlight = _mapper.Map<Flight>(flight);
+        _ = await _flightService.UpdateFlight(request.bookingInput.IdFlight, _mapper.Map<FlightInput>(mappedFlight), cancellationToken);
         return await _bookingService.CreateBooking(request.bookingInput, cancellationToken);
     }
 }

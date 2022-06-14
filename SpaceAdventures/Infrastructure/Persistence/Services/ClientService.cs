@@ -36,6 +36,12 @@ public class ClientService : IClientService
         };
     }
 
+    public async Task<ClientDto> GetClientByIdUser(int id,CancellationToken cancellation=default)
+    {
+        var client = await _context.Clients.FirstOrDefaultAsync(c => c.IdUser == id, cancellationToken: cancellation);
+        return _mapper.Map<ClientDto>(client);
+    }
+
     public async Task<PaginatedList<ClientsBriefDto>> GetAllClientsWithPagination(int pageNumber, int pageSize, CancellationToken cancellation = default)
     {
         var paginatedList = await _context.Clients

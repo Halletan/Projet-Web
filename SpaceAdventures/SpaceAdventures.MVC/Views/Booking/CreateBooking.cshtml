@@ -65,10 +65,17 @@
 </div>
 
 @section Scripts {
+    
+    
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    
+
+
     <script type="text/javascript">
 
         $("#IdItinerary").change(function () {
@@ -113,4 +120,5 @@
         });
 
     </script>
+
 }

@@ -9,10 +9,12 @@ namespace SpaceAdventures.MVC.Controllers
     public class UserManagementController : Controller
     {
         private readonly IUserManagementMvcService _userManagementMvcService;
+        private readonly IClientService _clientService;
 
-        public UserManagementController(IUserManagementMvcService userManagementMvcService)
+        public UserManagementController(IUserManagementMvcService userManagementMvcService, IClientService clientService)
         {
             _userManagementMvcService = userManagementMvcService;
+            _clientService = clientService;
         }
 
         #region Get List Users
@@ -90,13 +92,14 @@ namespace SpaceAdventures.MVC.Controllers
 
         #region DeleteUser
 
-        public async Task<IActionResult> DeleteUser(string? email)
+        public async Task<IActionResult> DeleteUser(int id)
         {
-            var user = await _userManagementMvcService.GetUserByEmail(email,
-                await HttpContext.GetTokenAsync("access_token"));
+
+            var user = await _userManagementMvcService.GetUserById(id, await HttpContext.GetTokenAsync("access_token"));
+            //var user = await _userManagementMvcService.GetUserByEmail(email,
+            //    await HttpContext.GetTokenAsync("access_token"));
             var role = await _userManagementMvcService.GetRoleByIdRole(user.IdRole, await HttpContext.GetTokenAsync("access_token"));
             user.RoleName = role.Name;
-            TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
             return View(user);
         }
 
@@ -104,10 +107,14 @@ namespace SpaceAdventures.MVC.Controllers
         [ActionName(nameof(DeleteUser))]
         public async Task<IActionResult> DelUser(int id)
         {
-            await _userManagementMvcService.DeleteUser(await HttpContext.GetTokenAsync("access_token"), id);
+            var client = await _clientService.GeClientByIdUser(id, await HttpContext.GetTokenAsync("access_token"));
+            if (client != null)
+            {
+                TempData["Message"] = "Unable to delete this user";
+                RedirectToAction("GetAllUsers");
+            }
 
-            
-            TempData["Role"] = await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token"));
+            await _userManagementMvcService.DeleteUser(await HttpContext.GetTokenAsync("access_token"), id);
             TempData["Message"] = "Success: User removed successfully";
             return RedirectToAction("GetAllUsers");
         }

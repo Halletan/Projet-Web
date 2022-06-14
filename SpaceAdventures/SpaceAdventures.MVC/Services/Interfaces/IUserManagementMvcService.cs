@@ -6,6 +6,7 @@ namespace SpaceAdventures.MVC.Services.Interfaces
     {
         Task<User> CreateUser(string token, User user);
         Task<User> CreateUserSignUp(string? accessToken, User user);
+        Task<User> GetUserById(int id, string? accessToken);
         Task<Users> GetAllUsers(string? accessToken);
         Task<User> GetUserByEmail(string email,string? accessToken);
         Task<bool> DeleteUser(string? accessToken,int userId);

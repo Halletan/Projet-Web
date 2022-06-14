@@ -28,6 +28,23 @@ public class UsersController : ControllerBase
 
     #region User
 
+
+    ///  <summary>
+    ///     Get a user by its Id
+    /// </summary>
+    /// <param name="id"></param>
+    [HttpPost]
+    [Authorize(Policy = "read:users")]
+    [Route("GetUserById/{id}")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<UserDto>> GetUserById(int id)
+    {
+       
+        return Ok(await _mediator.Send(GetUserByIdQuery(id));
+    }
+    
+
     /// <summary>
     ///     Create a new user
     /// </summary>
