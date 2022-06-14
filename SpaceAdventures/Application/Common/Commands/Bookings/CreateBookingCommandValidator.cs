@@ -17,7 +17,7 @@ public class CreateBookingCommandValidator : AbstractValidator<CreateBookingComm
                 return exists;
             }).WithMessage("This flight doesn't exist !");
 
-        // Control existing IdClient
+        //Control existing IdClient
         RuleFor(b => b.bookingInput.IdClient)
             .Must(idclient =>
             {
