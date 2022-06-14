@@ -44,7 +44,7 @@ namespace SpaceAdventures.MVC.Services
             var content = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<UserDto>(content);
         }
-        public async Task<User> CreateUser(string? accessToken, UserInput user)
+        public async Task<User> CreateUser(string? accessToken, User user)
         {
            var postBody = JsonConvert.SerializeObject(user);
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
@@ -56,7 +56,7 @@ namespace SpaceAdventures.MVC.Services
             return JsonConvert.DeserializeObject<User>(content);
         }
 
-        public async Task<User> CreateUserSignUp(string? accessToken, UserInput user)
+        public async Task<User> CreateUserSignUp(string? accessToken, User user)
         {
             var postBody = JsonConvert.SerializeObject(user);
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);

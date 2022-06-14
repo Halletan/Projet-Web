@@ -6,15 +6,41 @@ namespace SpaceAdventures.MVC.Models
     [Serializable]
     public class User
     {
+        public int IdUser { get; set; }  // in test, added
+
+        [Required]
+        [MaxLength(20)]
+        [MinLength(5)]
         public string Username { get; set; }
+
+        [Required]
+        [MaxLength(15)]
+        public string Lastname { get; set; } // Test, added
+       
+        [Required]
+        [MaxLength(15)]
+        public string Firstname { get; set; } // Test, added
+       
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
+
+        public bool VerifiedEmail { get; set; }   // in test, added
+
         public string Connection { get; set; }
-        public int idRole { get; set; }
+
         public string IdUserAuth0 { get; set; }
 
-        // public bool VerifiedEmail { get; set; }
-        //public int IdRole { get; set; }
-
+        [DisplayName("Role")]                   // added, in test
+        public int IdRole { get; set; }         // changed from idRole, in test
+        
+        public string? RoleName { get; set; }   // added, in test       
+        
+        
+        [PasswordPropertyText]
+        [Required]
+        [MinLength(6)]
+        public string Password { get; set; }  // Test, added
     }
 
     public class UserVm

@@ -29,7 +29,7 @@ namespace SpaceAdventures.MVC.Controllers
                     Email = user.Email,
                     Username = user.Username
                 };
-                var userRole = await _userManagementMvcService.GetRoleByIdRole(user.idRole,
+                var userRole = await _userManagementMvcService.GetRoleByIdRole(user.IdRole,
                     await HttpContext.GetTokenAsync("access_token"));
                 vm.Role = userRole.Name;
                 list.Add(vm);
@@ -57,7 +57,7 @@ namespace SpaceAdventures.MVC.Controllers
             var rolesList = await _userManagementMvcService.GetAllRole(await HttpContext.GetTokenAsync("access_token"));
             var rolesDropDownList = new SelectList(rolesList.RolesList, "IdRole", "Name");
             ViewBag.listRole = rolesDropDownList;
-            return View(new UserInput());
+            return View(new User());
         }
 
         public async Task<IActionResult> UserSignUp()
@@ -67,35 +67,35 @@ namespace SpaceAdventures.MVC.Controllers
 
         [HttpPost]
         [ActionName(nameof(UserSignUp))]
-        public async Task<IActionResult> PostUserSignUp(UserInput userInput)
+        public async Task<IActionResult> PostUserSignUp(User user)
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");
             
 
             if (ModelState.IsValid)
             {
-                _ = await _userManagementMvcService.CreateUserSignUp(accessToken, userInput);
+                _ = await _userManagementMvcService.CreateUserSignUp(accessToken, user);
                 TempData["Message"] = "Success: Account has been successfully created";
                 return RedirectToAction("Login", "Account"); 
             }
-            return View(userInput);
+            return View(user);
         }
 
         [HttpPost]
         [ActionName(nameof(CreateUser))]
-        public async Task<IActionResult> PostUser(UserInput userInput)
+        public async Task<IActionResult> PostUser(User user)
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            userInput.Password = "Default";
+            user.Password = "Default";
 
             if (ModelState.IsValid)
             {
-                _ = await _userManagementMvcService.CreateUser(accessToken, userInput);
+                _ = await _userManagementMvcService.CreateUser(accessToken, user);
                 TempData["Message"] = "Success: User has been created successfully";
                 return RedirectToAction("GetAllUsers");
             }
         
-            return View(userInput);
+            return View(user);
         }
 
         #endregion
@@ -144,7 +144,7 @@ namespace SpaceAdventures.MVC.Controllers
         [ActionName(nameof(UpdateUser))]
         public async Task<IActionResult> UpdtUser(UserDto userDto)
         {
-            //int userId = (int)TempData["IdUser"];
+           
             var userInput = new UserInput
             {
                 // TODO need to find a better way

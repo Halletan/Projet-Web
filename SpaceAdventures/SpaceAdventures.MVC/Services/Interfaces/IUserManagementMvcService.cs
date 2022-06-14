@@ -4,8 +4,8 @@ namespace SpaceAdventures.MVC.Services.Interfaces
 {
     public interface IUserManagementMvcService
     {
-        Task<User> CreateUser(string token, UserInput user);
-        Task<User> CreateUserSignUp(string? accessToken, UserInput user);
+        Task<User> CreateUser(string token, User user);
+        Task<User> CreateUserSignUp(string? accessToken, User user);
         Task<Users> GetAllUsers(string? accessToken);
         Task<UserDto> GetUserByEmail(string email,string? accessToken);
         Task<bool> DeleteUser(string? accessToken,int userId);
