@@ -13,8 +13,6 @@ namespace SpaceAdventures.API.Controllers.V1;
 public class BookingsController : ControllerBase
 {
     private readonly ILogger<BookingsController> _logger;
-
-
     private readonly IMediator _mediator;
 
     /// <summary>

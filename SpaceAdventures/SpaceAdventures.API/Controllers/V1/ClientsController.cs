@@ -13,14 +13,15 @@ namespace SpaceAdventures.API.Controllers.V1;
 public class ClientsController : ControllerBase
 {
     private readonly IMediator _mediator;
-
+    private readonly ILogger<ClientsController> _logger;
     /// <summary>
     ///     Clients Controller Constructor
     /// </summary>
     /// <param name="mediator"></param>
-    public ClientsController(IMediator mediator)
+    public ClientsController(IMediator mediator, ILogger<ClientsController> logger)
     {
         _mediator = mediator;
+        _logger = logger;
     }
 
     /// <summary>
