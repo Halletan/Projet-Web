@@ -199,8 +199,7 @@ public class UsersManagementApiService : IUsersManagementApiService
                 {"name", userInput.Firstname + " " + userInput.Lastname},
                 {"nickname", userInput.Username},
                 {"password", passwordToPost},
-                
-                //{"username", userInput.Username},                    // Antoine et Corentin, laissé commenté; Hammadi, to uncomment
+                {"username", userInput.Username},                    // Please DO NOT delete this line, Because Hammadi uses for insert its users
             }), cancellationToken);
 
 
@@ -433,8 +432,7 @@ public class UsersManagementApiService : IUsersManagementApiService
     {
         return _context.Users
             .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
-            .SingleOrDefault(n => n.Email == email);
-
+            .SingleOrDefault(n => n.Email == email)!;
     }
 
 
