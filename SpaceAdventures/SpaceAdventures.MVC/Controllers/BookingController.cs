@@ -105,7 +105,7 @@ namespace SpaceAdventures.MVC.Controllers
         }
 
         [HttpPost, ActionName("CreateBooking")]
-        public async Task<IActionResult> PostBooking(BookingVm booking)
+        public async Task<IActionResult> PostBooking(Booking booking)
         {
             var token = await HttpContext.GetTokenAsync("access_token");
 
@@ -125,14 +125,16 @@ namespace SpaceAdventures.MVC.Controllers
             var email = User.FindFirstValue(ClaimTypes.Email);
             var clientTemp  = await _clientService.GetClientByEmail(email, token);
 
-            Booking BookingToPost = new Booking()
-            {
-                IdFlight = booking.IdFlight,
-                NbSeats = booking.NbSeats,
-                IdClient = clientTemp.IdClient
-            };
+            //Booking BookingToPost = new Booking()
+            //{
+            //    IdFlight = booking.IdFlight,
+            //    NbSeats = booking.NbSeats,
+            //    IdClient = clientTemp.IdClient
+            //};
 
-            var bookingToShow = await _bookingService.CreateBooking(BookingToPost, token);
+            booking.IdClient = clientTemp.IdClient;
+
+            var bookingToShow = await _bookingService.CreateBooking(booking, token);
 
             if (bookingToShow == null)
             {
