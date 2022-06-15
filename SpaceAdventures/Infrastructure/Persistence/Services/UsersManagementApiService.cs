@@ -35,6 +35,15 @@ public class UsersManagementApiService : IUsersManagementApiService
 
     #endregion
 
+    
+     public async Task<UserDto> GetUserById(int userId, CancellationToken cancellation = default)
+    {
+        var user = await _context.Users.FindAsync(userId);
+        if (user == null) throw new NotFoundException("user", userId);
+
+        return _mapper.Map<UserDto>(user);
+    }
+
     #region Get All Users
     public async Task<UsersVm> GetAllUsers(CancellationToken cancellationToken)
     {

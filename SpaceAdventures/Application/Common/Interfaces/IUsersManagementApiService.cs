@@ -9,6 +9,7 @@ public interface IUsersManagementApiService
 {
     #region User
 
+    Task<UserDto> GetUserById(int userId, CancellationToken cancellation = default);
     Task<UsersVm> GetAllUsers(CancellationToken cancellation = default);
     Task<UserDto> GetUserByEmail(string email, CancellationToken cancellation = default);
     Task<List<UserAuth0>> GetAllAuth0Users(CancellationToken cancellation = default);   

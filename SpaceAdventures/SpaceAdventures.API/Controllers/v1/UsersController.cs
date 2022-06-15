@@ -41,7 +41,7 @@ public class UsersController : ControllerBase
     public async Task<ActionResult<UserDto>> GetUserById(int id)
     {
        
-        return Ok(await _mediator.Send(GetUserByIdQuery(id));
+        return Ok(await _mediator.Send(new GetUserByIdQuery(id)));
     }
     
 
