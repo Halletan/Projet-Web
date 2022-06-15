@@ -94,6 +94,15 @@ namespace SpaceAdventures.MVC.Controllers
 
         public async Task<IActionResult> DeleteUser(int id)
         {
+            var client = await _clientService.GeClientByIdUser(id, await HttpContext.GetTokenAsync("access_token"));
+
+            if (client != null)
+            {
+                TempData["Message"] = "Error : Unable to delete this user, also registered as a client";
+                return RedirectToAction("GetAllUsers");
+            }
+
+
             var user = await _userManagementMvcService.GetUserById(id, await HttpContext.GetTokenAsync("access_token"));           
             var role = await _userManagementMvcService.GetRoleByIdRole(user.IdRole, await HttpContext.GetTokenAsync("access_token"));
             user.RoleName = role.Name;
@@ -108,9 +117,11 @@ namespace SpaceAdventures.MVC.Controllers
             
             if (client != null)
             {
-                TempData["Message"] = "Unable to delete this user";
-                RedirectToAction("GetAllUsers");
+                TempData["Message"] = "Error: Unable to delete this user, also registered as a client";
+                return RedirectToAction("GetAllUsers");
             }
+
+
             await _userManagementMvcService.DeleteUser(await HttpContext.GetTokenAsync("access_token"), id);
             TempData["Message"] = "Success: User removed successfully";
             return RedirectToAction("GetAllUsers");
