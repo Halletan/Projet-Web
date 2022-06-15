@@ -33,7 +33,7 @@ public class UsersController : ControllerBase
     ///     Get a user by its Id
     /// </summary>
     /// <param name="id"></param>
-    [HttpPost]
+    [HttpGet]
     [Authorize(Policy = "read:users")]
     [Route("GetUserById/{id}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
@@ -65,7 +65,7 @@ public class UsersController : ControllerBase
     /// </summary>
     /// <param name="command"></param>
     [HttpPost]
-    //[Authorize(Policy = "write:users")]
+    // No Authorization
     [Route("CreateUserSignUp")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]

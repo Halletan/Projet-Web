@@ -94,10 +94,7 @@ namespace SpaceAdventures.MVC.Controllers
 
         public async Task<IActionResult> DeleteUser(int id)
         {
-
-            var user = await _userManagementMvcService.GetUserById(id, await HttpContext.GetTokenAsync("access_token"));
-            //var user = await _userManagementMvcService.GetUserByEmail(email,
-            //    await HttpContext.GetTokenAsync("access_token"));
+            var user = await _userManagementMvcService.GetUserById(id, await HttpContext.GetTokenAsync("access_token"));           
             var role = await _userManagementMvcService.GetRoleByIdRole(user.IdRole, await HttpContext.GetTokenAsync("access_token"));
             user.RoleName = role.Name;
             return View(user);
@@ -113,7 +110,6 @@ namespace SpaceAdventures.MVC.Controllers
                 TempData["Message"] = "Unable to delete this user";
                 RedirectToAction("GetAllUsers");
             }
-
             await _userManagementMvcService.DeleteUser(await HttpContext.GetTokenAsync("access_token"), id);
             TempData["Message"] = "Success: User removed successfully";
             return RedirectToAction("GetAllUsers");
@@ -139,8 +135,7 @@ namespace SpaceAdventures.MVC.Controllers
         [ActionName(nameof(UpdateUser))]
         public async Task<IActionResult> UpdtUser(User user)
         {
-
-            await _userManagementMvcService.UpdateUser(await HttpContext.GetTokenAsync("access_token"), user);
+            await _userManagementMvcService.UpdateUser(await HttpContext.GetTokenAsync("access_token"), user);   
             
             TempData["Message"] = "Success: User has been successfully Updated";
             return RedirectToAction(nameof(GetAllUsers));
