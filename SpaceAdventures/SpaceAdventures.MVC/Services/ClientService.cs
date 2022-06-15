@@ -34,7 +34,7 @@ public class ClientService : IClientService
         var response = await _httpClient.GetAsync("https://localhost:7195/api/v1.0/Clients/GetClientByIdUser/"+id);
 
         if (!response.IsSuccessStatusCode)
-            throw new Exception("Cannot retrieve data");
+            return null;
 
         var content = await response.Content.ReadAsStringAsync();
         return JsonConvert.DeserializeObject<Client>(content);

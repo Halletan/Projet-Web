@@ -94,7 +94,6 @@ namespace SpaceAdventures.MVC.Controllers
 
         public async Task<IActionResult> DeleteUser(int id)
         {
-
             var user = await _userManagementMvcService.GetUserById(id, await HttpContext.GetTokenAsync("access_token"));
             //var user = await _userManagementMvcService.GetUserByEmail(email,
             //    await HttpContext.GetTokenAsync("access_token"));
@@ -108,6 +107,7 @@ namespace SpaceAdventures.MVC.Controllers
         public async Task<IActionResult> DelUser(int id)
         {
             var client = await _clientService.GeClientByIdUser(id, await HttpContext.GetTokenAsync("access_token"));
+            
             if (client != null)
             {
                 TempData["Message"] = "Unable to delete this user";
