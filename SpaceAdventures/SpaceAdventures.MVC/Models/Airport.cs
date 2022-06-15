@@ -6,6 +6,8 @@ public class Airport
     public int IdAirport { get; set; }
     public string Name { get; set; }
     public int IdPlanet { get; set; }
+
+    public string? planetName { get; set; }
 }
 
 [Serializable]

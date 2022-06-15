@@ -42,7 +42,7 @@ public class ClientsController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet]
-    [Route("GetById/{id}")]
+    [Route("GetClientById/{id}")]
     [Authorize(Policy = "read:messages")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

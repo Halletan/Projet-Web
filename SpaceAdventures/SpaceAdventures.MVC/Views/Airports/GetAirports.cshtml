@@ -31,7 +31,7 @@ else
     <tr>
         <th>Airport ID</th>
         <th>Name</th>
-        <th>Planet ID</th>
+        <th>Planet</th>
 
         <th></th>
     </tr>
@@ -47,7 +47,7 @@ else
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdPlanet)
+                @Html.DisplayFor(modelItem => item.planetName)
             </td>
     @if (ViewContext.HttpContext.Session.GetString("Role") == RolesType.Agent.ToString())
     {

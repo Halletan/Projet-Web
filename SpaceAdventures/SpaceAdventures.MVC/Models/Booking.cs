@@ -21,6 +21,8 @@ public class Booking
     [DisplayName("Itinerary")]
     public int IdItinerary { get; set; }
 
+    public string? clientFirstName { get; set; }
+    public string? clientLastName { get; set; }
     public string? airport1Name { get; set; } 
     public string? airport2Name { get; set; } 
     public string? planet1Name { get; set; }  
