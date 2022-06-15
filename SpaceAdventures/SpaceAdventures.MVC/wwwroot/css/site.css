@@ -27,7 +27,10 @@ body { margin-bottom: 60px; }
 
 /**** DataTable CSS *****/
 
-#datatable { background-color: rgba(255, 255, 255, 0.5) }
+#datatable {
+    background-color: rgba(255, 255, 255, 0.5);
+    font-family: 'Righteous', cursive;
+}
 
 #datatable_filter { color: white }
 
@@ -36,6 +39,10 @@ body { margin-bottom: 60px; }
 #datatable_info { color: white }
 
 .dataTableColumn { font-size: smaller }
+
+.email {
+    color: black;
+}
 
 /************Sticky Footer CSS ***************/
 
