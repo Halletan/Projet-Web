@@ -75,8 +75,6 @@ public class UsersController : ControllerBase
         return Ok(await _mediator.Send(command));
     }
 
-
-
     /// <summary>
     ///     Update a user
     /// </summary>

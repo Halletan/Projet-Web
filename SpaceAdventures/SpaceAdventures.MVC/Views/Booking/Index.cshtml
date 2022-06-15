@@ -21,14 +21,14 @@
 </div>
 
 <div id="data">
-    <a class="mercury" title="mercury" href="#mercuryspeed" onclick="location.href = '@Url.Action("CreateBooking","Booking",new { planetName ="Mercury"})'">Mercury</a>
+    <a class="mercury" title="mercury" href="#mercuryspeed" >Mercury</a>
     <a class="venus" title="venus" href="#venusspeed" onclick="location.href = '@Url.Action("CreateBooking","Booking",new { planetName ="Venus"})'">Venus</a>
     <a class="earth active" title="earth" href="#earthspeed"onclick="location.href = '@Url.Action("CreateBooking","Booking",new { planetName ="Earth"})'">Earth</a>
     <a class="mars" title="mars" href="#marsspeed"onclick="location.href = '@Url.Action("CreateBooking","Booking",new { planetName ="Mars"})'">Mars</a>
     <a class="jupiter" title="jupiter" href="#jupiterspeed" onclick="location.href = '@Url.Action("CreateBooking","Booking",new { planetName ="Jupiter"})'">Jupiter</a>
     <a class="saturn" title="saturn" href="#saturnspeed" onclick="location.href = '@Url.Action("CreateBooking","Booking",new { planetName ="Saturn"})'">Saturn</a>
-    <a class="uranus" title="uranus" href="#uranusspeed" onclick="location.href = '@Url.Action("CreateBooking","Booking",new { planetName ="Uranus"})'">Uranus</a>
-    <a class="neptune" title="neptune" href="#neptunespeed" onclick="location.href = '@Url.Action("CreateBooking","Booking",new { planetName ="Neptune"})'">Neptune</a>
+    <a class="uranus" title="uranus" href="#uranusspeed">Uranus</a>
+    <a class="neptune" title="neptune" href="#neptunespeed">Neptune</a>
 </div>
 <div id="controls">
     <label class="set-view">
@@ -179,6 +179,7 @@
 
 <script src="~/js/solarsystem.js"></script>
 <script src="~/lib/toastr.js/toastr.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/js/toast-notifications.js"></script>
 
 
@@ -187,7 +188,23 @@
     $("#home").on("click", function() {
         window.location.href = "/Home/Index";
     })
+
+
+    $(".neptune").on("click",
+        function() {
+            toastr.info("Trip Currently unavailable");  
+        });
+    $(".uranus").on("click",
+        function() {
+            toastr.info("Trip Currently unavailable");  
+        });
+    $(".mercury").on("click",
+        function() {
+            toastr.info("Trip Currently unavailable");  
+        });
+
 </script>
 
-
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
+@*<a class="mercury" title="mercury" href="#mercuryspeed" onclick="location.href = '@Url.Action("CreateBooking","Booking",new { planetName ="Mercury"})'">Mercury</a>
+<a class="uranus" title="uranus" href="#uranusspeed" onclick="location.href = '@Url.Action("CreateBooking","Booking",new { planetName ="Uranus"})'">Uranus</a>
+<a class="neptune" title="neptune" href="#neptunespeed" onclick="location.href = '@Url.Action("CreateBooking","Booking",new { planetName ="Neptune"})'">Neptune</a>*@

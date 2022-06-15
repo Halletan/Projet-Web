@@ -37,7 +37,7 @@
         </div>
         <div class="form-group col">
             <label asp-for="Email" class="control-label text-white"></label>
-            <input asp-for="Email" class="form-control" />
+            <input id="email" asp-for="Email" class="form-control" />
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
     </div>
@@ -82,18 +82,15 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/lib/toastr.js/toastr.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
-        <script>
+    <script>
         $(document).ready(function() {
 
             $("#passTwo").change(function() {
-            var password = $("#passOne").val();
-            var confirmPassword = $("#passTwo").val();
-
-            console.log(password);
-            console.log(confirmPassword);
-
-                if (password != confirmPassword) {
+                var password = $("#passOne").val();
+                var confirmPassword = $("#passTwo").val();
+                if (password !== confirmPassword) {
                     toastr.warning("Passwords do not match");
                     $("#passOne").val('');
                     $("#passTwo").val('');

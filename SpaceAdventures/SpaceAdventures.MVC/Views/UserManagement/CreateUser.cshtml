@@ -74,29 +74,6 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
         <script src="~/lib/toastr.js/toastr.min.js"></script>
         <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
-    <script src="~/js/roles.js"></script>
-
-    <script>
-        $(document).ready(function() {
-
-            $("#email").on('change',
-                function() {
-                    var email = $(this).val();
-                    
-                    $.ajax({
-                        type: "GET",
-                        crossDomain: true,
-                        url: "/Users/UserExists",
-                        data: { email: email },
-                        success: function(exists) {
-                            if (exists) {
-                                toastr.warning("A user with this email already exists", "Warning");
-                                $("#email").val('');
-                            }
-                        }
-                    });
-
-                }); 
-        })
-    </script>
+        <script src="~/js/roles.js"></script>
+        <script src="~/js/user.js" ></script>
 }
