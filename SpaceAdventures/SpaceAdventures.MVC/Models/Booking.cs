@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
 namespace SpaceAdventures.MVC.Models;
@@ -9,6 +10,8 @@ public class Booking
     public int IdBooking { get; set; }
     public int IdFlight { get; set; }
     public int IdClient { get; set; }
+
+    [Range(1,10)]
     public int NbSeats { get; set; }
 
     [JsonIgnore]

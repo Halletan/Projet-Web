@@ -43,11 +43,13 @@ public class HomeController : Controller
                 
             if(clientUser != null)
             {
-                ViewBag.ClientUserId = clientUser.IdClient;
+                HttpContext.Session.SetInt32("ClientUserId", clientUser.IdClient);
+               //ViewBag.ClientUserId = clientUser.IdClient;
             }
             else
             {
-                ViewBag.ClientUserId = null;
+                HttpContext.Session.SetInt32("ClientUserId", 0);
+                // ViewBag.ClientUserId = null;
             }
                    
             TempData["Message"] = "Logged as : " + User.Identity.Name;

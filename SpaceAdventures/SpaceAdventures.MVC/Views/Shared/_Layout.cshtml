@@ -81,7 +81,7 @@
                             {
 
                                 <li>
-                                    <a class="dropdown-item" asp-controller="Booking" asp-action="GetBookingsByClient" asp-route-id=@ViewBag.ClientUserId><i class="fa-solid fa-list m-2"></i> My Bookings</a>
+                                    <a class="dropdown-item" asp-controller="Booking" asp-action="GetBookingsByClient" asp-route-id=@ViewContext.HttpContext.Session.GetInt32("ClientUserId")><i class="fa-solid fa-list m-2"></i> My Bookings</a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" asp-controller="Booking" asp-action="Index"> <i class="fa-solid fa-plus m-2"></i> New Booking</a>
