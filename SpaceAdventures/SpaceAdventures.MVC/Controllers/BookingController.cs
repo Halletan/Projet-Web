@@ -55,17 +55,18 @@ namespace SpaceAdventures.MVC.Controllers
 
             var result = await _bookingService.GetAllBookings(token);
 
-            foreach (var booking in result.BookingsList)  // Test en cours Corentin
+            foreach (var booking in result.BookingsList)
             {
+                Client client = await _clientService.GetClientById(booking.IdClient, token);
+                booking.clientFirstName = client.FirstName;
+                booking.clientLastName = client.LastName;
                 Flight flight = await _flightService.GetFlightById(booking.IdFlight, token);
-
                 Itinerary itinerary = await _itineraryService.GetItineraryById(flight.IdItinerary, token);
                 booking.IdItinerary = itinerary.IdItinerary;
                 Airport airport1 = await _airportService.GetAirportById(itinerary.IdAirport1, token);
                 booking.airport1Name = airport1.Name;
                 Airport airport2 = await _airportService.GetAirportById(itinerary.IdAirport2, token);
                 booking.airport2Name = airport2.Name;
-
                 Planet planet1 = await _planetService.GetPlanetById(airport1.IdPlanet, token);
                 booking.planet1Name = planet1.Name;
                 Planet planet2 = await _planetService.GetPlanetById(airport2.IdPlanet, token);
@@ -81,17 +82,18 @@ namespace SpaceAdventures.MVC.Controllers
 
             var result = await _bookingService.GetBookingsByClient(id, token);
 
-            foreach(var booking in result.BookingsList)  // Test en cours Corentin
+            foreach(var booking in result.BookingsList) 
             {
+                Client client = await _clientService.GetClientById(booking.IdClient, token);
+                booking.clientFirstName = client.FirstName;
+                booking.clientLastName = client.LastName;
                 Flight flight = await _flightService.GetFlightById(booking.IdFlight, token);
-                
                 Itinerary itinerary = await _itineraryService.GetItineraryById(flight.IdItinerary, token);
                 booking.IdItinerary = itinerary.IdItinerary;
                 Airport airport1 = await _airportService.GetAirportById(itinerary.IdAirport1, token);
                 booking.airport1Name = airport1.Name;
                 Airport airport2 = await _airportService.GetAirportById(itinerary.IdAirport2, token);
                 booking.airport2Name = airport2.Name;
-
                 Planet planet1 = await _planetService.GetPlanetById(airport1.IdPlanet, token);
                 booking.planet1Name = planet1.Name;
                 Planet planet2 = await _planetService.GetPlanetById(airport2.IdPlanet, token);

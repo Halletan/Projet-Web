@@ -28,9 +28,10 @@ else
     <thead class="dataTableColumn">
     <tr>
         <th>Itinerary ID</th>
-        <th>Departure Airport ID</th>
-        <th>Arrival Airport ID</th>
-        <th>Rate</th>
+        <th>Departure Airport </th>
+        <th>Departure Planet</th>
+        <th>Arrival Airport </th>
+        <th>Arrival Planet</th>
         <th></th>
     </tr>
     </thead>
@@ -42,14 +43,18 @@ else
                 @Html.DisplayFor(modelItem => item.IdItinerary)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdAirport1)
+                @Html.DisplayFor(modelItem => item.airport1Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdAirport2)
+                @Html.DisplayFor(modelItem => item.planet1Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Rate)
+                @Html.DisplayFor(modelItem => item.airport2Name)
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.planet2Name)
+            </td>
+           
             
             @if (@ViewContext.HttpContext.Session.GetString("Role") == RolesType.Agent.ToString())
             {
