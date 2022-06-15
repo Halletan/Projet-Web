@@ -7,17 +7,14 @@
 
 <link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
 
-
 <span id="message" class="d-none">@TempData["Message"]</span>
 
-<br/><br/><br/>
+<br/>
 
 <div id="myHeader" class="text-center mt-5 pt-5 text-white">
     <h1 class="display-4">Space Adventures</h1>
     <h2>List of the platform's users</h2>
 </div>
-
-<hr/>
 
 
 @if (ViewContext.HttpContext.Session.GetString("Role") == RolesType.Owner.ToString())
@@ -44,7 +41,7 @@ else
             <td>
                 @Html.DisplayFor(modelItem => item.Username)
             </td>
-            <td class="email">
+            <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
@@ -53,15 +50,15 @@ else
           @if (ViewContext.HttpContext.Session.GetString("Role") == RolesType.Owner.ToString())
             {
             <td>
-                <a class="btn btn-dark btn-sm" asp-action="UpdateUser" asp-route-Email="@item.Email"><i class="fa-solid fa-pen m-2"></i></a> |
-                <a class="btn btn-danger btn-sm" asp-action="DeleteUser" asp-route-id ="@item.IdUser"><i class="fa-solid fa-trash m-2"></i></a>
+                <a class="btn btn-dark btn-sm" asp-action="UpdateUser" asp-route-Email="@item.Email"><i class="fa-solid fa-pen fa-xs m-2"></i></a> |
+                <a class="btn btn-danger btn-sm" asp-action="DeleteUser" asp-route-id ="@item.IdUser"><i class="fa-solid fa-trash fa-xs m-2"></i></a>
             </td>
             }
           else
           {
               <td>
-                  <a class="btn btn-dark btn-sm disabled" asp-action="UpdateUser" asp-route-Email="@item.Email"><i class="fa-solid fa-pen m-2"></i></a> |
-                  <a class="btn btn-danger btn-sm disabled" asp-action="DeleteUser" asp-route-id ="@item.IdUser"><i class="fa-solid fa-trash m-2"></i></a>
+                  <a class="btn btn-dark btn-sm disabled" asp-action="UpdateUser" asp-route-Email="@item.Email"><i class="fa-solid fa-pen m-2 fa-xs m-2"></i></a> |
+                  <a class="btn btn-danger btn-sm disabled" asp-action="DeleteUser" asp-route-id ="@item.IdUser"><i class="fa-solid fa-trash m-2 fa-xs m-2"></i></a>
               </td>
           }
         </tr>

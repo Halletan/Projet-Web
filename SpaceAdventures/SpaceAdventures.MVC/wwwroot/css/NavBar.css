@@ -1,7 +1,7 @@
 ﻿/*****************New NavBar*****************/
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nuosu+SIL&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Patua+One&display=swap');
 
 #neubar {
     background: #fae8d2;
@@ -15,7 +15,7 @@
 }
 
 .nav-item {
-    font-family: 'Nuosu SIL', serif;
+    font-family: 'Patua One', cursive;
 }
 
 #neubar .dropdown-menu a:hover { color: #454545 }
@@ -32,6 +32,6 @@
 a.navbar-brand { color: #454545 }
 
 #logo {
-    font-family: 'Nuosu SIL', serif;
+    font-family: 'Patua One', cursive;
     font-size: 1.4em
 }
