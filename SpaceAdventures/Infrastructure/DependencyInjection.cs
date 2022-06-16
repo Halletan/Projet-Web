@@ -31,7 +31,8 @@ public static class DependencyInjection
 
         // Policy Service
         services.AddSingleton(new ClientPolicy());
-        services.AddHttpClient("RetryPolicy").AddPolicyHandler(request => new ClientPolicy().ExponentialHttpRetry);
+        services.AddHttpClient("RetryPolicy").AddPolicyHandler(request => new ClientPolicy().CircuitBreakerRetry);
+
 
         services.AddScoped<IISSCLService, ISSCLService>();
         services.AddScoped<INasaApiService, NasaApiService>();
