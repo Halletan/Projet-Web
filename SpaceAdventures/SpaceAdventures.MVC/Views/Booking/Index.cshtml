@@ -185,17 +185,12 @@
 
 
 <script>
-    $("#home").on("click", function() {
-        window.location.href = "/Home/Index";
-    })
-
-
+    $("#home").on("click",
+        function() {
+            window.location.href = "/Home/Index";
+        });
     $(".noTrip").on("click",
         function() {
             toastr.info("Trip Currently unavailable");  
         });
 </script>
-
-@*<a class="mercury" title="mercury" href="#mercuryspeed" onclick="location.href = '@Url.Action("CreateBooking","Booking",new { planetName ="Mercury"})'">Mercury</a>
-<a class="uranus" title="uranus" href="#uranusspeed" onclick="location.href = '@Url.Action("CreateBooking","Booking",new { planetName ="Uranus"})'">Uranus</a>
-<a class="neptune" title="neptune" href="#neptunespeed" onclick="location.href = '@Url.Action("CreateBooking","Booking",new { planetName ="Neptune"})'">Neptune</a>*@
