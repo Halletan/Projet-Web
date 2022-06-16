@@ -128,7 +128,7 @@
                             positionClass: "toast-bottom-right"
                         });
                     break;
-                case "maris":
+                case "mars":
                     toastr.info(response[6].description
                         + "<br>" +
                         "Mass : " + response[6].basicDetails.mass
