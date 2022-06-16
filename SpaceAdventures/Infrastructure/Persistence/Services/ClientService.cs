@@ -42,10 +42,10 @@ public class ClientService : IClientService
         return _mapper.Map<ClientDto>(client);
     }
 
-    public async Task<PaginatedList<ClientsBriefDto>> GetAllClientsWithPagination(int pageNumber, int pageSize, CancellationToken cancellation = default)
+    public async Task<PaginatedList<ClientDto>> GetAllClientsWithPagination(int pageNumber, int pageSize, CancellationToken cancellation = default)
     {
         var paginatedList = await _context.Clients
-            .ProjectTo<ClientsBriefDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<ClientDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(pageNumber, pageSize);
         return paginatedList;
     }

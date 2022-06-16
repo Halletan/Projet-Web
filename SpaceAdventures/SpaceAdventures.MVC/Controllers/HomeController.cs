@@ -36,7 +36,7 @@ public class HomeController : Controller
 
             HttpContext.Session.SetString("Role", await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token")));
 
-            // Fetch Client id associated with User and pass it to the Layout view through ViewBag
+            // Fetch Client id associated with User and pass it to the HttpContext
             string userEmail = User.FindFirstValue(ClaimTypes.Email);
             
                 Client clientUser = await _clientService.GetClientByEmail(userEmail, await HttpContext.GetTokenAsync("access_token"));
@@ -44,7 +44,7 @@ public class HomeController : Controller
             if(clientUser != null)
             {
                 HttpContext.Session.SetInt32("ClientUserId", clientUser.IdClient);
-               //ViewBag.ClientUserId = clientUser.IdClient;
+               
             }
             else
             {

@@ -6,6 +6,8 @@ using SpaceAdventures.Application.Common.Commands.Bookings;
 using SpaceAdventures.Application.Common.Exceptions;
 using SpaceAdventures.Application.Common.Interfaces;
 using SpaceAdventures.Application.Common.Queries.Bookings;
+using SpaceAdventures.Application.Common.Models;
+using SpaceAdventures.Application.Common.Mappings;
 
 namespace SpaceAdventures.Infrastructure.Persistence.Services;
 
@@ -42,7 +44,13 @@ public class BookingService : IBookingService
 
     }
 
-
+    public async  Task<PaginatedList<BookingDto>> GetBookingsWithPagination(int pageNumber, int pageSize, CancellationToken cancellation = default)
+    {
+        var paginatedList = await _context.Bookings
+            .ProjectTo<BookingDto>(_mapper.ConfigurationProvider)
+            .PaginatedListAsync(pageNumber, pageSize);
+        return paginatedList;
+    }
 
     public async Task<BookingDto> GetBookingById(int bookingId, CancellationToken cancellation = default)
     {

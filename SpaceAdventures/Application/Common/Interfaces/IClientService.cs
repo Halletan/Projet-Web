@@ -8,7 +8,7 @@ namespace SpaceAdventures.Application.Common.Interfaces;
 public interface IClientService
 {
     Task<ClientsVm> GetAllClients(CancellationToken cancellation = default);
-    Task<PaginatedList<ClientsBriefDto>> GetAllClientsWithPagination(int pageNumber, int pageSize, CancellationToken cancellation = default);
+    Task<PaginatedList<ClientDto>> GetAllClientsWithPagination(int pageNumber, int pageSize, CancellationToken cancellation = default);
     Task<ClientDto> GetClientById(int clientId, CancellationToken cancellation = default);
     Task<ClientDto> GetClientByIdUser(int id, CancellationToken cancellation = default);
     Task<ClientDto> GetClientByEmail(string email, CancellationToken cancellation = default);   

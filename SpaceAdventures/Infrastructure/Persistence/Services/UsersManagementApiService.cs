@@ -76,7 +76,7 @@ public class UsersManagementApiService : IUsersManagementApiService
     }
     #endregion
 
-    #region Get User's Roles => Using Auth0 User's ID by Hammadi
+    #region Get User's Roles => Using Auth0 User's ID
 
     public async Task<List<UserRole>> GetUserRoles(string userId, CancellationToken cancellation)
     {
@@ -98,7 +98,7 @@ public class UsersManagementApiService : IUsersManagementApiService
 
     #endregion
 
-    #region AssignRoles => Using Auth0 User's ID ID by Hammadi
+    #region AssignRoles => Using Auth0 User's ID
     public async Task AssignRoles(string id, AssignRolesRequest request, CancellationToken cancellationToken = default)
     {
         var tokenResponse = await GetToken();
@@ -119,7 +119,7 @@ public class UsersManagementApiService : IUsersManagementApiService
     }
     #endregion
 
-    #region APi Managemet Access Token by Hammadi
+    #region APi Managemet Access Token
 
     public async Task<TokenData> GetToken()
     {
@@ -241,7 +241,6 @@ public class UsersManagementApiService : IUsersManagementApiService
     {
         try
         {
-            
             User user = await _context.Users.Where(u => u.IdUser == userId).AsNoTracking().FirstOrDefaultAsync();
 
             if (user.IdRole != userInput.IdRole)

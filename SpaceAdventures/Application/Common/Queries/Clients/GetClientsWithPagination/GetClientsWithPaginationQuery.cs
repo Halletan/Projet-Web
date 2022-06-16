@@ -7,7 +7,7 @@ using SpaceAdventures.Application.Common.Models;
 
 namespace SpaceAdventures.Application.Common.Queries.Clients.GetClientsWithPagination;
 
-public class GetClientsWithPaginationQuery : IRequest<PaginatedList<ClientsBriefDto>>
+public class GetClientsWithPaginationQuery : IRequest<PaginatedList<ClientDto>>
 {
     public int PageNumber { get; set; } = 1;
     public int PageSize { get; set; } = 10;
@@ -15,7 +15,7 @@ public class GetClientsWithPaginationQuery : IRequest<PaginatedList<ClientsBrief
 
 public class
     GetClientsWithPaginationQueryHandler : IRequestHandler<GetClientsWithPaginationQuery,
-        PaginatedList<ClientsBriefDto>>
+        PaginatedList<ClientDto>>
 {
     private readonly IClientService _clientService;
 
@@ -24,7 +24,7 @@ public class
         _clientService = clientService;
     }
 
-    public async Task<PaginatedList<ClientsBriefDto>> Handle(GetClientsWithPaginationQuery request,
+    public async Task<PaginatedList<ClientDto>> Handle(GetClientsWithPaginationQuery request,
         CancellationToken cancellationToken)
     {
         return await _clientService.GetAllClientsWithPagination(request.PageNumber, request.PageSize,

@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SpaceAdventures.Application.Common.Commands.Bookings;
+using SpaceAdventures.Application.Common.Models;
 using SpaceAdventures.Application.Common.Queries.Bookings;
+using SpaceAdventures.Application.Common.Queries.Bookings.GetBookingsWithPagination;
 
 namespace SpaceAdventures.API.Controllers.V1;
 
@@ -36,6 +38,10 @@ public class BookingsController : ControllerBase
     {
         return Ok(await _mediator.Send(new GetBookingsQuery()));
     }
+
+
+    
+    
 
     /// <summary>
     ///     Get a list of all Bookings for a specific client

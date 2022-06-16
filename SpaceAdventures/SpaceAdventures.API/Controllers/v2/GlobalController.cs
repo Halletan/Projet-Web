@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SpaceAdventures.Application.Common.Models;
+using SpaceAdventures.Application.Common.Queries.Bookings;
+using SpaceAdventures.Application.Common.Queries.Bookings.GetBookingsWithPagination;
+using SpaceAdventures.Application.Common.Queries.Clients;
 using SpaceAdventures.Application.Common.Queries.Clients.GetClientsWithPagination;
 
 namespace SpaceAdventures.API.Controllers.V2;
@@ -33,8 +36,22 @@ public class GlobalController : ControllerBase
     [Route("ClientWithPagination")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<PaginatedList<ClientsBriefDto>>> GetClientsWithPagination(
+    public async Task<ActionResult<PaginatedList<ClientDto>>> GetClientsWithPagination(
         [FromQuery] GetClientsWithPaginationQuery query)
+    {
+        return await _mediator.Send(query);
+    }
+
+    /// <summary>
+    ///     Get a paginated List of bookings
+    /// </summary>
+    [HttpGet]
+    [Route("GetBookingsWithPagination")]
+    [Authorize(Policy = "read:messages")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<PaginatedList<BookingDto>>> GetBookingsWithPagination(
+        [FromQuery] GetBookingsWithPaginationQuery query)
     {
         return await _mediator.Send(query);
     }

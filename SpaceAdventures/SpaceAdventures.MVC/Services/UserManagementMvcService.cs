@@ -45,6 +45,21 @@ namespace SpaceAdventures.MVC.Services
             var content = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<Users>(content);
         }
+
+        public async Task<Users> GetAllUsersForSignUp()
+        {
+            
+            var response = await _httpClient.GetAsync("https://localhost:7195/api/v1.0/Users/GetAllUsersForSignUp");
+
+            if (!response.IsSuccessStatusCode)
+                throw new Exception("Cannot retrieve data");
+
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<Users>(content);
+        }
+
+
+
         public async Task<User> GetUserByEmail(string email, string? accessToken)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);

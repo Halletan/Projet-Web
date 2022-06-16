@@ -47,8 +47,6 @@ namespace SpaceAdventures.MVC.Controllers
             return View();
         }
 
-
-
         public async Task<IActionResult> GetAllBookings()
         {
             var token = await HttpContext.GetTokenAsync("access_token");

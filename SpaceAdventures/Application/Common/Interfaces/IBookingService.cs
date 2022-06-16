@@ -1,4 +1,5 @@
 ﻿using SpaceAdventures.Application.Common.Commands.Bookings;
+using SpaceAdventures.Application.Common.Models;
 using SpaceAdventures.Application.Common.Queries.Bookings;
 
 namespace SpaceAdventures.Application.Common.Interfaces;
@@ -6,6 +7,7 @@ namespace SpaceAdventures.Application.Common.Interfaces;
 public interface IBookingService
 {
     Task<BookingsVm> GetAllBookings(CancellationToken cancellation = default);
+    Task<PaginatedList<BookingDto>> GetBookingsWithPagination(int pageNumber, int pageSize, CancellationToken cancellation = default);
     Task<BookingsVm> GetBookingsByClient(int clientId, CancellationToken cancellation = default);
     Task<BookingDto> GetBookingById(int BookingId, CancellationToken cancellation = default);
     Task<BookingDto> CreateBooking(BookingInput BookingInput, CancellationToken cancellation = default);

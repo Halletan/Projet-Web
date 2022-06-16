@@ -39,6 +39,15 @@ namespace SpaceAdventures.MVC.Controllers
             return users.UsersList.Any(u => u.Email == email);
         }
 
+
+        [HttpGet]
+        [Route("Users/UserExistsForSignUp")]
+        public async Task<bool> UserExistsForSignUp(string? email)
+        {
+            var users = await _userManagementMvcService.GetAllUsersForSignUp();
+            return users.UsersList.Any(u => u.Email == email);
+        }
+
         #endregion
 
         #region CreateUser

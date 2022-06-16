@@ -105,6 +105,21 @@ public class UsersController : ControllerBase
         return await _mediator.Send(new GetUsersQuery());
     }
 
+    
+    /// <summary>
+    ///     Get List of users from DB V2
+    /// </summary>
+    /// <returns>List of users</returns>
+    [HttpGet]
+    [Route("GetAllUsersForSignUp")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<UsersVm>> GetAllUsersForSignUp()
+    {
+        return await _mediator.Send(new GetUsersQuery());
+    }
+
 
     /// <summary>
     ///     Get Lis of users from Auth0 Platform
