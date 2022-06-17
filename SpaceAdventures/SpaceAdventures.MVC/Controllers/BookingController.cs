@@ -99,7 +99,7 @@ namespace SpaceAdventures.MVC.Controllers
             }
 
             if (id == 0)
-                TempData["Message"] = "Error : It seems that you haven't done a booking yet";
+                TempData["Message"] = "Info : It seems that you haven't done a booking yet";
 
             return View(result);
         }
