@@ -21,13 +21,13 @@ public class Booking
 
     [Required]
     [MaxLength(20)]
-    [MinLength(5)]
+    [MinLength(2)]
     [JsonIgnore]
     public string Lastname { get; set; }
 
     [Required]
     [MaxLength(20)]
-    [MinLength(5)]
+    [MinLength(2)]
     [JsonIgnore]
     public string FirstName { get; set; }
 
