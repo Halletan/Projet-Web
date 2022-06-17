@@ -36,7 +36,6 @@ public class HomeController : Controller
 
             HttpContext.Session.SetString("Role", await _userManagementMvcService.GetRole(await HttpContext.GetTokenAsync("access_token")));
 
-            // Fetch Client id associated with User and pass it to the Layout view through ViewBag
             var userEmail = User.FindFirstValue(ClaimTypes.Email);
             
             var clientUser = await _clientService.GetClientByEmail(userEmail, await HttpContext.GetTokenAsync("access_token"));

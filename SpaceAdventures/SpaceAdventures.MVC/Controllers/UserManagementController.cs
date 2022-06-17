@@ -70,12 +70,11 @@ namespace SpaceAdventures.MVC.Controllers
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");
 
-
             if (ModelState.IsValid)
             {
-                _ = await _userManagementMvcService.CreateUserSignUp(accessToken, user);
-                TempData["Message"] = "Success: Account has been successfully created";
-                return RedirectToAction("Login", "Account");
+                var newUser = await _userManagementMvcService.CreateUserSignUp(accessToken, user);
+                TempData["Message"] = "Success: Welcome " + newUser.Username +" your account has been successfully created, please check your email for verification.";
+                return RedirectToAction("Index", "Home");
             }
             return View(user);
         }
