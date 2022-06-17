@@ -251,12 +251,12 @@ public class UsersManagementApiService : IUsersManagementApiService
                 bool assignRoleOk = await AssignRole(user, cancellationToken);
             }
 
-            if(user.Username != userInput.Username || user.Email != userInput.Email)
+            if(user.Email != userInput.Email)
             {              
                 user = await UpdateUserInAuth0(user.IdUserAuth0, userInput, cancellationToken);
                 user.IdUser = userId;
             }
-            user.Username = userInput.Username;
+            //user.Username = userInput.Username;
 
             return await UpdateUserInDb(user, cancellationToken);
 
@@ -294,8 +294,7 @@ public class UsersManagementApiService : IUsersManagementApiService
            new Dictionary<string, string>
            {
                 {"email", userInput.Email},
-                {"verify_email","true"},
-                {"username", userInput.Username}
+                {"verify_email","true"}
 
            }), cancellationToken);
 
