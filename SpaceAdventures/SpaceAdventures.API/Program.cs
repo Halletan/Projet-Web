@@ -17,12 +17,11 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 // Serilog Service
-
 builder.Host.UseSerilog((context,logger) => logger
     .ReadFrom.Configuration(configuration)
-    .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder()
-        .WithDefaultDestructurers()
-        .WithDestructurers(new[] {new DbUpdateExceptionDestructurer()})));
+    .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder()  
+        .WithDefaultDestructurers()       /// Adds destructurers for a known set of exceptions from standard library.
+        .WithDestructurers(new [] {new DbUpdateExceptionDestructurer()})));
 
 
 // Jwt Bearer Authentication
@@ -61,6 +60,8 @@ var app = builder.Build();
 
 /*********  Middleware  **********/
 
+
+// Serilog Middleware (Log Events)
 app.UseSerilogRequestLogging();
 
 // Our Dedicated Nuget
@@ -79,7 +80,6 @@ if (app.Environment.IsDevelopment())
             opt.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.ApiVersion.ToString());
     });
 }
-
 
 app.UseHttpsRedirection();
 
