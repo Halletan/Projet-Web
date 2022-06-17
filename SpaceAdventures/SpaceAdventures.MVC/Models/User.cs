@@ -11,6 +11,7 @@ namespace SpaceAdventures.MVC.Models
         [Required]
         [MaxLength(20)]
         [MinLength(5)]
+        
         public string Username { get; set; }
 
         [Required]

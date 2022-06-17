@@ -30,7 +30,7 @@
             <div class="row mt-3">
             <div class="form-group col">
                 <label asp-for="Username" class="control-label text-white"></label>
-                <input asp-for="Username" class="form-control" />
+                <input asp-for="Username" class="form-control nowhitespaces"/>
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
             <div class="form-group col">
@@ -76,4 +76,6 @@
         <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
         <script src="~/js/roles.js"></script>
         <script src="~/js/user.js" ></script>
+         <script src="~/js/NoWhiteSpaces.js"></script>
+           
 }
