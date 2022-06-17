@@ -7,6 +7,7 @@
 <link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
 
 <br/><br/><br/><br/>
+<span id="message" class="d-none">@TempData["Message"]</span>
 
 <div id="myHeader" class="text-center mt-5 pt-5 text-white">
     <h1 class="display-4">Space Adventures</h1>
@@ -55,6 +56,8 @@
 
 @section Scripts
 {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
     <script src ="~/lib/datatables/js/jquery.dataTables.min.js"></script>
     <script src ="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
     <script src ="~/js/datatable.js"></script>
