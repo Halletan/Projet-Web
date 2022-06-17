@@ -98,6 +98,9 @@ namespace SpaceAdventures.MVC.Controllers
                 booking.planet2Name = planet2.Name;
             }
 
+            if (id == 0)
+                TempData["Message"] = "Error : It seems that you haven't done a booking yet";
+
             return View(result);
         }
 
